@@ -25,10 +25,10 @@ const LoginForm = () => {
             </FormGroup>
             <div>
               <a className="reset_pass" href="#">
-                Log in
+                로그인
               </a>&nbsp;&nbsp;&nbsp;&nbsp;
               <a className="reset_pass" href="#">
-                Lost your password?
+                비밀번호를 잊으셨나요?
               </a>
             </div>
 
@@ -36,10 +36,10 @@ const LoginForm = () => {
 
             <div className="separator">
               <p className="change_link">
-                New to site?
+                아이디가 없으신가요? &nbsp;
                 <a href="#signup" className="to_register">
                   {" "}
-                  Create Account{" "}
+                  회원가입{" "}
                 </a>
               </p>
 
