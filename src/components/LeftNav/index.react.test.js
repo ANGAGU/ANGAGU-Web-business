@@ -2,7 +2,7 @@ import React from 'react';
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
 
-import Login from './index';
+import LeftNav from './index';
 
 let container = null;
 beforeEach(() => {
@@ -18,8 +18,10 @@ afterEach(() => {
   container = null;
 });
 
-it("renders Login Page", () => {
-  act(() => {
-    render(<Login />, container);
+describe("LeftNav Component", () => {
+  it("renders", () => {
+    act(() => {
+      render(<LeftNav />, container);
+    });
   });
-});
+})

@@ -1,11 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
 import React, {useState} from 'react';
-import {Login} from './page';
+import {ManageOrder} from './page';
 
 const App = () => {
   return (
-    <Login></Login>
+    <ManageOrder></ManageOrder>
   );
 }
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
 
-import LoginForm from './index';
+import ManageOrder from './index';
 
 let container = null;
 beforeEach(() => {
@@ -17,10 +17,11 @@ afterEach(() => {
   container.remove();
   container = null;
 });
-describe("LoginForm Page", () => {
-  it("renders with or without a name", () => {
+
+describe("Order Management Page", () => {
+  it("renders", () => {
     act(() => {
-      render(<LoginForm />, container);
+      render(<ManageOrder />, container);
     });
   });
 })
