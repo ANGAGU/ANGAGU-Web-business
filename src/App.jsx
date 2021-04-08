@@ -1,11 +1,15 @@
-import logo from './logo.svg';
 import './App.css';
 import React, {useState} from 'react';
 import {Login} from './page';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 const App = () => {
   return (
-    <Login></Login>
+    <Router>
+      <Switch>
+        <Route exact path="/" component={Login} />
+      </Switch>
+    </Router>
   );
 }
 
