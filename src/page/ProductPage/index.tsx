@@ -37,7 +37,7 @@ function ProductPage(): React.ReactElement {
   const [productDummyData] = useState(makeDummyData(30));
 
   const productList = productDummyData.map((product, index) => (
-    <tr className={index % 2 == 0 ? "even pointer" : "odd pointer"}>
+    <tr key={index} className={index % 2 == 0 ? "even pointer" : "odd pointer"}>
       <td className="a-center">
         <input type="checkbox" className="flat" name="table_records" />
       </td>
