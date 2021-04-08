@@ -13,12 +13,15 @@
     "@types/react-fontawesome": "^1.6.4",
     "@types/reactstrap": "^8.7.2",
     "axios": "^0.21.1",
+    "bootstrap": "^4.6.0",
     "classnames": "^2.3.1",
     "gh-pages": "^3.1.0",
     "querystring": "^0.2.1",
     "react": "^17.0.2",
+    "react-bootstrap": "^1.5.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
+    "reactstrap": "^8.9.0",
     "typescript": "^4.2.3",
     "web-vitals": "^1.1.1"
   },
@@ -63,9 +66,6 @@
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.23.1",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "bootstrap": "^4.6.0",
-    "react-bootstrap": "^1.5.2",
-    "react-router-dom": "^5.2.0",
-    "reactstrap": "^8.9.0"
+    "react-router-dom": "^5.2.0"
   }
 }

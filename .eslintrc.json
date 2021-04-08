@@ -29,9 +29,17 @@
   },
   "rules": {
     "react/jsx-filename-extension": [
-      "error",
+      "warn",
       { "extensions": [".js", ".jsx", ".tsx"] }
     ],
+
+    "prettier/prettier": [
+      "warn",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+
     "arrow-parens": ["warn", "as-needed"],
     "react/prop-types": ["off"],
     "no-unused-vars": ["off"],
@@ -41,7 +49,12 @@
     "no-param-reassign": "off",
     "no-console": "off",
     "no-use-before-define": "off",
-    "react-hooks/exhaustive-deps": ["warn"],
-    "react/jsx-props-no-spreading": ["warn"]
+    "react-hooks/exhaustive-deps": ["off"],
+    "react/jsx-props-no-spreading": ["off"],
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "react/no-array-index-key": ["warn"],
+    "jsx-a11y/no-static-element-interactions": ["off"],
+    "jsx-a11y/click-events-have-key-events": "off",
+    "react/jsx-curly-brace-presence": "off"
   }
 }
