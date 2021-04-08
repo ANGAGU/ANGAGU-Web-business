@@ -2,6 +2,7 @@
   "env": {
     "browser": true,
     "es6": true,
+    "es2020": true,
     "node": true
   },
   "parser": "@typescript-eslint/parser",
@@ -9,6 +10,7 @@
   "extends": [
     "eslint:recommended",
     "airbnb",
+    "airbnb/hooks",
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended"
   ],
@@ -20,20 +22,26 @@
   "settings": {
     "import/resolver": {
       "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+        "extensions": [".js", ".jsx", ".ts", ".tsx"],
+        "moduleDirectory": ["node_modules", "."]
       }
     }
   },
   "rules": {
     "react/jsx-filename-extension": [
       "error",
-      { "extensions": [".js", ".jsx"] }
+      { "extensions": [".js", ".jsx", ".tsx"] }
     ],
+    "arrow-parens": ["warn", "as-needed"],
+    "react/prop-types": ["off"],
+    "no-unused-vars": ["off"],
     "import/extensions": "off",
     "import/prefer-default-export": "off",
     "class-methods-use-this": "off",
     "no-param-reassign": "off",
     "no-console": "off",
-    "no-use-before-define": "off"
+    "no-use-before-define": "off",
+    "react-hooks/exhaustive-deps": ["warn"],
+    "react/jsx-props-no-spreading": ["warn"]
   }
 }
