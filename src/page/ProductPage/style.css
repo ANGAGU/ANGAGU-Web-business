@@ -1,7 +1,7 @@
 table {
     width: 100%;
     margin-bottom: 8px;
-    text-align: left;
+    text-align: center;
 }
 .table th {
     line-height: 60px;
@@ -15,7 +15,21 @@ table {
     border-top: none;
     border-bottom: 1px solid gainsboro;
 }
-
+button {
+    background-color: #595c7a; /* Green */
+    border: none;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 4px 2px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+  
 .product-page {
     margin: 50px 20px;
 }
