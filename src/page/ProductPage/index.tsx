@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect} from "react";
 import "./style.css";
 import Chance from "chance";
 
@@ -11,30 +11,58 @@ interface Product {
   name: String;
   price: String;
   stock: Number;
-  createDt: Date;
+  createDt: String;
 }
 
 function ProductPage(): React.ReactElement {
-  const chance = new Chance();
-  let productDummyData: Array<Product> = [];
-
-  useEffect(() => {
-    makeDummyData(5);
-    console.log(productDummyData);
-  });
-
-  const makeDummyData = (num: Number): void => {
+  const makeDummyData = (num: Number): Array<Product> => {
+    let tempArr: Array<Product> = [];
     for (let i = 0; i < num; i++) {
-      productDummyData.push({
-        img: "../../assets/product_test.jpeg",
+      tempArr.push({
+        img: '../../assets/product_test.jpeg',
         id: chance.integer({ min: 0, max: 100 }),
         name: chance.word(),
         price: chance.dollar(),
         stock: chance.integer({ min: 0, max: 100 }),
-        createDt: chance.date(),
+        createDt: chance.date().toDateString()
       });
     }
+    console.log(tempArr)
+    return tempArr;
   };
+  
+  const chance = new Chance();
+  const [productDummyData] = useState(makeDummyData(10));
+
+  
+
+  useEffect(() => {
+    console.log(productDummyData)
+  });
+
+ 
+  const productList = productDummyData.map((product, index) => 
+    ( <tr className={index%2==0 ? "even pointer" : "odd pointer"}>
+
+      <td className="a-center">
+        <input type="checkbox" className="flat" name="table_records" />
+      </td>
+      <td className=" ">
+        <img className="product__img" src={testImg}></img>
+      </td>
+      <td className=" ">{index}</td>
+      <td className=" ">
+        {product.name} <i className="success fa fa-long-arrow-up"></i>
+      </td>
+      <td className=" ">{product.price}</td>
+      <td className=" ">{product.stock}</td>
+      <td className="a-right a-right ">{product.createDt}</td>
+      <td className="last">
+        <button>수정하기</button>
+      </td>
+    </tr>
+    )
+  );
 
   return (
     <div className="product-page">
@@ -57,49 +85,9 @@ function ProductPage(): React.ReactElement {
             </thead>
 
             <tbody>
-              <tr className="even pointer">
-                <td className="a-center">
-                  <input
-                    type="checkbox"
-                    className="flat"
-                    name="table_records"
-                  />
-                </td>
-                <td className=" ">
-                  <img className="product__img" src={testImg}></img>
-                </td>
-                <td className=" ">May 23, 2014 11:47:56 PM </td>
-                <td className=" ">
-                  121000210 <i className="success fa fa-long-arrow-up"></i>
-                </td>
-                <td className=" ">John Blank L</td>
-                <td className=" ">Paid</td>
-                <td className="a-right a-right ">$7.45</td>
-                <td className=" last">
-                  <span>View</span>
-                </td>
-              </tr>
+              {productList}
 
-              <tr className="odd pointer">
-                <td className="a-center ">
-                  <input
-                    type="checkbox"
-                    className="flat"
-                    name="table_records"
-                  />
-                </td>
-                <td className=" ">121000039</td>
-                <td className=" ">May 23, 2014 11:30:12 PM</td>
-                <td className=" ">
-                  121000208 <i className="success fa fa-long-arrow-up"></i>
-                </td>
-                <td className=" ">John Blank L</td>
-                <td className=" ">Paid</td>
-                <td className="a-right a-right ">$741.20</td>
-                <td className=" last">
-                  <span>View</span>
-                </td>
-              </tr>
+             
             </tbody>
           </table>
         </div>
