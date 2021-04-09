@@ -1,15 +1,14 @@
-import Chance from "chance";
+import Chance from 'chance';
 
 const Dummy = {
-    makeProducts: (num) => {
-       
+  makeProducts: num => {
     const chance = new Chance();
 
-    let tempArr= [];
-    for (let i = 0; i < num; i++) {
+    const tempArr = [];
+    for (let i = 0; i < num; i += 1) {
       tempArr.push({
         id: chance.integer({ min: 0, max: 100 }),
-        img: "../../assets/product_test.jpeg",
+        img: '../../assets/product_test.jpeg',
         name: chance.word(),
         price: chance.dollar(),
         stock: chance.integer({ min: 0, max: 100 }),
@@ -19,8 +18,7 @@ const Dummy = {
     }
 
     return tempArr;
+  },
+};
 
-    }
-}
-
-export default Dummy
+export default Dummy;
