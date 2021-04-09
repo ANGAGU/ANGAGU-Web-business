@@ -60,19 +60,21 @@ function ProductPage(): React.ReactElement {
   ));
 
   return (
-    <div className="product-page">
-      <div className="x_content">
-        <div className="table-responsive">
-          <table className="table table-striped jambo_table bulk_action">
-            <thead>
-              <tr className="headings">{productsHeader}</tr>
-            </thead>
+    <>
+      <div className="product-page">
+        <div className="x_content">
+          <div className="table-responsive">
+            <table className="table table-striped jambo_table bulk_action">
+              <thead>
+                <tr className="headings">{productsHeader}</tr>
+              </thead>
 
-            <tbody>{products}</tbody>
-          </table>
+              <tbody>{products}</tbody>
+            </table>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
