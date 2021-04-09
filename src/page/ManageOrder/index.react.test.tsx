@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
 
-import Login from "./index";
+import ManageOrder from './index';
 
-let container = null;
+let container:any = null;
 beforeEach(() => {
   // setup a DOM element as a render target
   container = document.createElement("div");
@@ -18,10 +18,10 @@ afterEach(() => {
   container = null;
 });
 
-describe("Login Page", () => {
+describe("Order Management Page", () => {
   it("renders", () => {
     act(() => {
-      render(<Login />, container);
+      render(<ManageOrder />, container);
     });
   });
-});
+})

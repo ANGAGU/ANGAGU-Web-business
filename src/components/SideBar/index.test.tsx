@@ -1,10 +1,11 @@
-import React from 'react';
+import React from "react";
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
+import { BrowserRouter as Router } from "react-router-dom";
+import SideBar from "./index";
 
-import Header from './index';
+let container:any = null;
 
-let container = null;
 beforeEach(() => {
   // setup a DOM element as a render target
   container = document.createElement("div");
@@ -18,10 +19,15 @@ afterEach(() => {
   container = null;
 });
 
-describe("Header Component", () => {
+describe("SideBar Page", () => {
   it("renders", () => {
     act(() => {
-      render(<Header />, container);
+      render(
+        <Router>
+          <SideBar isOpen={true} toggle={()=>{}} />
+        </Router>,
+        container
+      );
     });
   });
-})
+});

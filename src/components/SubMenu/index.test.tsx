@@ -6,7 +6,7 @@ import { faHome } from "@fortawesome/free-solid-svg-icons";
 
 import SubMenu from "./index";
 
-let container = null;
+let container:any = null;
 const submenus = [
   [
     {

@@ -2,16 +2,17 @@ import React from "react";
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
 import { BrowserRouter as Router } from "react-router-dom";
-import SideBar from "./index";
+import Main from "./index";
 
-let container = null;
-
+let container:any = null;
+// eslint-disable-next-line no-undef
 beforeEach(() => {
   // setup a DOM element as a render target
   container = document.createElement("div");
   document.body.appendChild(container);
 });
 
+// eslint-disable-next-line no-undef
 afterEach(() => {
   // cleanup on exiting
   unmountComponentAtNode(container);
@@ -19,12 +20,14 @@ afterEach(() => {
   container = null;
 });
 
-describe("SideBar Page", () => {
+// eslint-disable-next-line no-undef
+describe("Main Page", () => {
+  // eslint-disable-next-line no-undef
   it("renders", () => {
     act(() => {
       render(
         <Router>
-          <SideBar />
+          <Main />
         </Router>,
         container
       );

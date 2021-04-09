@@ -1,7 +1,7 @@
 import React from 'react';
 import { Alert } from 'reactstrap';
 
-const OrderTable = () => {
+const OrderTable:React.FC = () => {
   return (
     <div>
       <Alert color="primary">

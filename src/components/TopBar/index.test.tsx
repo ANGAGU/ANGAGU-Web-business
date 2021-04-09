@@ -1,10 +1,11 @@
-import React from 'react';
+import React from "react";
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
+import { BrowserRouter as Router } from "react-router-dom";
 
-import ManageOrder from './index';
+import TopBar from "./index";
 
-let container = null;
+let container:any = null;
 beforeEach(() => {
   // setup a DOM element as a render target
   container = document.createElement("div");
@@ -18,10 +19,15 @@ afterEach(() => {
   container = null;
 });
 
-describe("Order Management Page", () => {
+describe("TopBar Page", () => {
   it("renders", () => {
     act(() => {
-      render(<ManageOrder />, container);
+      render(
+        <Router>
+          <TopBar toggleSidebar={()=>{}}/>
+        </Router>,
+        container
+      );
     });
   });
-})
+});

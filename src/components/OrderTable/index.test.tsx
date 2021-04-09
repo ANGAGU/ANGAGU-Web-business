@@ -2,9 +2,9 @@ import React from 'react';
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
 
-import LeftNav from './index';
+import OrderTable from './index';
 
-let container = null;
+let container:any = null;
 beforeEach(() => {
   // setup a DOM element as a render target
   container = document.createElement("div");
@@ -18,10 +18,10 @@ afterEach(() => {
   container = null;
 });
 
-describe("LeftNav Component", () => {
-  it("renders", () => {
+describe("OrderTable Component", () => {
+  it("renders component", () => {
     act(() => {
-      render(<LeftNav />, container);
+      render(<OrderTable />, container);
     });
   });
 })

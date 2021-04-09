@@ -34,7 +34,7 @@ function ProductPage(): React.ReactElement {
   const productsHeader = productsTitleList.map(ttl => (
     <th className="column-title">{ttl}</th>
   ));
-  const products = productDummyData.map((product, index) => (
+  const products = productDummyData.map((product:any, index:any) => (
     <tr
       key={index}
       className={index % 2 === 0 ? 'even pointer' : 'odd pointer'}

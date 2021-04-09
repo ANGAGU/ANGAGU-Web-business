@@ -2,10 +2,10 @@ import React from "react";
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
 import { BrowserRouter as Router } from "react-router-dom";
-import LoginForm from "./index";
 
-let container = null;
+import Content from "./index";
 
+let container:any = null;
 beforeEach(() => {
   // setup a DOM element as a render target
   container = document.createElement("div");
@@ -19,10 +19,15 @@ afterEach(() => {
   container = null;
 });
 
-describe("LoginForm Page", () => {
+describe("Content Page", () => {
   it("renders", () => {
     act(() => {
-      render(<LoginForm />, container);
+      render(
+        <Router>
+          <Content sidebarIsOpen={true} toggleSidebar={()=>{}}/>
+        </Router>,
+        container
+      );
     });
   });
 });

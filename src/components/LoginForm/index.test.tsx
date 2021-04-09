@@ -2,10 +2,10 @@ import React from "react";
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
 import { BrowserRouter as Router } from "react-router-dom";
+import LoginForm from "./index";
 
-import Content from "./index";
+let container:any = null;
 
-let container = null;
 beforeEach(() => {
   // setup a DOM element as a render target
   container = document.createElement("div");
@@ -19,15 +19,10 @@ afterEach(() => {
   container = null;
 });
 
-describe("Content Page", () => {
+describe("LoginForm Page", () => {
   it("renders", () => {
     act(() => {
-      render(
-        <Router>
-          <Content />
-        </Router>,
-        container
-      );
+      render(<LoginForm />, container);
     });
   });
 });

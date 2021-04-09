@@ -12,7 +12,7 @@ import { NavItem, NavLink, Nav } from "reactstrap";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
 import './style.css';
-import {SubMenu} from "components";
+import {SubMenu} from "../../components";
 
 type SideBarProps = {
   isOpen: boolean;
