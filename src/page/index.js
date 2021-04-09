@@ -1,3 +1,1 @@
-export {default as ProductPage} from './ProductPage';
-
-
+export { default as Main } from './Main';
