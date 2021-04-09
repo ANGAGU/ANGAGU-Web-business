@@ -5,3 +5,4 @@ export { default as TopBar } from './TopBar';
 export { default as LoginForm } from './LoginForm';
 export { default as ProductTable } from './ProductTable';
 export { default as RegisterBusin } from './RegisterBusin';
+export { default as RegisterBusinForm } from './RegisterBusinForm';
