@@ -1,4 +1,60 @@
 {
-    "extends": "react-app"
+  "env": {
+    "browser": true,
+    "es6": true,
+    "es2020": true,
+    "node": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "eslint:recommended",
+    "airbnb",
+    "airbnb/hooks",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"],
+        "moduleDirectory": ["node_modules", "."]
+      }
+    }
+  },
+  "rules": {
+    "react/jsx-filename-extension": [
+      "warn",
+      { "extensions": [".js", ".jsx", ".tsx"] }
+    ],
+
+    "prettier/prettier": [
+      "warn",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+
+    "arrow-parens": ["warn", "as-needed"],
+    "react/prop-types": ["off"],
+    "no-unused-vars": ["off"],
+    "import/extensions": "off",
+    "import/prefer-default-export": "off",
+    "class-methods-use-this": "off",
+    "no-param-reassign": "off",
+    "no-console": "off",
+    "no-use-before-define": "off",
+    "react-hooks/exhaustive-deps": ["off"],
+    "react/jsx-props-no-spreading": ["off"],
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "react/no-array-index-key": ["warn"],
+    "jsx-a11y/no-static-element-interactions": ["off"],
+    "jsx-a11y/click-events-have-key-events": "off",
+    "react/jsx-curly-brace-presence": "off"
   }
-  
+}
