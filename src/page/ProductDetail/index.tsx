@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Button } from 'reactstrap';
+import { Button } from 'reactstrap';
 import './style.css';
 import { Dummy } from '../../utils';
 
@@ -16,7 +16,7 @@ interface Product {
   createDt: string;
 }
 
-const ProductPage: React.FC = () => {
+const ProductDetail: React.FC = () => {
   const productsTitleList = [
     '',
     '상품 아이디',
@@ -59,21 +59,7 @@ const ProductPage: React.FC = () => {
     </tr>
   ));
 
-  return (
-    <div className="product-page">
-      <div className="x_content">
-        <div className="table-responsive">
-          <Table className="table table-striped jambo_table bulk_action">
-            <thead>
-              <tr className="headings">{productsHeader}</tr>
-            </thead>
-
-            <tbody>{products}</tbody>
-          </Table>
-        </div>
-      </div>
-    </div>
-  );
+  return <div />;
 };
 
-export default ProductPage;
+export default ProductDetail;
