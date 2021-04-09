@@ -4,7 +4,7 @@ import { Container } from 'reactstrap';
 import { Switch, Route } from 'react-router-dom';
 import './style.css';
 import Topbar from '../TopBar';
-import { ProductPage } from '../../page/index';
+import { ProductPage, ProductDetail } from '../../page/index';
 
 type ContentProps = {
   sidebarIsOpen: boolean;
@@ -26,8 +26,8 @@ const Content = ({ sidebarIsOpen, toggleSidebar }: ContentProps) => (
       <Route exact path="/Home-1" component={(): any => 'Home-1'} />
       <Route exact path="/Home-2" component={(): any => 'Home-2'} />
       <Route exact path="/Home-3" component={(): any => 'Home-3'} />
-      <Route exact path="/Product" component={ProductPage} />
-      <Route exact path="/Page-2" component={(): any => 'Page-2'} />
+      <Route exact path="/product" component={ProductPage} />
+      <Route exact path="/product/:idx" component={ProductDetail} />
       <Route exact path="/page-1" component={(): any => 'page-1'} />
       <Route exact path="/page-2" component={(): any => 'page-2'} />
       <Route exact path="/page-3" component={(): any => 'page-3'} />
