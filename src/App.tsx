@@ -1,13 +1,18 @@
-import React from 'react';
-import './App.css';
-import {Main} from './page';
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import "./App.css";
+import { Main, Login } from "./page";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-
-const App:React.FC = () => {
+const App: React.FC = () => {
   return (
-    <Main></Main>
+    <Router>
+      <Switch>
+        <Route exact path="/" component={Login} />
+        <Route path="/Home" component={Main} />
+      </Switch>
+    </Router>
   );
-}
+};
 
 export default App;

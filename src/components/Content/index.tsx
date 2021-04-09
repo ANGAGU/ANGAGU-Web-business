@@ -6,7 +6,7 @@ import './style.css';
 import Topbar from "../TopBar";
 
 type ContentProps = {
-  sidebarIsOpen: Boolean;
+  sidebarIsOpen: boolean;
   toggleSidebar: VoidFunction;
 };
 

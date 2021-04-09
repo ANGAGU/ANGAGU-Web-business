@@ -1,19 +1,21 @@
-a {
+.nav-link {
     color : white;
   }
-  a:link {
+.nav-link:link {
     color : white;
   }
-  a:visited {
+.nav-link:visited {
     color : white;
   }
-  a:hover {
+.nav-link:hover {
     color : white;
   }
-  a:active {
+.nav-link:active {
     color : white
   }
-
+.mr-2 {
+  color : white;
+}
   .sidebar {
     min-width: 250px;
     max-width: 250px;

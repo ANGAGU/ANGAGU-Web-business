@@ -4,6 +4,7 @@ import { Collapse, NavItem, NavLink } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import './style.css';
+
 type SubMenuProps = {
   icon : any,
   title : string,
