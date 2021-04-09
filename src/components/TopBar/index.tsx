@@ -12,6 +12,7 @@ import {
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import './style.css';
+import {RegisterBusin} from '../index';
 
 type TopBarProps = {
   toggleSidebar: VoidFunction;
@@ -34,9 +35,7 @@ const TopBar = ({ toggleSidebar }: TopBarProps) => {
       <Collapse isOpen={topbarIsOpen} navbar>
         <Nav className="ml-auto" navbar>
           <NavItem>
-            <NavLink tag={Link} to="/page-1">
-              page 1
-            </NavLink>
+            <RegisterBusin classname="register" buttonLabel="사업자 등록"/>
           </NavItem>
           <NavItem>
             <NavLink tag={Link} to="/page-2">
@@ -49,8 +48,8 @@ const TopBar = ({ toggleSidebar }: TopBarProps) => {
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink tag={Link} to="/page-4">
-              page 4
+            <NavLink tag={Link} to="/">
+              로그아웃
             </NavLink>
           </NavItem>
         </Nav>

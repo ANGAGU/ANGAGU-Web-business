@@ -25,7 +25,7 @@ const SideBar:React.FC<SideBarProps> = ({ isOpen, toggle }) => (
       <span color="info" onClick={toggle} style={{ color: "#fff" }}>
         &times;
       </span>
-      <h3>안가구</h3>
+      <a href="/Main">안가구</a>
     </div>
     <div className="side-menu">
       <Nav vertical className="list-unstyled pb-3">
