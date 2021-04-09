@@ -23,7 +23,7 @@ const LoginForm:React.FC = () => {
               />
             </FormGroup>
             <div>
-              <a className="reset_pass" href="/Home">
+              <a className="reset_pass" href="/Main">
                 로그인
               </a>&nbsp;&nbsp;&nbsp;&nbsp;
               <a className="reset_pass" href="/">
