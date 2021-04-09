@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
 
-import Login from './index';
+import Login from "./index";
 
-let container = null;
+let container:any = null;
 beforeEach(() => {
   // setup a DOM element as a render target
   container = document.createElement("div");
@@ -18,8 +18,10 @@ afterEach(() => {
   container = null;
 });
 
-it("renders Login Page", () => {
-  act(() => {
-    render(<Login />, container);
+describe("Login Page", () => {
+  it("renders", () => {
+    act(() => {
+      render(<Login />, container);
+    });
   });
 });
