@@ -34,7 +34,7 @@ const TopBar = ({ toggleSidebar }: TopBarProps) => {
       <Collapse isOpen={topbarIsOpen} navbar>
         <Nav className="ml-auto" navbar>
           <NavItem>
-            <NavLink tag={Link} to="./register">
+            <NavLink tag={Link} to="/Main/register">
               사업자 등록 필요
             </NavLink>
           </NavItem>
