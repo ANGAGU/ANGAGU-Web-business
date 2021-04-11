@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as querystring from 'querystring';
 
 const hostId = window.location.hostname.split('.')[0];
-let server = 'https://dev-bapi.angadu.com';
+let server = 'http://localhost:3002';
 
 // set server url
 if (hostId === 'dev') server = 'https://dev-bapi.angadu.com';
