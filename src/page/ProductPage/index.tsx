@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from 'reactstrap';
 import './style.css';
 import { Dummy } from '../../utils';
+import api from '../../api/index';
 
 // 임시
 import testImg from '../../assets/product_test.jpeg';
@@ -13,7 +14,7 @@ interface Product {
   price: string;
   stock: number;
   rate: number;
-  createDt: string;
+  create_time: string;
 }
 
 function ProductPage(): React.ReactElement {
@@ -29,22 +30,29 @@ function ProductPage(): React.ReactElement {
     '',
   ];
   // set state
-  const [productDummyData] = useState(Dummy.makeProducts(10));
-  const [products, setProducts] = useState(Dummy.makeProducts(10));
+  const [products, setProducts] = useState([] as Array<Product>);
 
-  // useEffect(() => {});
+  useEffect(() => {
+    const getProducts = async () => {
+      const result = await api.get('/customer/products', {});
+      if (result.status === 'success') {
+        setProducts(result.data);
+      }
+    };
+    getProducts();
+  }, []);
   const productsHeader = productsTitleList.map(ttl => (
     <th className="column-title">{ttl}</th>
   ));
-  const productList = productDummyData.map((product, index) => (
+  const productList = products.map((product, index) => (
     <tr
-      key={index}
+      key={product.id}
       className={index % 2 === 0 ? 'even pointer' : 'odd pointer'}
     >
       <td className="a-center">
         <input type="checkbox" className="flat" name="table_records" />
       </td>
-      <td className=" ">{index}</td>
+      <td className=" ">{product.id}</td>
       <td className=" ">
         <img className="product__img" alt="" src={testImg} />
       </td>
@@ -52,9 +60,9 @@ function ProductPage(): React.ReactElement {
         {product.name} <i className="success fa fa-long-arrow-up" />
       </td>
       <td className=" ">{product.price}</td>
-      <td className=" ">{product.rate}</td>
+      <td className=" ">{5.0}</td>
       <td className=" ">{product.stock}</td>
-      <td className="a-right a-right ">{product.createDt}</td>
+      <td className="a-right a-right ">{product.create_time}</td>
       <td className="last">
         <Button color="secondary">수정하기</Button>{' '}
       </td>
