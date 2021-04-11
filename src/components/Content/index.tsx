@@ -29,7 +29,7 @@ const Content = ({ sidebarIsOpen, toggleSidebar }: ContentProps) => (
       <Route exact path="/Product" component={ProductPage} />
       <Route exact path="/Page-2" component={(): any => 'Page-2'} />
       <Route exact path="/page-1" component={(): any => 'page-1'} />
-      <Route exact path="/page-2" component={(): any => 'page-2'} />
+      <Route exact path="/page-2" component={ProductPage} />
       <Route exact path="/page-3" component={(): any => 'page-3'} />
       <Route exact path="/page-4" component={(): any => 'page-4'} />
     </Switch>

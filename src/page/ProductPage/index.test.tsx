@@ -5,6 +5,4 @@ describe('Product Page', () => {
     it('renders Product page', () => {
         render(<ProductPage />);
     });
-
-    
 });
