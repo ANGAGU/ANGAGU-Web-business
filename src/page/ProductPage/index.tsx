@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Table, Button } from 'reactstrap';
 import './style.css';
 import { Dummy } from '../../utils';
@@ -54,7 +55,9 @@ const ProductPage: React.FC = () => {
       <td className=" ">{product.stock}</td>
       <td className="a-right a-right ">{product.createDt}</td>
       <td className="last">
-        <Button color="secondary">수정하기</Button>{' '}
+        <Link to="/product/1">
+          <Button color="secondary">수정하기</Button>
+        </Link>
       </td>
     </tr>
   ));

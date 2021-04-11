@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from 'reactstrap';
+import { Container, Row, Col, Button } from 'reactstrap';
 import './style.css';
 import { Dummy } from '../../utils';
 
@@ -17,49 +17,29 @@ interface Product {
 }
 
 const ProductDetail: React.FC = () => {
-  const productsTitleList = [
-    '',
-    '상품 아이디',
-    '이미지',
-    '상품명',
-    '판매가',
-    '별점',
-    '재고',
-    '등록일자',
-    '',
-  ];
   // set state
   const [productDummyData] = useState(Dummy.makeProducts(10));
 
-  const productsHeader = productsTitleList.map(ttl => (
-    <th className="column-title">{ttl}</th>
-  ));
-  const products = productDummyData.map((product, index) => (
-    <tr
-      key={index}
-      className={index % 2 === 0 ? 'even pointer' : 'odd pointer'}
-    >
-      <td className="a-center">
-        <input type="checkbox" className="flat" name="table_records" />
-      </td>
-      <td className=" ">{index}</td>
-      <td className=" ">
-        <img className="product__img" alt="" src={testImg} />
-      </td>
-      <td className=" ">
-        {product.name} <i className="success fa fa-long-arrow-up" />
-      </td>
-      <td className=" ">{product.price}</td>
-      <td className=" ">{product.rate}</td>
-      <td className=" ">{product.stock}</td>
-      <td className="a-right a-right ">{product.createDt}</td>
-      <td className="last">
-        <Button color="secondary">수정하기</Button>{' '}
-      </td>
-    </tr>
-  ));
-
-  return <div />;
+  return (
+    <Container>
+      <Row>
+        <Col xs="5">
+          <div className="product-img">
+            <h4 className="produnct-img__title">상품 이미지</h4>
+            <div className="product-img__content">
+              <div className="content__main">
+                <img className="main-img" src={testImg} alt="" />
+              </div>
+            </div>
+          </div>
+          <div>
+            <h4>상품 3D 모델</h4>
+          </div>
+        </Col>
+        <Col xs="7">fdf</Col>
+      </Row>
+    </Container>
+  );
 };
 
 export default ProductDetail;

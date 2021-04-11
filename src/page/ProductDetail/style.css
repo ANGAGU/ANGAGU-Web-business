@@ -6,3 +6,10 @@
   overflow: hidden;
   white-space: nowrap;
 }
+
+.product-img {
+  height: 50vh;
+}
+.product-img .main-img {
+  width: 90%;
+}
