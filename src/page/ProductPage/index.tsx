@@ -30,11 +30,13 @@ function ProductPage(): React.ReactElement {
   ];
   // set state
   const [productDummyData] = useState(Dummy.makeProducts(10));
+  const [products, setProducts] = useState(Dummy.makeProducts(10));
 
+  // useEffect(() => {});
   const productsHeader = productsTitleList.map(ttl => (
     <th className="column-title">{ttl}</th>
   ));
-  const products = productDummyData.map((product, index) => (
+  const productList = productDummyData.map((product, index) => (
     <tr
       key={index}
       className={index % 2 === 0 ? 'even pointer' : 'odd pointer'}
@@ -68,7 +70,7 @@ function ProductPage(): React.ReactElement {
               <tr className="headings">{productsHeader}</tr>
             </thead>
 
-            <tbody>{products}</tbody>
+            <tbody>{productList}</tbody>
           </table>
         </div>
       </div>
