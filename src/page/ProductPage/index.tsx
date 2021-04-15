@@ -63,19 +63,21 @@ const ProductPage: React.FC = () => {
   ));
 
   return (
-    <div className="product-page">
-      <div className="x_content">
-        <div className="table-responsive">
-          <Table className="table table-striped jambo_table bulk_action">
-            <thead>
-              <tr className="headings">{productsHeader}</tr>
-            </thead>
+    <>
+      <div className="product-page">
+        <div className="x_content">
+          <div className="table-responsive">
+            <Table className="table table-striped jambo_table bulk_action">
+              <thead>
+                <tr className="headings">{productsHeader}</tr>
+              </thead>
 
-            <tbody>{products}</tbody>
-          </Table>
+              <tbody>{products}</tbody>
+            </Table>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

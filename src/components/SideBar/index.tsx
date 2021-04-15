@@ -12,7 +12,7 @@ import { NavItem, NavLink, Nav } from 'reactstrap';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import './style.css';
-import { SubMenu } from '..';
+import { SubMenu } from 'components';
 
 type SideBarProps = {
   isOpen: boolean;
@@ -78,12 +78,12 @@ const submenus = [
   ],
   [
     {
-      title: 'Product',
-      target: '/product',
+      title: 'Page 1',
+      target: 'Page-1',
     },
     {
-      title: 'ProductDetail',
-      target: '/product/1',
+      title: 'Products',
+      target: 'Products',
     },
   ],
 ];
