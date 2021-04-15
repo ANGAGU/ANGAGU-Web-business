@@ -78,12 +78,12 @@ const submenus = [
   ],
   [
     {
-      title: 'Page 1',
-      target: 'Page-1',
+      title: 'ProductDetail',
+      target: '/product/1',
     },
     {
       title: 'Products',
-      target: 'Products',
+      target: '/product',
     },
   ],
 ];

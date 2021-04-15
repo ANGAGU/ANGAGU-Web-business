@@ -6,13 +6,6 @@ import { Main, Login, ProductPage } from './page';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App: React.FC = () => {
-  const test = async () => {
-    const result = await api.get('/customer/products', {});
-    if (result.status === 'success') {
-      console.log(result.data);
-    }
-  };
-  test();
   return (
     <Router>
       <Switch>

@@ -1,1 +1,1 @@
-export {default as Dummy} from './dummy.js';
+export { default as Dummy } from './dummy.js';

@@ -1,10 +1,8 @@
-import React, {useState, useEffect} from 'react';
-import {LoginForm} from 'components';
+import React, { useState, useEffect } from 'react';
+import { LoginForm } from 'components';
 
-const Home:React.FC = () => {
-    return (
-        <LoginForm />
-    )
-}
+const Home: React.FC = () => {
+  return <LoginForm />;
+};
 
 export default Home;
