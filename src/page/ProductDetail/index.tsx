@@ -17,11 +17,11 @@ import testImg from '../../assets/product_test.jpeg';
 
 interface ProductInfo {
   name: string;
-  price: string;
+  price: number;
   stock: number;
   group: string;
   desc: string;
-  descImg: string;
+  descImgUrl: string;
 }
 
 const ProductDetail: React.FC = () => {
@@ -41,14 +41,25 @@ const ProductDetail: React.FC = () => {
   ));
 
   // method
-  const submitProductInfo = () => {
-    alert('submit Data!');
+  const submitProductInfo = (evt: React.FormEvent<EventTarget>) => {
+    evt.preventDefault();
+
+    alert(`submit Data!${submitValue.name}`);
   };
 
   const handleOnChange = (evt: React.FormEvent<HTMLInputElement>) => {
     const target = evt.target as HTMLInputElement;
     tempValue[target.name] = target.value;
-    console.log(tempValue, target.value);
+    setSubmitValue({
+      name: tempValue.name,
+      price: tempValue.price,
+      stock: tempValue.stock,
+      group: tempValue.group,
+      desc: tempValue.desc,
+      descImgUrl: tempValue.descImg,
+    });
+
+    console.log(submitValue);
   };
 
   return (
@@ -65,7 +76,12 @@ const ProductDetail: React.FC = () => {
             <div className="product-img__content">
               <Form>
                 <FormGroup>
-                  <Input type="file" name="productExFile" id="productExFile" />
+                  <Input
+                    type="file"
+                    multiple
+                    name="productExFile"
+                    id="productExFile"
+                  />
                 </FormGroup>
               </Form>
               <div className="content__main">
@@ -131,6 +147,7 @@ const ProductDetail: React.FC = () => {
                 type="textarea"
                 name="desc"
                 id="productDesc"
+                value={submitValue.desc}
                 maxLength={500}
                 placeholder="상품에 대한 간단한 설명을 적어주세요 :)"
               />
