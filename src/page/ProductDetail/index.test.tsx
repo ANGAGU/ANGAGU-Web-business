@@ -62,6 +62,39 @@ describe('Product Page', () => {
         value: testText,
       },
     });
-    expect(input.value).not.toEqual(testText);
+    expect(input.value.length).toBeLessThan(501);
+  });
+
+  it('change multiple input', () => {
+    const { getByLabelText } = render(<ProductDetail />);
+    const nameInput = getByLabelText('상품명') as HTMLInputElement;
+    const priceInput = getByLabelText('상품 가격') as HTMLInputElement;
+    const descInput = getByLabelText('상품 상세 설명') as HTMLTextAreaElement;
+    fireEvent.change(nameInput, {
+      target: {
+        value: '상품 이름 입력 테스트',
+      },
+    });
+    fireEvent.change(priceInput, {
+      target: {
+        value: 30000,
+      },
+    });
+    fireEvent.change(descInput, {
+      target: {
+        value: '상품 상세 설명 입력 테스트',
+      },
+    });
+    const testValue = {
+      name: nameInput.value,
+      price: priceInput.value,
+      desc: descInput.value,
+    };
+    console.log(testValue);
+    expect(testValue).toMatchObject({
+      name: '상품 이름 입력 테스트',
+      price: '30000',
+      desc: '상품 상세 설명 입력 테스트',
+    });
   });
 });
