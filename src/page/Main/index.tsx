@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { SideBar, Content } from '../../components';
 import './style.css';
 
-const App: React.FC = () => {
+const Main: React.FC = () => {
   const [sidebarIsOpen, setSidebarOpen] = useState(true);
   const toggleSidebar = () => setSidebarOpen(!sidebarIsOpen);
 
@@ -14,4 +14,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default Main;
