@@ -27,13 +27,14 @@ interface ProductInfo {
 const ProductDetail: React.FC = () => {
   // state & variable
   const [submitValue, setSubmitValue] = useState({} as ProductInfo);
+  const [descImg, setDescImg] = useState(null as File | null);
+
   const productsGroupList: Array<string> = [
     '폭신폭신 의자',
     '안폭신폭신 의자',
     '물침대',
     '돌침대',
   ];
-  const tempValue = {} as any; // form value 임시 저장
 
   // comp
   const productGroup = productsGroupList.map(group => (
@@ -41,25 +42,33 @@ const ProductDetail: React.FC = () => {
   ));
 
   // method
-  const submitProductInfo = (evt: React.FormEvent<EventTarget>) => {
+  const submitProductInfo = async (evt: React.FormEvent<EventTarget>) => {
     evt.preventDefault();
+    const formData = new FormData();
+
+    formData.append('data', JSON.stringify(submitValue));
+    // formData.append('name', JSON.stringify(submitValue.price));
+    console.log(formData);
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+    };
+
+    // await post(url, formData, config)
 
     alert(`submit Data!${submitValue.name}`);
   };
 
-  const handleOnChange = (evt: React.FormEvent<HTMLInputElement>) => {
-    const target = evt.target as HTMLInputElement;
-    tempValue[target.name] = target.value;
-    setSubmitValue({
-      name: tempValue.name,
-      price: tempValue.price,
-      stock: tempValue.stock,
-      group: tempValue.group,
-      desc: tempValue.desc,
-      descImgUrl: tempValue.descImg,
-    });
+  const handleOnChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = evt.target as HTMLInputElement;
+    setSubmitValue({ ...submitValue, [name]: value });
+  };
 
-    console.log(submitValue);
+  const handleOnChangeImg = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    const files = evt.target.files as FileList;
+    setDescImg(files[0]);
+    handleOnChange(evt);
   };
 
   return (
@@ -148,13 +157,19 @@ const ProductDetail: React.FC = () => {
                 name="desc"
                 id="productDesc"
                 value={submitValue.desc}
+                onChange={handleOnChange}
                 maxLength={500}
                 placeholder="상품에 대한 간단한 설명을 적어주세요 :)"
               />
             </FormGroup>
             <FormGroup>
               <Label for="productDescImg">상품 상세 이미지</Label>
-              <Input type="file" name="descImg" id="productDescImg" />
+              <Input
+                type="file"
+                name="descImgUrl"
+                id="productDescImg"
+                onChange={handleOnChangeImg}
+              />
               <FormText color="muted">
                 상품 상세 설명 이미지를 넣어주세요 :)
               </FormText>
