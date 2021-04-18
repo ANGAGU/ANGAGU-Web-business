@@ -15,6 +15,8 @@ const RegisterBusin:React.FC<RegisterProps> = (props) => {
     classname
   } = props;
 
+  
+
   return (
     <div>
       <Button color="danger" onClick={toggle}>{buttonLabel}</Button>
