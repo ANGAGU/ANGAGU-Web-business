@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './style.css';
 
-function AdjustPage(): React.ReactElement {
+type AdjustPageProps = {
+  isAdmin: boolean;
+};
+const AdjustPage: React.FC<AdjustPageProps> = ({ isAdmin }) => {
   return <></>;
-}
+};
 
 export default AdjustPage;
