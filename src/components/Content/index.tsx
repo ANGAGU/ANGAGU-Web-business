@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { Container } from 'reactstrap';
 import { Switch, Route } from 'react-router-dom';
 import './style.css';
-import Topbar from '../TopBar';
+import Topbar from '../basis/TopBar';
 import { ProductPage } from '../../page/index';
 
 type ContentProps = {
