@@ -4,7 +4,7 @@ import { Container } from 'reactstrap';
 import { Switch, Route } from 'react-router-dom';
 import './style.css';
 import Topbar from '../TopBar';
-import { ProductPage } from '../../page/index';
+import { ProductPage } from '../../../page/index';
 
 type ContentProps = {
   sidebarIsOpen: boolean;
