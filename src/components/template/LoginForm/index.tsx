@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { Link, useRouteMatch } from 'react-router-dom';
 import { Input, Form, FormGroup, Button } from 'reactstrap';
 import './style.css';
 
 const LoginForm: React.FC = () => {
+  const { url } = useRouteMatch();
   return (
     <div className="login_wrapper">
       <div className="animate form login_form">
@@ -30,10 +32,9 @@ const LoginForm: React.FC = () => {
             <div className="separator">
               <p className="change_link">
                 아이디가 없으신가요? &nbsp;
-                <a href="/Signup" className="to_register">
-                  {' '}
-                  회원가입{' '}
-                </a>
+                <Link to={`${url}/Signup`} className="to_register">
+                  회원가입
+                </Link>
               </p>
 
               <div className="clearfix" />

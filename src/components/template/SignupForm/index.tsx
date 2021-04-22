@@ -12,8 +12,8 @@ import {
 } from 'reactstrap';
 import './style.css';
 
-const Signup: React.FC = () => {
+const SignupForm: React.FC = () => {
   return <Container>signup page</Container>;
 };
 
-export default Signup;
+export default SignupForm;
