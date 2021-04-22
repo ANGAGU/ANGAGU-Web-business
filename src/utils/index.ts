@@ -1,2 +1,2 @@
 export { default as Dummy } from './dummy';
-export { default as Validation } from './validation';
+export { isEmail, isPassword, isSame } from './validation';

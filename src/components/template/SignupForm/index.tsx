@@ -10,6 +10,7 @@ import {
   Input,
   FormText,
 } from 'reactstrap';
+import { isEmail, isPassword, isSame } from '../../../utils';
 import './style.css';
 
 type UserInfo = {
@@ -23,9 +24,12 @@ type UserInfo = {
 const SignupForm: React.FC = () => {
   // state & variable
   const [submitValue, setSubmitValue] = useState({} as UserInfo);
+  const [isValid, setIsValid] = useState(false as boolean);
 
   const submitUserInfo = async (evt: React.FormEvent<EventTarget>) => {
     evt.preventDefault();
+
+    // 보내기 전 validation 필요
     const formData = new FormData();
 
     formData.append('data', JSON.stringify(submitValue));
@@ -44,6 +48,7 @@ const SignupForm: React.FC = () => {
 
   const handleOnChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = evt.target as HTMLInputElement;
+    console.log(name, value);
     setSubmitValue({ ...submitValue, [name]: value });
   };
 
@@ -61,7 +66,14 @@ const SignupForm: React.FC = () => {
               name="email"
               id="userEmail"
               value={submitValue.email}
-              onChange={handleOnChange}
+              onChange={evt => {
+                if (!isEmail(evt.target.value)) {
+                  console.log('이메일 형식이 올바르지 않습니다.');
+                } else {
+                  console.log('이메일 가능가능~');
+                }
+                handleOnChange(evt);
+              }}
               placeholder="이메일을 적어주세요."
             />
           </FormGroup>
@@ -72,7 +84,14 @@ const SignupForm: React.FC = () => {
               name="password"
               id="userPassword"
               value={submitValue.password}
-              onChange={handleOnChange}
+              onChange={evt => {
+                if (!isPassword(evt.target.value)) {
+                  console.log('비밀번호 형식이 올바르지 않습니다.');
+                } else {
+                  console.log('비번 가능가능~');
+                }
+                handleOnChange(evt);
+              }}
               placeholder="비밀번호를 적어주세요."
             />
           </FormGroup>
@@ -83,8 +102,15 @@ const SignupForm: React.FC = () => {
               name="passwordConfirm"
               id="userPasswordConfirm"
               value={submitValue.passwordConfirm}
-              onChange={handleOnChange}
-              placeholder="비밀번호를 적어주세요."
+              onChange={evt => {
+                if (!isSame(evt.target.value, submitValue.password)) {
+                  console.log('비밀번호가 다릅니다.');
+                } else {
+                  console.log('비번 가능가능~');
+                }
+                handleOnChange(evt);
+              }}
+              placeholder="비밀번호를 한번 더 적어주세요."
             />
           </FormGroup>
           <FormGroup>
