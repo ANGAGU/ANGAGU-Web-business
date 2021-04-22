@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Table, Button } from 'reactstrap';
 import './style.css';
-import { Dummy } from '../../utils';
+import { Dummy } from '../../../utils';
 
 // 임시
-import testImg from '../../assets/product_test.jpeg';
+import testImg from '../../../assets/product_test.jpeg';
 
 interface Product {
   id: number;

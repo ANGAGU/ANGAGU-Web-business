@@ -16,7 +16,7 @@ const LoginForm: React.FC = () => {
               <Input type="password" placeholder="패스워드" />
             </FormGroup>
             <div>
-              <a className="reset_pass" href="/Home">
+              <a className="reset_pass" href="/Main">
                 로그인
               </a>
               &nbsp;&nbsp;&nbsp;&nbsp;
