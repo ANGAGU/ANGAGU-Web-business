@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import api from './api/index';
 import './App.css';
-import { Main, Login, ProductPage } from './page';
+import { Main, Login, ProductPage, Signup } from './page';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App: React.FC = () => {
@@ -17,6 +17,7 @@ const App: React.FC = () => {
     <Router>
       <Switch>
         <Route exact path="/" component={Login} />
+        <Route exact path="/Signup" component={Signup} />
         <Route path="/Home" component={Main} />
         <Route path="/Products" component={ProductPage} />
       </Switch>

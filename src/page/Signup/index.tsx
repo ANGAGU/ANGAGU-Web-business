@@ -13,7 +13,7 @@ import {
 import './style.css';
 
 const Signup: React.FC = () => {
-  return <Container />;
+  return <Container>signup page</Container>;
 };
 
 export default Signup;
