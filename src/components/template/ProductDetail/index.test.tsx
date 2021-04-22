@@ -1,4 +1,4 @@
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, waitForElement } from '@testing-library/react';
 import ProductDetail from './index';
 
 describe('Product Page', () => {
@@ -96,5 +96,25 @@ describe('Product Page', () => {
       price: '30000',
       desc: '상품 상세 설명 입력 테스트',
     });
+  });
+
+  it('test 3d model product input', async () => {
+    const { getByLabelText, getByText, getByAltText } = render(
+      <ProductDetail />,
+    );
+    const file = new File(['testing(⌐□_□)'], 'test.obj');
+    const imageInput = getByLabelText('상품 3D 모델') as HTMLInputElement;
+    fireEvent.change(imageInput, { target: { files: [file] } });
+
+    await waitForElement(() => getByAltText('image-preview'));
+    const data = getByAltText('image-preview') as HTMLInputElement;
+    const dataURL = data.src;
+    expect(dataURL).toMatchSnapshot(
+      'data url in the image-preview src for this string: "testing(⌐□_□)"',
+    );
+
+    // ensure the form is submittable
+    const imageSubmit = getByText('상품 3D 모델') as HTMLInputElement;
+    expect(imageSubmit.type).toBe('submit');
   });
 });
