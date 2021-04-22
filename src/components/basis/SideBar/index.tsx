@@ -79,11 +79,11 @@ const submenus = [
   [
     {
       title: 'ProductDetail',
-      target: '/Product/1',
+      target: '/Main/Product/1',
     },
     {
       title: 'Products',
-      target: '/Product',
+      target: '/Main/Product',
     },
   ],
 ];

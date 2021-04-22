@@ -13,7 +13,7 @@ import {
 import './style.css';
 
 // 임시
-import testImg from '../../assets/product_test.jpeg';
+import testImg from '../../../assets/product_test.jpeg';
 
 interface ProductInfo {
   name: string;
