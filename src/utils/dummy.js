@@ -19,6 +19,21 @@ const Dummy = {
 
     return tempArr;
   },
+  makeAdjusts: num => {
+    const chance = new Chance();
+
+    const tempArr = [];
+    for (let i = 0; i < num; i += 1) {
+      tempArr.push({
+        profit: chance.dollar(),
+        state: '정산완료',
+        term: `${chance.date().toDateString()}~${chance.date().toDateString()}`,
+        adjustDate: chance.date().toDateString(),
+      });
+    }
+
+    return tempArr;
+  },
 };
 
 export default Dummy;
