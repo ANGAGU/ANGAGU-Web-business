@@ -12,11 +12,7 @@ import { NavItem, NavLink, Nav } from 'reactstrap';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import './style.css';
-<<<<<<< HEAD:src/components/SideBar/index.tsx
-import {SubMenu} from "../index";
-=======
 import { SubMenu } from 'components';
->>>>>>> dev:src/components/basis/SideBar/index.tsx
 
 type SideBarProps = {
   isOpen: boolean;
@@ -86,13 +82,8 @@ const submenus = [
       target: 'Page-1',
     },
     {
-<<<<<<< HEAD:src/components/SideBar/index.tsx
-      title: "Products",
-      target: "./Products",
-=======
       title: 'Products',
       target: 'Products',
->>>>>>> dev:src/components/basis/SideBar/index.tsx
     },
   ],
 ];
