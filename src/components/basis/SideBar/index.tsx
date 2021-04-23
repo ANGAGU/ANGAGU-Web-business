@@ -68,8 +68,8 @@ const submenus = [
       target: 'Home-1',
     },
     {
-      title: 'Home 2',
-      target: 'Home-2',
+      title: 'Adjusts',
+      target: '/Main/Adjust',
     },
     {
       itle: 'Home 3',
