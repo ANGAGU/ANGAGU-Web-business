@@ -1,3 +1,4 @@
+import api from 'api';
 import React, { useState, useEffect } from 'react';
 import { Table, Button } from 'reactstrap';
 import { Dummy } from 'utils';
@@ -23,6 +24,12 @@ const AdjustPage: React.FC<AdjustPageProps> = ({ isAdmin }) => {
     '정산상태',
     '정산요청',
   ];
+
+  // methods
+  const requestAdjust = async () => {
+    // const result = api.post('send adjust api', {});
+  };
+
   const adjustHeader = adjustTitleList.map(ttl => (
     <th className="column-title">{ttl}</th>
   ));
@@ -42,7 +49,9 @@ const AdjustPage: React.FC<AdjustPageProps> = ({ isAdmin }) => {
       <td className=" ">{adjust.profit}</td>
       <td className=" ">{adjust.state}</td>
       <td className="last">
-        <Button color="secondary">정산요청</Button>
+        <Button color="secondary" onClick={requestAdjust}>
+          정산요청
+        </Button>
       </td>
     </tr>
   ));
