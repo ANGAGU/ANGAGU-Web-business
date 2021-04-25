@@ -1,28 +1,18 @@
-table {
-  width: 100%;
-  margin-bottom: 8px;
+.signup-form {
   text-align: center;
+  padding: 50px 0;
 }
-.table th {
-  line-height: 60px;
+.form-content {
+  text-align: left;
 }
-.table td {
-  line-height: 70px;
+.form-btn {
+  text-align: center;
+  padding: 10px 15px 0px 15px;
 }
-.table td,
-.table th {
-  padding: 0 16px;
-  border-top: none;
-  border-bottom: 1px solid gainsboro;
+.form-btn__login {
+  color: darkgray;
 }
-
-.product-page {
-  margin: 50px 20px;
-}
-.product__img {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 70px;
-  height: 70px;
+.form-btn__login:hover {
+  color: gray;
+  text-decoration: none;
 }
