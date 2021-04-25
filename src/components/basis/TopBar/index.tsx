@@ -19,7 +19,9 @@ type TopBarProps = {
 const TopBar = ({ toggleSidebar }: TopBarProps) => {
   const [topbarIsOpen, setTopbarOpen] = useState(true);
   const toggleTopbar = () => setTopbarOpen(!topbarIsOpen);
-
+  const Logout= (e:any) => {
+    window.localStorage.setItem('', "");
+  }
   return (
     <Navbar
       color="light"
@@ -34,8 +36,8 @@ const TopBar = ({ toggleSidebar }: TopBarProps) => {
       <Collapse isOpen={topbarIsOpen} navbar>
         <Nav className="ml-auto" navbar>
           <NavItem>
-            <NavLink tag={Link} to="/page-1">
-              page 1
+            <NavLink tag={Link} to="/Main/register">
+              사업자 등록 필요
             </NavLink>
           </NavItem>
           <NavItem>
@@ -49,9 +51,9 @@ const TopBar = ({ toggleSidebar }: TopBarProps) => {
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink tag={Link} to="/page-4">
-              page 4
-            </NavLink>
+            <Button onClick={Logout}>
+              로그아웃
+            </Button>
           </NavItem>
         </Nav>
       </Collapse>
