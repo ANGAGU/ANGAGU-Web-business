@@ -1,5 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 import './App.css';
 import { SignupForm } from 'components/template';
 import { Main, Login } from './page';
@@ -9,10 +14,27 @@ const App: React.FC = () => {
   return (
     <Router>
       <Switch>
-        <Route exact path="/Login" component={Login} />
-        {/* 임시 */}
-        <Route exact path="/Login/Signup" component={SignupForm} />
+        <Route path="/Login" component={Login} />
+
         <Route path="/Main" component={Main} />
+        <Route
+          path="/"
+          render={() =>
+            0 ? (
+              <Redirect
+                to={{
+                  pathname: '/Main',
+                }}
+              />
+            ) : (
+              <Redirect
+                to={{
+                  pathname: '/Login',
+                }}
+              />
+            )
+          }
+        />
       </Switch>
     </Router>
   );

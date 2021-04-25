@@ -6,8 +6,8 @@ const Login: React.FC = () => {
   const { path } = useRouteMatch();
   return (
     <>
-      <Route exact path={`${path}`} component={LoginForm} />
       <Route exact path={`${path}/Signup`} component={SignupForm} />
+      <Route exact path={`${path}`} component={LoginForm} />
     </>
   );
 };
