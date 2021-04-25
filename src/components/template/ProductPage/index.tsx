@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from 'reactstrap';
 import './style.css';
-import api from '../../../api';
 import { Dummy } from '../../../utils';
+import api from '../../../api';
 
 // 임시
 import testImg from '../../../assets/product_test.jpeg';
@@ -14,6 +14,7 @@ interface Product {
   price: string;
   stock: number;
   rate: number;
+  // eslint-disable-next-line camelcase
   create_time: string;
 }
 

@@ -1,8 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { Input, Form, FormGroup, Button } from 'reactstrap';
 import './style.css';
+import { useHistory } from 'react-router-dom';
+import api from '../../../api';
 
 const LoginForm: React.FC = () => {
+  const [id, setId] = useState('');
+  const [pw, setPw] = useState('');
+  const history = useHistory();
+
+  const getLogin = async () => {
+    const result = await api.post('/customer/login', {
+      email: id,
+      password: pw,
+    });
+    if (result.status === 'success') {
+      alert('로그인 성공');
+      history.push('/');
+    } else {
+      console.log(result);
+    }
+  };
   return (
     <div className="login_wrapper">
       <div className="animate form login_form">
@@ -10,13 +28,28 @@ const LoginForm: React.FC = () => {
           <Form>
             <h1>Login Form</h1>
             <FormGroup>
-              <Input type="text" id="email" placeholder="아이디" />
+              <Input
+                type="text"
+                value={id}
+                id="email"
+                placeholder="아이디"
+                onChange={e => {
+                  setId(`${e.target.value}`);
+                }}
+              />
             </FormGroup>
             <FormGroup>
-              <Input type="password" placeholder="패스워드" />
+              <Input
+                type="password"
+                value={pw}
+                placeholder="패스워드"
+                onChange={e => {
+                  setPw(`${e.target.value}`);
+                }}
+              />
             </FormGroup>
             <div>
-              <a className="reset_pass" href="/Main">
+              <a className="reset_pass" href="/Main" onClick={getLogin}>
                 로그인
               </a>
               &nbsp;&nbsp;&nbsp;&nbsp;
