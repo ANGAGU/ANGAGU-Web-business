@@ -2,12 +2,13 @@
   display: flex;
   width: 100%;
   align-items: stretch;
+  overflow-y: hidden;
+  margin: 0 0 0 0;
 }
 
-@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+@import 'https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700';
 
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   background: #fafafa;
 }
-
