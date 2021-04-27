@@ -1,28 +1,36 @@
-import { fireEvent, render } from '@testing-library/react';
+import { act, fireEvent, render } from '@testing-library/react';
 import Signup from './index';
+import { isEmail, isPassword, isSame } from '../../../utils';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 describe('Signup Page', () => {
   it('renders signup page', () => {
-    render(<Signup />);
+    render(
+      <Router>
+        <Signup />
+      </Router>,
+    );
   });
-  it('change user name input', () => {
-    const { getByLabelText } = render(<Signup />);
-    const input = getByLabelText('이름') as HTMLInputElement;
+  it('change user company name input', () => {
+    const { getByLabelText } = render(
+      <Router>
+        <Signup />
+      </Router>,
+    );
+    const input = getByLabelText('회사명') as HTMLInputElement;
     fireEvent.change(input, {
       target: {
-        value: '이름 입력 테스트',
+        value: '이름이름',
       },
     });
-    expect(input.value).toBe('이름 입력 테스트');
+    expect(input.value).toBe('이름이름');
   });
-
-  it('validate name checking function', () => {
-    const el = render(<Signup />);
-    expect(el.checkNameValue('박 영')).toBe(false);
-  });
-
   it('change user email input', () => {
-    const { getByLabelText } = render(<Signup />);
+    const { getByLabelText } = render(
+      <Router>
+        <Signup />
+      </Router>,
+    );
     const input = getByLabelText('이메일') as HTMLInputElement;
     fireEvent.change(input, {
       target: {
@@ -33,12 +41,19 @@ describe('Signup Page', () => {
   });
 
   it('validate email checking function', () => {
-    const el = render(<Signup />);
-    expect(el.checkEmailValue('test.test.com')).toBe(false);
+    expect(isEmail('test.test.com')).toBe(false);
+  });
+
+  it('validate email checking function', () => {
+    expect(isEmail('test@test.com')).toBe(true);
   });
 
   it('change password input', () => {
-    const { getByLabelText } = render(<Signup />);
+    const { getByLabelText } = render(
+      <Router>
+        <Signup />
+      </Router>,
+    );
     const input = getByLabelText('비밀번호') as HTMLInputElement;
     fireEvent.change(input, {
       target: {
@@ -49,7 +64,11 @@ describe('Signup Page', () => {
   });
 
   it('change checking password input', () => {
-    const { getByLabelText } = render(<Signup />);
+    const { getByLabelText } = render(
+      <Router>
+        <Signup />
+      </Router>,
+    );
     const input = getByLabelText('비밀번호 확인') as HTMLInputElement;
     fireEvent.change(input, {
       target: {
@@ -60,18 +79,33 @@ describe('Signup Page', () => {
   });
 
   it('validate password checking function', () => {
-    const el = render(<Signup />);
-    expect(el.checkPasswordValue('password1!', 'password!')).toBe(false);
+    expect(isPassword('password')).toBe(false);
   });
 
-  it('change user birthday input', () => {
-    const { getByLabelText } = render(<Signup />);
-    const input = getByLabelText('생년월일') as HTMLTextAreaElement;
+  it('validate password checking function', () => {
+    expect(isPassword('password1')).toBe(true);
+  });
+
+  it('check both passwords are same', () => {
+    expect(isSame('password1!', 'password!')).toBe(false);
+  });
+
+  it('check both passwords are same', () => {
+    expect(isSame('password1', 'password1')).toBe(true);
+  });
+
+  it('change user phone number input', () => {
+    const { getByLabelText } = render(
+      <Router>
+        <Signup />
+      </Router>,
+    );
+    const input = getByLabelText('휴대폰') as HTMLTextAreaElement;
     fireEvent.change(input, {
       target: {
-        value: '1998-04-19',
+        value: '010-0000-0000',
       },
     });
-    expect(input.value).toBe('1998-04-19');
+    expect(input.value).toBe('010-0000-0000');
   });
 });

@@ -18,7 +18,6 @@ const LoginForm: React.FC = () => {
     });
     if (result.status === 'success') {
       alert('로그인 성공');
-      history.push('/');
     } else {
       console.log(result);
     }
