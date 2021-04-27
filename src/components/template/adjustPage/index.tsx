@@ -1,6 +1,6 @@
 import api from 'api';
 import React, { useState, useEffect } from 'react';
-import { Table, Button } from 'reactstrap';
+import { Table, Button, Container, Row, Col, Input } from 'reactstrap';
 import { Dummy } from 'utils';
 import './style.css';
 
@@ -15,7 +15,7 @@ type Adjust = {
   profit: string;
 };
 const AdjustPage: React.FC<AdjustPageProps> = ({ isAdmin }) => {
-  const [adjustDummyData] = useState(Dummy.makeAdjusts(10) as Array<Adjust>);
+  const [adjustDummyData] = useState(Dummy.makeAdjusts(1) as Array<Adjust>);
   const adjustTitleList = [
     '',
     '정산번호',
@@ -23,6 +23,20 @@ const AdjustPage: React.FC<AdjustPageProps> = ({ isAdmin }) => {
     '총매출',
     '수수료',
     '최종정산금액',
+  ];
+  const monthList = [
+    '1월',
+    '2월',
+    '3월',
+    '4월',
+    '5월',
+    '6월',
+    '7월',
+    '8월',
+    '9월',
+    '10월',
+    '11월',
+    '12월',
   ];
 
   // methods
@@ -33,6 +47,9 @@ const AdjustPage: React.FC<AdjustPageProps> = ({ isAdmin }) => {
   const adjustHeader = adjustTitleList.map(ttl => (
     <th className="column-title">{ttl}</th>
   ));
+
+  // 추후 기간 검색 결과로 한줄만 띄울 예정
+  // 아래 상세 목록 토글 추가? => 여유될 경우
   const adjusts = adjustDummyData.map((adjust, index) => (
     <tr
       key={index}
@@ -51,21 +68,48 @@ const AdjustPage: React.FC<AdjustPageProps> = ({ isAdmin }) => {
     </tr>
   ));
 
+  const monthOptions = monthList.map((month, index) => (
+    <option key={index}>{month}</option>
+  ));
+
   return (
     <>
-      <div className="adjust-page">
-        <div className="x_content">
-          <div className="table-responsive">
-            <Table className="table table-striped jambo_table bulk_action">
-              <thead>
-                <tr className="headings">{adjustHeader}</tr>
-              </thead>
-
-              <tbody>{adjusts}</tbody>
-            </Table>
+      <Container className="adjust-page">
+        <div className="adjust-filter">
+          <h5> 검색 </h5>
+          <div className="filter-form">
+            {isAdmin ? (
+              <div className="filter-form__content">
+                <span className="content__ttl">회사명</span>
+                <span>
+                  <Input type="select" name="month" id="filter-month">
+                    {monthOptions}
+                  </Input>
+                </span>
+              </div>
+            ) : (
+              <></>
+            )}
+            <div className="filter-form__content">
+              <span className="content__ttl">정산 일자</span>
+              <span>
+                <Input type="select" name="month" id="filter-month">
+                  {monthOptions}
+                </Input>
+              </span>
+            </div>
           </div>
         </div>
-      </div>
+        <div>
+          <Table className="table table-striped jambo_table bulk_action">
+            <thead>
+              <tr className="headings">{adjustHeader}</tr>
+            </thead>
+
+            <tbody>{adjusts}</tbody>
+          </Table>
+        </div>
+      </Container>
     </>
   );
 };

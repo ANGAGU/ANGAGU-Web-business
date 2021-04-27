@@ -1,0 +1,17 @@
+.adjust-filter {
+  margin-bottom: 20px;
+}
+.filter-form,
+.filter-form__content {
+  display: flex;
+}
+.filter-form__content {
+  margin-right: 30px;
+}
+
+.filter-form__content .content__ttl {
+  margin-right: 10px;
+}
+#filter-month {
+  width: 100px;
+}

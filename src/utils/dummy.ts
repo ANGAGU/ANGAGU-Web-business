@@ -19,7 +19,7 @@ const Dummy = {
 
     return tempArr;
   },
-  makeAdjusts: num => {
+  makeAdjusts: (num: number) => {
     const chance = new Chance();
 
     const tempArr = [];
