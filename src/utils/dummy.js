@@ -25,10 +25,11 @@ const Dummy = {
     const tempArr = [];
     for (let i = 0; i < num; i += 1) {
       tempArr.push({
-        profit: chance.dollar(),
-        state: '정산완료',
+        id: chance.integer({ min: 0, max: 100 }),
         term: `${chance.date().toDateString()}~${chance.date().toDateString()}`,
-        adjustDate: chance.date().toDateString(),
+        profit: chance.dollar(),
+        totalRevenue: chance.dollar(),
+        fee: chance.dollar(),
       });
     }
 

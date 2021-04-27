@@ -8,21 +8,21 @@ type AdjustPageProps = {
   isAdmin: boolean;
 };
 type Adjust = {
+  id: number;
   term: string;
-  adjustDate: string;
-  state: string;
+  fee: string;
+  totalRevenue: string;
   profit: string;
 };
 const AdjustPage: React.FC<AdjustPageProps> = ({ isAdmin }) => {
   const [adjustDummyData] = useState(Dummy.makeAdjusts(10) as Array<Adjust>);
   const adjustTitleList = [
     '',
-    '분기',
+    '정산번호',
     '기간',
-    '정산날짜',
-    '매출',
-    '정산상태',
-    '정산요청',
+    '총매출',
+    '수수료',
+    '최종정산금액',
   ];
 
   // methods
@@ -41,18 +41,13 @@ const AdjustPage: React.FC<AdjustPageProps> = ({ isAdmin }) => {
       <td className="a-center">
         <input type="checkbox" className="flat" name="table_records" />
       </td>
-      <td className=" ">{`${index}분기`}</td>
+      <td className=" ">{`${adjust.id}`}</td>
+      <td className=" ">{`${adjust.term}`}</td>
       <td className=" ">
-        {adjust.term} <i className="success fa fa-long-arrow-up" />
+        {adjust.totalRevenue} <i className="success fa fa-long-arrow-up" />
       </td>
-      <td className=" ">{adjust.adjustDate}</td>
+      <td className=" ">{adjust.fee}</td>
       <td className=" ">{adjust.profit}</td>
-      <td className=" ">{adjust.state}</td>
-      <td className="last">
-        <Button color="secondary" onClick={requestAdjust}>
-          정산요청
-        </Button>
-      </td>
     </tr>
   ));
 
