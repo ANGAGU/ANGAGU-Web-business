@@ -2,31 +2,56 @@ import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import { BrowserRouter as Router } from 'react-router-dom';
-import Main from './index';
+import { faHome } from '@fortawesome/free-solid-svg-icons';
+
+import SubMenu from './index';
 
 let container: HTMLElement;
-// eslint-disable-next-line no-undef
+const submenus = [
+  [
+    {
+      title: 'Home 1',
+      target: 'Home-1',
+    },
+    {
+      title: 'Home 2',
+      target: 'Home-2',
+    },
+    {
+      itle: 'Home 3',
+      target: 'Home-3',
+    },
+  ],
+  [
+    {
+      title: 'Page 1',
+      target: 'Page-1',
+    },
+    {
+      title: 'Page 2',
+      target: 'Page-2',
+    },
+  ],
+];
+
 beforeEach(() => {
   // setup a DOM element as a render target
   container = document.createElement('div');
   document.body.appendChild(container);
 });
 
-// eslint-disable-next-line no-undef
 afterEach(() => {
   // cleanup on exiting
   unmountComponentAtNode(container);
   container.remove();
 });
 
-// eslint-disable-next-line no-undef
-describe('Main Page', () => {
-  // eslint-disable-next-line no-undef
+describe('SubMenu Page', () => {
   it('renders', () => {
     act(() => {
       render(
         <Router>
-          <Main />
+          <SubMenu title="Home" icon={faHome} items={submenus[0]} />
         </Router>,
         container,
       );
