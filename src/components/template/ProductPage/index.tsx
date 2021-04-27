@@ -15,7 +15,6 @@ interface Product {
   price: string;
   stock: number;
   rate: number;
-  // eslint-disable-next-line camelcase
   create_time: string;
 }
 
@@ -32,17 +31,19 @@ const ProductPage: React.FC = () => {
     '',
   ];
   // set state
-  const [products, setProducts] = useState([] as Array<Product>);
 
-  useEffect(() => {
-    const getProducts = async () => {
-      const result = await api.get('/customer/products', {});
-      if (result.status === 'success') {
-        setProducts(result.data);
-      }
-    };
-    getProducts();
-  }, []);
+  const [products, setProducts] = useState(Dummy.makeProducts(10));
+  // for api data binding
+  // const [products, setProducts] = useState([] as Array<Product>);
+  // useEffect(() => {
+  //   const getProducts = async () => {
+  //     const result = await api.get('/customer/products', {});
+  //     if (result.status === 'success') {
+  //       setProducts(result.data);
+  //     }
+  //   };
+  //   getProducts();
+  // }, []);
   const productsHeader = productsTitleList.map(ttl => (
     <th className="column-title">{ttl}</th>
   ));
