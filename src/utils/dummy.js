@@ -13,7 +13,7 @@ const Dummy = {
         price: chance.dollar(),
         stock: chance.integer({ min: 0, max: 100 }),
         rate: chance.floating({ min: 0, max: 5, fixed: 1 }),
-        createDt: chance.date().toDateString(),
+        create_time: chance.date().toDateString(),
       });
     }
 
