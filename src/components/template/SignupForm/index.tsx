@@ -55,13 +55,13 @@ const SignupForm: React.FC = () => {
 
   return (
     <Container className="signup-form">
-      <Row>
-        <Col md={{ size: 5, offset: 3 }}>
+      <Row className="signup-form__row">
+        <Col md={{ size: 5 }}>
           <h2>회원가입</h2>
         </Col>
       </Row>
-      <Row>
-        <Col className="form-content" md={{ size: 5, offset: 3 }}>
+      <Row className="signup-form__row">
+        <Col className="form-content" md={{ size: 5 }}>
           <Form id="signup" onSubmit={submitUserInfo}>
             <FormGroup>
               <Label for="userEmail">이메일</Label>
@@ -190,7 +190,7 @@ const SignupForm: React.FC = () => {
               >
                 안오구에 회원가입 하기
               </Button>
-              <Col className="form-btn" md={{ size: 6, offset: 3 }}>
+              <Col className="form-btn">
                 <Link className="form-btn__login" to="/Login">
                   로그인으로 돌아가기
                 </Link>

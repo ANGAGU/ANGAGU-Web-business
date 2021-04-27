@@ -1,6 +1,9 @@
 .signup-form {
-  text-align: center;
   padding: 50px 0;
+  text-align: center;
+}
+.signup-form__row {
+  justify-content: center;
 }
 .form-content {
   text-align: left;
@@ -11,6 +14,7 @@
 }
 .form-btn__login {
   color: darkgray;
+  font-size: 14px;
 }
 .form-btn__login:hover {
   color: gray;
