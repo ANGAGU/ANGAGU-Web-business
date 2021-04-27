@@ -82,8 +82,8 @@ const submenus = [
       target: '/Main/Product/1',
     },
     {
-      title: 'Products',
-      target: '/Main/Products',
+      title: 'Product',
+      target: '/Main/Product',
     },
   ],
 ];
