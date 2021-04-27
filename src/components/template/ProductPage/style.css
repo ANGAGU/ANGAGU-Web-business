@@ -18,6 +18,7 @@ table {
 
 .product-page {
   margin: 50px 20px;
+  overflow-x: scroll;
 }
 .product__img {
   display: flex;

@@ -57,6 +57,7 @@
     "jsx-a11y/click-events-have-key-events": "off",
     "react/jsx-curly-brace-presence": "off",
     "@typescript-eslint/no-var-requires": "off",
+    "camelcase": "off",
     "react/react-in-jsx-scope": "off"
   }
 }

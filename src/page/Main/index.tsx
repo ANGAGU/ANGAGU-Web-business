@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { SideBar, Content } from "../../components";
-import "./style.css";
+import React, { useState } from 'react';
+import { SideBar, Content } from '../../components';
+import './style.css';
 
 const App: React.FC = () => {
   const [sidebarIsOpen, setSidebarOpen] = useState(true);
