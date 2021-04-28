@@ -10,7 +10,7 @@ import {
   NavItem,
   NavLink,
 } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 import './style.css';
 
 type TopBarProps = {
@@ -19,9 +19,10 @@ type TopBarProps = {
 const TopBar = ({ toggleSidebar }: TopBarProps) => {
   const [topbarIsOpen, setTopbarOpen] = useState(true);
   const toggleTopbar = () => setTopbarOpen(!topbarIsOpen);
-  const Logout= (e:any) => {
-    window.localStorage.setItem('', "");
-  }
+  const Logout = (e: any) => {
+    window.localStorage.setItem('', '');
+  };
+  const { path } = useRouteMatch();
   return (
     <Navbar
       color="light"
@@ -36,7 +37,7 @@ const TopBar = ({ toggleSidebar }: TopBarProps) => {
       <Collapse isOpen={topbarIsOpen} navbar>
         <Nav className="ml-auto" navbar>
           <NavItem>
-            <NavLink tag={Link} to="/Main/register">
+            <NavLink tag={Link} to={`${path}/Register`}>
               사업자 등록 필요
             </NavLink>
           </NavItem>
@@ -51,9 +52,7 @@ const TopBar = ({ toggleSidebar }: TopBarProps) => {
             </NavLink>
           </NavItem>
           <NavItem>
-            <Button onClick={Logout}>
-              로그아웃
-            </Button>
+            <Button onClick={Logout}>로그아웃</Button>
           </NavItem>
         </Nav>
       </Collapse>

@@ -11,7 +11,10 @@ import {
 } from 'reactstrap';
 import './style.css';
 
-const RegisterBusin: React.FC = () => {
+const RegisterBusin: React.FC = (props:any) => {
+  useEffect(() => {
+    console.log(props);
+  }, []);
   return (
     <Jumbotron>
       <Form>
