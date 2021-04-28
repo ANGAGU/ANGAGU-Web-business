@@ -1,7 +1,8 @@
 import api from 'api';
 import React, { useState, useEffect } from 'react';
-import { Table, Button, Container, Row, Col, Input } from 'reactstrap';
+import { Table, Container, Input } from 'reactstrap';
 import { Dummy } from 'utils';
+import { CompanyFilter } from '../../molecules';
 import { adjustTitleList, monthList } from '../../../commons/constants/string';
 import './style.css';
 
@@ -67,6 +68,7 @@ const AdjustPage: React.FC<AdjustPageProps> = ({ isAdmin }) => {
             ) : (
               <></>
             )}
+            <CompanyFilter isAdmin={false} />
             <div className="filter-form__content">
               <span className="content__ttl">정산 일자</span>
               <span>

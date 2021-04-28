@@ -8,17 +8,11 @@ import './style.css';
 type CompanyFilterProps = {
   isAdmin: boolean;
 };
-type Adjust = {
-  id: number;
-  term: string;
-  fee: string;
-  totalRevenue: string;
-  profit: string;
-};
 const CompanyFilter: React.FC<CompanyFilterProps> = ({ isAdmin }) => {
   const [company, setCompany] = useState('' as string);
   // const [companyList, setCompanyList] = useState([] as Array<string>);
   const [filteredList, setFilteredList] = useState([] as Array<string>);
+  const [viewList, setViewList] = useState(false as boolean);
 
   // 임시
   const companyList = [
@@ -39,29 +33,55 @@ const CompanyFilter: React.FC<CompanyFilterProps> = ({ isAdmin }) => {
   ];
 
   // methods
-  const requestAdjust = async () => {
+
+  useEffect(() => {
+    requestCompanies();
+  });
+  const requestCompanies = async () => {
     // const result = api.post('send adjust api', {});
   };
 
   const handleOnChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = evt.target as HTMLInputElement;
-    const result = companyList.filter(name => name.includes(value));
-    setFilteredList(result);
-  };
+    setCompany(value);
 
+    const result = companyList.filter(name => name.includes(value));
+    console.log(result);
+    if (result.length === 0) setFilteredList(['검색결과가 없습니다.']);
+    else setFilteredList(result);
+  };
+  const selectCompany = (value: string) => {
+    console.log(value);
+  };
   return (
     <div className="filter-form__content">
       <span className="content__ttl">회사명</span>
-      <span>
+      <div className="content__input">
         <Input
+          autoComplete="off"
           type="text"
           name="companyName"
           id="filter__company-name"
           value={company}
           onChange={handleOnChange}
+          onFocus={() => setViewList(true)}
+          onBlur={() => setTimeout(() => setViewList(false), 100)}
         />
-      </span>
-      {filteredList}
+        <ul className={viewList ? 'result-list' : 'result-list--hiddem'}>
+          {filteredList.map((el, index) => (
+            <li
+              className={
+                filteredList.length !== index + 1
+                  ? 'result-list__item'
+                  : 'result-list__item result-list__item--last'
+              }
+              onClick={() => selectCompany(el)}
+            >
+              {el}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

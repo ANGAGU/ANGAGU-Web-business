@@ -15,3 +15,41 @@
 #filter-month {
   width: 100px;
 }
+.content__input {
+  position: relative;
+}
+
+/* :focus로 해결해도 될듯 */
+.content__input .result-list--hiddem {
+  position: absolute;
+  visibility: hidden;
+}
+
+.content__input .result-list {
+  position: absolute;
+  visibility: visible;
+  top: 39px;
+  left: 0px;
+  overflow: scroll;
+  width: 193px;
+  max-height: 160px;
+  padding: 10px 0;
+  border: solid 2px #cbddfc;
+  background-color: #ffffff;
+  color: #6e757c;
+}
+
+.content__input .result-list__item {
+  padding: 0 20px;
+  width: 193px;
+  border-bottom: solid 1px #ced4da;
+  line-height: 35px;
+}
+
+.content__input .result-list__item:hover {
+  cursor: pointer;
+}
+
+.content__input .result-list__item--last {
+  border: none;
+}
