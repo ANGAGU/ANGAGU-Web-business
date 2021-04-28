@@ -80,13 +80,17 @@ const submenus = [
   ],
   [
     {
-      title: 'ManageOrder',
+      title: '주문관리',
       target: `/Main/ManageOrder`,
     },
     {
-      title: 'Product',
+      title: '상품관리',
       target: `/Main/Product`,
     },
+    {
+      title: '기업정보',
+      target: `/Main/Info`,
+    }
   ],
 ];
 

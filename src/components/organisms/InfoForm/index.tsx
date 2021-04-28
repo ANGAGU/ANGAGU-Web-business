@@ -1,7 +1,7 @@
 import React from 'react';
 import { Alert } from 'reactstrap';
 
-const OrderTable: React.FC = () => {
+const InfoForm: React.FC = () => {
   return (
     <div>
       <Alert color="primary">This is a primary alert — check it out!</Alert>
@@ -16,4 +16,4 @@ const OrderTable: React.FC = () => {
   );
 };
 
-export default OrderTable;
+export default InfoForm;

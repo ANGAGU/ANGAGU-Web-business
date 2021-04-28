@@ -33,6 +33,8 @@ const Content = ({ sidebarIsOpen, toggleSidebar }: ContentProps) => {
             component={ManageOrderTemplate}
           />
           <Route exact path={`${path}/Product`} component={ProductPage} />
+          <Route exact path={`${path}/Info`} component={ProductPage} />
+
         </Switch>
       </div>
     </Container>
