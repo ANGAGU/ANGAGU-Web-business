@@ -30,14 +30,15 @@ const CompanyFilter: React.FC<CompanyFilterProps> = ({ isAdmin }) => {
     '토깽이',
     '마스크',
     'bluepen',
+    '이름이 짱짱 긴 회사에요오오',
   ];
 
   // methods
 
   useEffect(() => {
-    requestCompanies();
+    getCompanies();
   });
-  const requestCompanies = async () => {
+  const getCompanies = async () => {
     // const result = api.post('send adjust api', {});
   };
 
@@ -51,7 +52,7 @@ const CompanyFilter: React.FC<CompanyFilterProps> = ({ isAdmin }) => {
     else setFilteredList(result);
   };
   const selectCompany = (value: string) => {
-    console.log(value);
+    setCompany(value);
   };
   return (
     <div className="filter-form__content">
@@ -63,6 +64,7 @@ const CompanyFilter: React.FC<CompanyFilterProps> = ({ isAdmin }) => {
           name="companyName"
           id="filter__company-name"
           value={company}
+          placeholder="회사 검색"
           onChange={handleOnChange}
           onFocus={() => setViewList(true)}
           onBlur={() => setTimeout(() => setViewList(false), 100)}

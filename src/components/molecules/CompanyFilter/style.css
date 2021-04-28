@@ -25,6 +25,7 @@
   visibility: hidden;
 }
 
+/* width 따로 props로 조저예정 */
 .content__input .result-list {
   position: absolute;
   visibility: visible;
@@ -40,14 +41,19 @@
 }
 
 .content__input .result-list__item {
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
   padding: 0 20px;
-  width: 193px;
+  width: 100%;
   border-bottom: solid 1px #ced4da;
   line-height: 35px;
 }
 
 .content__input .result-list__item:hover {
   cursor: pointer;
+  background-color: #f0f0f0;
 }
 
 .content__input .result-list__item--last {
