@@ -67,9 +67,13 @@ const CompanyFilter: React.FC<CompanyFilterProps> = ({ isAdmin }) => {
           placeholder="회사 검색"
           onChange={handleOnChange}
           onFocus={() => setViewList(true)}
-          onBlur={() => setTimeout(() => setViewList(false), 100)}
+          onBlur={() => setViewList(false)}
         />
-        <ul className={viewList ? 'result-list' : 'result-list--hiddem'}>
+        <ul
+          className={
+            viewList ? 'result-list' : 'result-list result-list--hidden'
+          }
+        >
           {filteredList.map((el, index) => (
             <li
               className={

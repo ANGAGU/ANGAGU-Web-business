@@ -19,12 +19,6 @@
   position: relative;
 }
 
-/* :focus로 해결해도 될듯 */
-.content__input .result-list--hiddem {
-  position: absolute;
-  visibility: hidden;
-}
-
 /* width 따로 props로 조저예정 */
 .content__input .result-list {
   position: absolute;
@@ -38,6 +32,15 @@
   border: solid 2px #cbddfc;
   background-color: #ffffff;
   color: #6e757c;
+  opacity: 1;
+  transition: 0.5s;
+}
+/* :focus로 해결해도 될듯 */
+.content__input .result-list--hidden {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.5s;
 }
 
 .content__input .result-list__item {
