@@ -2,6 +2,7 @@ import api from 'api';
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Container, Row, Col, Input } from 'reactstrap';
 import { Dummy } from 'utils';
+import { adjustTitleList, monthList } from '../../../commons/constants/string';
 import './style.css';
 
 type AdjustPageProps = {
@@ -16,28 +17,6 @@ type Adjust = {
 };
 const AdjustPage: React.FC<AdjustPageProps> = ({ isAdmin }) => {
   const [adjustDummyData] = useState(Dummy.makeAdjusts(1) as Array<Adjust>);
-  const adjustTitleList = [
-    '',
-    '정산번호',
-    '기간',
-    '총매출',
-    '수수료',
-    '최종정산금액',
-  ];
-  const monthList = [
-    '1월',
-    '2월',
-    '3월',
-    '4월',
-    '5월',
-    '6월',
-    '7월',
-    '8월',
-    '9월',
-    '10월',
-    '11월',
-    '12월',
-  ];
 
   // methods
   const requestAdjust = async () => {
@@ -82,9 +61,7 @@ const AdjustPage: React.FC<AdjustPageProps> = ({ isAdmin }) => {
               <div className="filter-form__content">
                 <span className="content__ttl">회사명</span>
                 <span>
-                  <Input type="select" name="month" id="filter-month">
-                    {monthOptions}
-                  </Input>
+                  <Input type="text" name="month" id="filter-month" />
                 </span>
               </div>
             ) : (
