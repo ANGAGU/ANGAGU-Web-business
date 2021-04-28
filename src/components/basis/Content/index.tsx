@@ -1,13 +1,14 @@
 import React from 'react';
 import classNames from 'classnames';
 import { Container } from 'reactstrap';
-import { Switch, Route, useRouteMatch, useLocation } from 'react-router-dom';
+import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import './style.css';
 import Topbar from '../TopBar';
 import {
   ProductPage,
   RegisterCompany,
   ManageOrderTemplate,
+  InfoTemplate
 } from '../../template';
 
 type ContentProps = {
@@ -15,6 +16,7 @@ type ContentProps = {
   toggleSidebar: VoidFunction;
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const Content = ({ sidebarIsOpen, toggleSidebar }: ContentProps) => {
   const { path } = useRouteMatch(); // 요청시의 path?
   console.log('path : ', path);
@@ -33,7 +35,7 @@ const Content = ({ sidebarIsOpen, toggleSidebar }: ContentProps) => {
             component={ManageOrderTemplate}
           />
           <Route exact path={`${path}/Product`} component={ProductPage} />
-          <Route exact path={`${path}/Info`} component={ProductPage} />
+          <Route exact path={`${path}/Info`} component={InfoTemplate} />
 
         </Switch>
       </div>

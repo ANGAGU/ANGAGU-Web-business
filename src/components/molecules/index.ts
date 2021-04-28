@@ -1,5 +1,1 @@
-const foo = {
-  default: '',
-};
-
-export default foo;
+export { default as SideBarItem } from './SideBarItem';

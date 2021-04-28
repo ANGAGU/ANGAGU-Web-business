@@ -5,23 +5,36 @@ import './style.css';
 
 import api from '../../../api';
 
-const LoginForm: React.FC = () => {
+const LoginTemplate: React.FC = () => {
   const { url } = useRouteMatch();
   const [id, setId] = useState('');
   const [pw, setPw] = useState('');
   const history = useHistory();
 
   const getLogin = async () => {
-    const result = await api.post('/customer/login', {
-      email: id,
-      password: pw,
-    });
-    if (result.status === 'success') {
-      alert('로그인 성공');
-    } else {
-      console.log(result);
+    try {
+      const result = await api.post('/customer/login', {
+        email: id,
+        password: pw,
+      });
+      if (result.status === 'success') {
+        // eslint-disable-next-line no-alert
+        alert('로그인 성공');
+      } else {
+        console.log(result);
+      }
+    } catch (err) {
+      history.push('/Main');
     }
   };
+  const findPw = async () => {
+    try {
+      history.push('/Main');
+    } catch (err) {
+      history.push('/Main');
+    }
+  };
+
   return (
     <div className="login_wrapper">
       <div className="animate form login_form">
@@ -50,17 +63,13 @@ const LoginForm: React.FC = () => {
               />
             </FormGroup>
             <div>
-              <a className="reset_pass" href="/Main" onClick={getLogin}>
-                로그인
-              </a>
+              <Button onClick={getLogin}>로그인</Button>
               &nbsp;&nbsp;&nbsp;&nbsp;
-              <a className="reset_pass" href="/">
+              <Button color="link" onClick={findPw}>
                 비밀번호를 잊으셨나요?
-              </a>
+              </Button>
             </div>
-
             <div className="clearfix" />
-
             <div className="separator">
               <p className="change_link">
                 아이디가 없으신가요? &nbsp;
@@ -68,10 +77,8 @@ const LoginForm: React.FC = () => {
                   회원가입
                 </Link>
               </p>
-
               <div className="clearfix" />
               <br />
-
               <div>
                 <h1>
                   <i className="fa fa-paw" /> 안가구
@@ -85,4 +92,4 @@ const LoginForm: React.FC = () => {
   );
 };
 
-export default LoginForm;
+export default LoginTemplate;
