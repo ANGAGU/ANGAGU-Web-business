@@ -1,46 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useRouteMatch, useHistory } from 'react-router-dom';
 import { Input, Form, FormGroup, Button } from 'reactstrap';
 import './style.css';
-
+import { getLogin, findPw } from './libs';
 import api from '../../../api';
 
 const LoginTemplate: React.FC = () => {
-  const { url } = useRouteMatch();
+  const match = useRouteMatch();
   const [id, setId] = useState('');
   const [pw, setPw] = useState('');
   const history = useHistory();
-
-  const getLogin = async () => {
-    try {
-      const result = await api.post('/customer/login', {
-        email: id,
-        password: pw,
-      });
-      if (result.status === 'success') {
-        // eslint-disable-next-line no-alert
-        alert('로그인 성공');
-      } else {
-        console.log(result);
-      }
-    } catch (err) {
-      history.push('/Main');
-    }
-  };
-  const findPw = async () => {
-    try {
-      history.push('/Main');
-    } catch (err) {
-      history.push('/Main');
-    }
-  };
+  const title =
+    Object.keys(match.params).length === 0
+      ? '로그인'
+      : Object.keys(match.params)[0];
 
   return (
     <div className="login_wrapper">
       <div className="animate form login_form">
         <section className="login_content">
           <Form>
-            <h1>Login Form</h1>
+            <h1>{title}</h1>
             <FormGroup>
               <Input
                 type="text"
@@ -63,9 +43,22 @@ const LoginTemplate: React.FC = () => {
               />
             </FormGroup>
             <div>
-              <Button onClick={getLogin}>로그인</Button>
+              <Button
+                onClick={e => {
+                  e.preventDefault();
+                  getLogin(title, api, id, pw, history);
+                }}
+              >
+                로그인
+              </Button>
               &nbsp;&nbsp;&nbsp;&nbsp;
-              <Button color="link" onClick={findPw}>
+              <Button
+                color="link"
+                onClick={(e: any) => {
+                  e.preventDefault();
+                  findPw(history);
+                }}
+              >
                 비밀번호를 잊으셨나요?
               </Button>
             </div>
@@ -73,7 +66,7 @@ const LoginTemplate: React.FC = () => {
             <div className="separator">
               <p className="change_link">
                 아이디가 없으신가요? &nbsp;
-                <Link to={`${url}/Signup`} className="to_register">
+                <Link to={`${match.url}/Signup`} className="to_register">
                   회원가입
                 </Link>
               </p>

@@ -1,11 +1,15 @@
 import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
-import { BrowserRouter as Router } from 'react-router-dom';
-import LoginTemplate from './index';
+import ModalMol from './index';
 
 let container: HTMLElement;
 
+const ModalItemProps = {
+  buttonLabel: 'test',
+  className: 'test',
+  content: 'test'
+};
 beforeEach(() => {
   // setup a DOM element as a render target
   container = document.createElement('div');
@@ -18,27 +22,17 @@ afterEach(() => {
   container.remove();
 });
 
-describe('LoginForm Page', () => {
+describe('SideBarItem Page', () => {
   it('renders', () => {
     act(() => {
       render(
-        <Router>
-          <LoginTemplate />
-        </Router>,
+        <ModalMol
+          buttonLabel={ModalItemProps.buttonLabel}
+          className={ModalItemProps.className}
+          content={ModalItemProps.content}
+        />,
         container,
       );
     });
   });
-
-  // it('renders user data', async () => {
-  //   const fakeUser = {
-  //     id: 'test',
-  //     pw: 'test',
-  //   };
-  //   jest.spyOn(LoginTemplate, 'getLogin').mockImplementation(() => {
-  //     return Promise.resolve({
-  //       json: () => Promise.resolve(fakeUser),
-  //     });
-  //   });
-  // });
 });
