@@ -5,10 +5,10 @@ import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import './style.css';
 import Topbar from '../TopBar';
 import {
-  ProductPage,
-  RegisterCompany,
+  ProductPageTemplate,
+  RegisterCompanyTemplate,
   ManageOrderTemplate,
-  InfoTemplate
+  InfoTemplate,
 } from '../../template';
 
 type ContentProps = {
@@ -28,15 +28,18 @@ const Content = ({ sidebarIsOpen, toggleSidebar }: ContentProps) => {
       <Topbar toggleSidebar={toggleSidebar} />
       <div id="content_container">
         <Switch>
-          <Route exact path={`${path}/Register`} component={RegisterCompany} />
+          <Route
+            exact
+            path={`${path}/Register`}
+            component={RegisterCompanyTemplate}
+          />
           <Route
             exact
             path={`${path}/ManageOrder`}
             component={ManageOrderTemplate}
           />
-          <Route exact path={`${path}/Product`} component={ProductPage} />
+          <Route exact path={`${path}/Product`} component={ProductPageTemplate} />
           <Route exact path={`${path}/Info`} component={InfoTemplate} />
-
         </Switch>
       </div>
     </Container>

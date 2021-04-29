@@ -11,7 +11,7 @@ import {
 } from 'reactstrap';
 import './style.css';
 
-const RegisterBusin: React.FC = (props:any) => {
+const RegisterCompanyTemplate: React.FC = (props:any) => {
   useEffect(() => {
     console.log(props);
   }, []);
@@ -73,4 +73,4 @@ const RegisterBusin: React.FC = (props:any) => {
   );
 };
 
-export default RegisterBusin;
+export default RegisterCompanyTemplate;

@@ -11,5 +11,23 @@ const InputGroupAddonStyle = {
 const BreadcrumbItemStyle = {
   background: 'green',
 };
+const tdStyle = {
+  lineHeight: '20px',
+  verticalAlign: 'middle',
+};
+const thStyle = {
+  fontSize: 'large',
+};
+const formStyle = {
+  margin: '30px',
+}
 
-export { trStyle, JumboStyle, InputGroupAddonStyle, BreadcrumbItemStyle };
+export {
+  trStyle,
+  tdStyle,
+  thStyle,
+  formStyle,
+  JumboStyle,
+  InputGroupAddonStyle,
+  BreadcrumbItemStyle,
+};

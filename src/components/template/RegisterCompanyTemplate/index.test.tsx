@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
-import RegisterBusinForm from './index';
+import RegisterCompanyTemplate from './index';
 
 let container: HTMLElement;
 
@@ -20,7 +20,7 @@ afterEach(() => {
 describe('RegisterBusin Page', () => {
   it('renders', () => {
     act(() => {
-      render(<RegisterBusinForm />, container);
+      render(<RegisterCompanyTemplate />, container);
     });
   });
 });
