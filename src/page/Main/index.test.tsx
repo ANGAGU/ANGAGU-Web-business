@@ -1,14 +1,14 @@
-import React from "react";
-import { render, unmountComponentAtNode } from "react-dom";
-import { act } from "react-dom/test-utils";
-import { BrowserRouter as Router } from "react-router-dom";
-import Main from "./index";
+import React from 'react';
+import { render, unmountComponentAtNode } from 'react-dom';
+import { act } from 'react-dom/test-utils';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Main from './index';
 
-let container:any = null;
+let container: HTMLElement;
 // eslint-disable-next-line no-undef
 beforeEach(() => {
   // setup a DOM element as a render target
-  container = document.createElement("div");
+  container = document.createElement('div');
   document.body.appendChild(container);
 });
 
@@ -17,19 +17,18 @@ afterEach(() => {
   // cleanup on exiting
   unmountComponentAtNode(container);
   container.remove();
-  container = null;
 });
 
 // eslint-disable-next-line no-undef
-describe("Main Page", () => {
+describe('Main Page', () => {
   // eslint-disable-next-line no-undef
-  it("renders", () => {
+  it('renders', () => {
     act(() => {
       render(
         <Router>
           <Main />
         </Router>,
-        container
+        container,
       );
     });
   });

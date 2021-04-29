@@ -1,13 +1,13 @@
-import React from "react";
-import { render, unmountComponentAtNode } from "react-dom";
-import { act } from "react-dom/test-utils";
+import React from 'react';
+import { render, unmountComponentAtNode } from 'react-dom';
+import { act } from 'react-dom/test-utils';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Login from './index';
 
-import Login from "./index";
-
-let container:any = null;
+let container: any = null;
 beforeEach(() => {
   // setup a DOM element as a render target
-  container = document.createElement("div");
+  container = document.createElement('div');
   document.body.appendChild(container);
 });
 
@@ -18,10 +18,15 @@ afterEach(() => {
   container = null;
 });
 
-describe("Login Page", () => {
-  it("renders", () => {
+describe('Login Page', () => {
+  it('renders', () => {
     act(() => {
-      render(<Login />, container);
+      render(
+        <Router>
+          <Login />
+        </Router>,
+        container,
+      );
     });
   });
 });
