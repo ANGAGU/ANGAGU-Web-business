@@ -11,6 +11,7 @@ type AdjustPageProps = {
 };
 type Adjust = {
   id: number;
+  company: string;
   term: string;
   fee: string;
   totalRevenue: string;
@@ -38,13 +39,14 @@ const AdjustPage: React.FC<AdjustPageProps> = ({ isAdmin }) => {
       <td className="a-center">
         <input type="checkbox" className="flat" name="table_records" />
       </td>
-      <td className=" ">{`${adjust.id}`}</td>
-      <td className=" ">{`${adjust.term}`}</td>
-      <td className=" ">
+      <td>{`${adjust.id}`}</td>
+      <td>{`${adjust.company}`}</td>
+      <td>{`${adjust.term}`}</td>
+      <td>
         {adjust.totalRevenue} <i className="success fa fa-long-arrow-up" />
       </td>
-      <td className=" ">{adjust.fee}</td>
-      <td className=" ">{adjust.profit}</td>
+      <td>{adjust.fee}</td>
+      <td>{adjust.profit}</td>
     </tr>
   ));
 
@@ -58,17 +60,8 @@ const AdjustPage: React.FC<AdjustPageProps> = ({ isAdmin }) => {
         <div className="adjust-filter">
           <h5> 검색 </h5>
           <div className="filter-form">
-            {isAdmin ? (
-              <div className="filter-form__content">
-                <span className="content__ttl">회사명</span>
-                <span>
-                  <Input type="text" name="month" id="filter-month" />
-                </span>
-              </div>
-            ) : (
-              <></>
-            )}
-            <CompanyFilter isAdmin={false} />
+            {true ? <CompanyFilter isAdmin /> : <></>}
+
             <div className="filter-form__content">
               <span className="content__ttl">정산 일자</span>
               <span>

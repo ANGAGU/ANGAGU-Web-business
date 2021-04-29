@@ -35,6 +35,9 @@
   opacity: 1;
   transition: 0.5s;
 }
+.content__input .result-list::-webkit-scrollbar-track {
+  background-color: transparent;
+}
 /* :focus로 해결해도 될듯 */
 .content__input .result-list--hidden {
   position: absolute;

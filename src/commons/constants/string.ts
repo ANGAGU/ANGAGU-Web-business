@@ -1,6 +1,7 @@
 export const adjustTitleList = [
   '',
   '정산번호',
+  '회사',
   '기간',
   '총매출',
   '수수료',

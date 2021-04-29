@@ -26,6 +26,7 @@ const Dummy = {
     for (let i = 0; i < num; i += 1) {
       tempArr.push({
         id: chance.integer({ min: 0, max: 100 }),
+        company: chance.word(),
         term: `${chance.date().toDateString()}~${chance.date().toDateString()}`,
         profit: chance.dollar(),
         totalRevenue: chance.dollar(),
