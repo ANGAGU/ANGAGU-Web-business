@@ -1,6 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const getLogin = async (titleType, api, id, pw, history) => {
   try {
+    console.log(id, pw);
     if (titleType === '로그인') {
       const result = await api.post('/customer/login', {
         email: id,

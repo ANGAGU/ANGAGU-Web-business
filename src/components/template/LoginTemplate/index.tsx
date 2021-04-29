@@ -7,7 +7,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -19,25 +18,29 @@ import api from '../../../api';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    height: '100vh',
-    width: '80%',
-    margin: 'auto',
+    height: '80%',
+    width: '70%',
+    position: 'absolute',
+    top: '10%',
+    left: '15%',
   },
   image: {
     backgroundImage: 'url(https://source.unsplash.com/random)', // 여기에 이미지
     backgroundRepeat: 'no-repeat',
     backgroundColor:
-      theme.palette.type === 'light'
-        ? theme.palette.grey[50]
-        : theme.palette.grey[900],
+      theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
     backgroundSize: 'cover',
     backgroundPosition: 'center',
+    borderRadius: '20px 0px 0px 20px',
   },
   paper: {
     margin: theme.spacing(8, 4),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+  },
+  main: {
+    borderRadius: '0px 20px 20px 0px',
   },
   avatar: {
     margin: theme.spacing(1),
@@ -59,15 +62,13 @@ const LoginTemplate: React.FC = () => {
   const [pw, setPw] = useState('');
   const history = useHistory();
   const title =
-    Object.keys(match.params).length === 0
-      ? '로그인'
-      : Object.keys(match.params)[0];
+    Object.keys(match.params).length === 0 ? '로그인' : Object.keys(match.params)[0];
 
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+      <Grid item xs={12} sm={8} md={5} component={Paper} className={classes.main} elevation={6} square>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import axios from 'axios';
 import * as querystring from 'querystring';
 
@@ -18,7 +19,7 @@ const setCommonParams = (params:any) => {
 
 const api = {
   setAxiosDefaultHeader(accessToken: any) {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+    axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
   },
 
   async get(endpoint:string, params:any) {
