@@ -3,6 +3,7 @@ const getLogin = async (titleType, api, id, pw, history) => {
   try {
     console.log(id, pw);
     if (titleType === '로그인') {
+      // 기업 로그인
       const result = await api.post('/customer/login', {
         email: id,
         password: pw,
