@@ -3,7 +3,6 @@ import { Route, useRouteMatch } from 'react-router-dom';
 import { LoginTemplate, SignupTemplate } from 'components/template';
 import { bodyStyle } from './style';
 
-
 const Login: React.FC = () => {
   const { path } = useRouteMatch();
   return (

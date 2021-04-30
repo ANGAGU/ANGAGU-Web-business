@@ -31,7 +31,7 @@ type ProductProfit = {
   profit: string; // revenue - commission
   sellCount: number;
 };
-const AdjustPage: React.FC<AdjustPageProps> = ({ isAdmin }) => {
+const AdjustPageTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
   const [adjustsDummy] = useState(Dummy.makeAdjusts(1) as Array<Adjust>);
   const [productProfitsDummy] = useState(
     Dummy.makeProductProfits(10) as Array<ProductProfit>,
@@ -122,4 +122,4 @@ const AdjustPage: React.FC<AdjustPageProps> = ({ isAdmin }) => {
   );
 };
 
-export default AdjustPage;
+export default AdjustPageTemplate;
