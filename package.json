@@ -2,7 +2,7 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
-  "hompage": "https://terajh.github.io/ANGAGU_WEB_business/",
+  "homepage": "https://angagu.github.io/ANGAGU_WEB_business/",
   "dependencies": {
     "@babel/preset-env": "^7.13.12",
     "@babel/preset-react": "^7.13.13",
@@ -10,6 +10,8 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.14",
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.8.3",
@@ -24,6 +26,7 @@
     "gh-pages": "^3.1.0",
     "http-proxy-middleware": "^0.19.1",
     "jest-dom": "^4.0.0",
+    "mdbreact": "^5.0.2",
     "querystring": "^0.2.1",
     "react": "^17.0.2",
     "react-bootstrap": "^1.5.2",
@@ -33,6 +36,7 @@
     "react-test-renderer": "^17.0.2",
     "react-testing-library": "^8.0.1",
     "reactstrap": "^8.9.0",
+    "styled-components": "^5.2.3",
     "typescript": "^4.2.3",
     "web-vitals": "^1.1.1"
   },
@@ -42,7 +46,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "jest": "jest"
   },
   "eslintConfig": {
     "extends": [
@@ -71,6 +76,7 @@
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.3",
     "@types/react-router-dom": "^5.1.7",
+    "@types/styled-components": "^5.1.9",
     "@typescript-eslint/eslint-plugin": "^4.21.0",
     "@typescript-eslint/parser": "^4.21.0",
     "eslint": "^7.23.0",

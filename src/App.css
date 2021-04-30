@@ -11,6 +11,7 @@
 body {
   font-family: 'Poppins', sans-serif;
   background: #fafafa;
+  height: 100%;
 }
 
 ol,
@@ -25,4 +26,11 @@ ul {
 }
 ::-webkit-scrollbar-track {
   background-color: transparent;
+}
+html {
+  height: 100%;
+}
+
+#root {
+  height: 100%;
 }
