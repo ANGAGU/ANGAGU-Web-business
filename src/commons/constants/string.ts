@@ -7,6 +7,13 @@ export const adjustTitleList = [
   '수수료',
   '최종정산금액',
 ];
+export const projuctProfitTitleList = [
+  '상품 아이디',
+  '상품명',
+  '가격',
+  '주문량',
+  '최종정산금액',
+];
 export const monthList = [
   '1월',
   '2월',
