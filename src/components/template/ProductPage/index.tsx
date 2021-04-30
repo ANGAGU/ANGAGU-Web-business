@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from 'reactstrap';
+import { Button, Table } from 'reactstrap';
 import './style.css';
 import { Dummy } from '../../../utils';
 import api from '../../../api';
@@ -75,15 +75,13 @@ function ProductPage(): React.ReactElement {
     <>
       <div className="product-page">
         <div className="x_content">
-          <div className="table-responsive">
-            <table className="table table-striped jambo_table bulk_action">
-              <thead>
-                <tr className="headings">{productsHeader}</tr>
-              </thead>
+          <Table striped className="product-table">
+            <thead>
+              <tr className="headings">{productsHeader}</tr>
+            </thead>
 
-              <tbody>{productList}</tbody>
-            </table>
-          </div>
+            <tbody>{productList}</tbody>
+          </Table>
         </div>
       </div>
     </>
