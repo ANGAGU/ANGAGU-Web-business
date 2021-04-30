@@ -1,20 +1,20 @@
 import { act, fireEvent, render } from '@testing-library/react';
-import Signup from './index';
-import { isEmail, isPassword, isSame } from '../../../utils';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { isEmail, isPassword, isSame } from '../../../utils';
+import SignupTemplate from './index';
 
 describe('Signup Page', () => {
   it('renders signup page', () => {
     render(
       <Router>
-        <Signup />
+        <SignupTemplate />
       </Router>,
     );
   });
   it('change user company name input', () => {
     const { getByLabelText } = render(
       <Router>
-        <Signup />
+        <SignupTemplate />
       </Router>,
     );
     const input = getByLabelText('회사명') as HTMLInputElement;
@@ -28,7 +28,7 @@ describe('Signup Page', () => {
   it('change user email input', () => {
     const { getByLabelText } = render(
       <Router>
-        <Signup />
+        <SignupTemplate />
       </Router>,
     );
     const input = getByLabelText('이메일') as HTMLInputElement;
@@ -51,7 +51,7 @@ describe('Signup Page', () => {
   it('change password input', () => {
     const { getByLabelText } = render(
       <Router>
-        <Signup />
+        <SignupTemplate />
       </Router>,
     );
     const input = getByLabelText('비밀번호') as HTMLInputElement;
@@ -66,7 +66,7 @@ describe('Signup Page', () => {
   it('change checking password input', () => {
     const { getByLabelText } = render(
       <Router>
-        <Signup />
+        <SignupTemplate />
       </Router>,
     );
     const input = getByLabelText('비밀번호 확인') as HTMLInputElement;
@@ -97,7 +97,7 @@ describe('Signup Page', () => {
   it('change user phone number input', () => {
     const { getByLabelText } = render(
       <Router>
-        <Signup />
+        <SignupTemplate />
       </Router>,
     );
     const input = getByLabelText('휴대폰') as HTMLTextAreaElement;
