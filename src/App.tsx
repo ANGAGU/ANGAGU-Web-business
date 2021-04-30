@@ -6,7 +6,6 @@ import {
   Redirect,
 } from 'react-router-dom';
 import './App.css';
-import { SignupForm } from 'components/template';
 import { Main, Login } from './page';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -15,7 +14,6 @@ const App: React.FC = () => {
     <Router>
       <Switch>
         <Route path="/Login" component={Login} />
-
         <Route path="/Main" component={Main} />
         <Route
           path="/"

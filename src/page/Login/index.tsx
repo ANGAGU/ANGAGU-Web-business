@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { Link, Route, Switch, useRouteMatch } from 'react-router-dom';
-import { LoginForm, SignupForm } from 'components/template';
+import React from 'react';
+import { Route, useRouteMatch } from 'react-router-dom';
+import { LoginTemplate, SignupTemplate } from 'components/template';
+import { bodyStyle } from './style';
+
 
 const Login: React.FC = () => {
   const { path } = useRouteMatch();
   return (
-    <>
-      <Route exact path={`${path}/Signup`} component={SignupForm} />
-      <Route exact path={`${path}`} component={LoginForm} />
-    </>
+    <div style={bodyStyle}>
+      <Route exact path={`${path}/Signup`} component={SignupTemplate} />
+      <Route exact path={`${path}`} component={LoginTemplate} />
+      <Route exact path={`${path}/:Admin`} component={LoginTemplate} />
+    </div>
   );
 };
 

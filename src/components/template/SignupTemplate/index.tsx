@@ -15,6 +15,7 @@ import {
   ModalFooter,
   ModalHeader,
 } from 'reactstrap';
+
 import { isEmail, isPassword, isSame } from '../../../utils';
 import './style.css';
 
@@ -29,8 +30,7 @@ interface UserInfo {
   account_number: string;
   account_owner: string;
 }
-
-const SignupForm: React.FC = () => {
+const SignupTemplate: React.FC = () => {
   // state & variable
   const [submitValue, setSubmitValue] = useState({} as UserInfo);
   const [isValid, setIsValid] = useState(false as boolean);
@@ -256,4 +256,4 @@ const SignupForm: React.FC = () => {
   );
 };
 
-export default SignupForm;
+export default SignupTemplate;
