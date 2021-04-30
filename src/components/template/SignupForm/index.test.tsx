@@ -1,7 +1,7 @@
 import { act, fireEvent, render } from '@testing-library/react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import Signup from './index';
 import { isEmail, isPassword, isSame } from '../../../utils';
-import { BrowserRouter as Router } from 'react-router-dom';
 
 describe('Signup Page', () => {
   it('renders signup page', () => {

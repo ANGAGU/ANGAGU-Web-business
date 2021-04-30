@@ -5,18 +5,31 @@
 .signup-form__row {
   justify-content: center;
 }
-.form-content {
+.signup-form .form-content {
   text-align: left;
 }
-.form-btn {
+.signup-form .form-btn {
   text-align: center;
   padding: 10px 15px 0px 15px;
 }
-.form-btn__login {
+.signup-form .form-btn__login {
   color: darkgray;
   font-size: 14px;
 }
-.form-btn__login:hover {
+.signup-form .form-btn__login:hover {
   color: gray;
   text-decoration: none;
+}
+
+.signup-form .form-block {
+  display: flex;
+}
+.signup-form .form-block__input {
+  margin-right: 15px;
+}
+.signup-form .input--id {
+  width: calc(100% - 81.5px);
+}
+.signup-form .input--phone {
+  width: calc(100% - 106px);
 }
