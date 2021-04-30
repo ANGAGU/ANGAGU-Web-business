@@ -1,10 +1,10 @@
 import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
-import { BrowserRouter as Router } from 'react-router-dom';
-import Login from './index';
 
-let container: any = null;
+import OrderTable from './index';
+
+let container: HTMLElement;
 beforeEach(() => {
   // setup a DOM element as a render target
   container = document.createElement('div');
@@ -15,18 +15,12 @@ afterEach(() => {
   // cleanup on exiting
   unmountComponentAtNode(container);
   container.remove();
-  container = null;
 });
 
-describe('Login Page', () => {
-  it('renders', () => {
+describe('OrderTable Component', () => {
+  it('renders component', () => {
     act(() => {
-      render(
-        <Router>
-          <Login />
-        </Router>,
-        container,
-      );
+      render(<OrderTable />, container);
     });
   });
 });
