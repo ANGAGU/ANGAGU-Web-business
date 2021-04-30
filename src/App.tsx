@@ -15,6 +15,7 @@ const App: React.FC = () => {
       <Switch>
         <Route path="/Login" component={Login} />
         <Route path="/Main" component={Main} />
+        {/* 로그인 정보에 따라 redirect 분기 */}
         <Route
           path="/"
           render={() =>

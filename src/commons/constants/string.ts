@@ -1,5 +1,4 @@
 export const adjustTitleList = [
-  '',
   '정산번호',
   '회사',
   '기간',

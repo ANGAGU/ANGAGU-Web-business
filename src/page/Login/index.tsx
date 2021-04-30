@@ -8,8 +8,8 @@ const Login: React.FC = () => {
   return (
     <div style={bodyStyle}>
       <Route exact path={`${path}/Signup`} component={SignupTemplate} />
+      <Route exact path={`${path}/Admin`} component={LoginTemplate} />
       <Route exact path={`${path}`} component={LoginTemplate} />
-      <Route exact path={`${path}/:Admin`} component={LoginTemplate} />
     </div>
   );
 };

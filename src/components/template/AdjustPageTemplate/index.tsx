@@ -1,6 +1,6 @@
 import api from 'api';
 import React, { useState, useEffect } from 'react';
-import { Table, Container, Input } from 'reactstrap';
+import { Table, Container, Input, Button } from 'reactstrap';
 import { Dummy } from 'utils';
 import { CompanyFilter } from '../../molecules';
 import {
@@ -63,9 +63,6 @@ const AdjustPageTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
   // 아래 상세 목록 토글 추가? => 여유될 경우
   const adjusts = adjustsDummy.map((adjust, index) => (
     <tr key={index}>
-      <td>
-        <input type="checkbox" name="table_records" />
-      </td>
       <td>{`${adjust.id}`}</td>
       <td>{`${adjust.company}`}</td>
       <td>{`${adjust.term}`}</td>
@@ -87,9 +84,8 @@ const AdjustPageTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
         <div className="adjust-filter">
           <h5> 검색 </h5>
           <div className="filter-form">
-            {true ? <CompanyFilter isAdmin /> : <></>}
-
             <div className="filter-form__content">
+              {true ? <CompanyFilter isAdmin /> : <></>}
               <span className="content__ttl">정산 일자</span>
               <span>
                 <Input type="select" name="month" id="filter-month">
@@ -97,25 +93,26 @@ const AdjustPageTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
                 </Input>
               </span>
             </div>
+            <Button>검색</Button>
           </div>
         </div>
-        <div>
-          <Table>
+        <div className="adjust-table-blk">
+          <Table borderless className="adjust-table">
             <thead>
               <tr className="headings">{adjustHeader}</tr>
             </thead>
 
             <tbody>{adjusts}</tbody>
           </Table>
-        </div>
-        <div>
-          <Table size="sm" className="product-profit-table">
-            <thead>
-              <tr>{productProfitHeader}</tr>
-            </thead>
+          <div>
+            <Table size="sm" className="product-profit-table">
+              <thead>
+                <tr>{productProfitHeader}</tr>
+              </thead>
 
-            <tbody>{productProfits}</tbody>
-          </Table>
+              <tbody>{productProfits}</tbody>
+            </Table>
+          </div>
         </div>
       </Container>
     </>
