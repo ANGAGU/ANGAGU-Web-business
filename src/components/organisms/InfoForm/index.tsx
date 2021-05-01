@@ -12,15 +12,19 @@ const InfoForm: React.FC = () => {
   
 
   const getCompanyInfo = async () => {
-    // const key = localStorage.getItem('token');
-    // const result = await api.get('/company/info', {"key": key});
-    // if (result.status === 'success') {
-    //   // eslint-disable-next-line no-alert
-    //   alert('로그인 성공');
-    //   data = result.data;
-    // } else {
-    //   console.log(result);
-    // }
+    const key = localStorage.getItem('token');
+    try{
+      const result = await api.get('/company/info', {"key": key});
+      if (result.status === 'success') {
+        // eslint-disable-next-line no-alert
+        alert('로그인 성공');
+        data = result.data;
+      } else {
+        console.log(result);
+      }
+    } catch {
+      console.log('error');
+    }
   }
   useEffect(() => {
     getCompanyInfo();
@@ -58,7 +62,7 @@ const createData = (
 ) => {
   return { name, id, text, button, buttonText };
 };
-const data = {
+let data = {
   name: 'test',
   ownerName: 'test',
   phoneNumber: '010-0000-0000',
