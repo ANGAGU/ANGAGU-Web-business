@@ -4,4 +4,4 @@ export { default as SignupTemplate } from './SignupTemplate';
 export { default as RegisterCompanyTemplate } from './RegisterCompanyTemplate';
 export { default as ManageOrderTemplate } from './ManageOrderTemplate';
 export { default as InfoTemplate } from './InfoTemplate';
-export { default as ProductDetail } from './ProductDetail';
+export { default as ProductDetailTemplate } from './ProductDetailTemplate';

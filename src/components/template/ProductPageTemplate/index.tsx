@@ -48,10 +48,7 @@ const ProductPage: React.FC = () => {
     <th className="column-title">{ttl}</th>
   ));
   const productList = products.map((product, index) => (
-    <tr
-      key={product.id}
-      className={index % 2 === 0 ? 'even pointer' : 'odd pointer'}
-    >
+    <tr key={product.id} className={index % 2 === 0 ? 'even pointer' : 'odd pointer'}>
       <td className="a-center">
         <input type="checkbox" className="flat" name="table_records" />
       </td>
@@ -67,7 +64,7 @@ const ProductPage: React.FC = () => {
       <td className=" ">{product.stock}</td>
       <td className="a-right a-right ">{product.create_time}</td>
       <td className="last">
-        <Link to="/product/1">
+        <Link to="/Main/Product/1">
           <Button color="secondary">수정하기</Button>
         </Link>
       </td>

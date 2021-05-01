@@ -41,6 +41,7 @@ const SideBar: React.FC<SideBarProps> = ({ isOpen, toggle }) => {
           <SideBarItem title={'About'} url={'/about'} icon={faBriefcase} />
           <SubMenu title="Pages" icon={faCopy} items={submenus[1]} />
           <SideBarItem title={'상품관리'} url={'/Main/Product'} icon={faCopy} />
+          <SideBarItem title={'상품상세'} url={'/Main/Product/1'} icon={faImage} />
           <SideBarItem title={'기업정보'} url={'/Main/Info'} icon={faCopy} />
           <SideBarItem title={'주문관리'} url={'/Main/ManageOrder'} icon={faImage} />
           <SideBarItem title={'FAQ'} url={'/faq'} icon={faQuestion} />
