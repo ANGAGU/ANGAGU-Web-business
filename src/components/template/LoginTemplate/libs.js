@@ -1,14 +1,16 @@
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const getLogin = async (titleType, api, id, pw, history) => {
   try {
+    console.log(id, pw);
     if (titleType === '로그인') {
+      // 기업 로그인
       const result = await api.post('/customer/login', {
         email: id,
         password: pw,
       });
       if (result.status === 'success') {
         // eslint-disable-next-line no-alert
-        alert('로그인 성공');
+        alert('관리자 로그인 성공');
         localStorage.setItem('token', result.data.token);
       } else {
         console.log(result);
@@ -20,7 +22,7 @@ const getLogin = async (titleType, api, id, pw, history) => {
       });
       if (result.status === 'success') {
         // eslint-disable-next-line no-alert
-        alert('로그인 성공');
+        alert('관리자 로그인 성공');
       } else {
         console.log(result);
       }
