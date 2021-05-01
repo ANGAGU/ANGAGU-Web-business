@@ -25,7 +25,7 @@ const Content = ({ sidebarIsOpen, toggleSidebar }: ContentProps) => {
       fluid
       className={classNames('content', { 'is-open': sidebarIsOpen })}
     >
-      <Topbar toggleSidebar={toggleSidebar} />
+      
       <div id="content_container">
         <Switch>
           <Route
