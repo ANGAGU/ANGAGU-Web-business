@@ -24,7 +24,7 @@ interface ProductInfo {
   descImgUrl: string;
 }
 
-const ProductDetail: React.FC = () => {
+const ProductDetailTemplate: React.FC = () => {
   // state & variable
   const [submitValue, setSubmitValue] = useState({} as ProductInfo);
   const [descImg, setDescImg] = useState(null as File | null);
@@ -85,12 +85,7 @@ const ProductDetail: React.FC = () => {
             <div className="product-img__content">
               <Form>
                 <FormGroup>
-                  <Input
-                    type="file"
-                    multiple
-                    name="productExFile"
-                    id="productExFile"
-                  />
+                  <Input type="file" multiple name="productExFile" id="productExFile" />
                 </FormGroup>
               </Form>
               <div className="content__main">
@@ -170,9 +165,7 @@ const ProductDetail: React.FC = () => {
                 id="productDescImg"
                 onChange={handleOnChangeImg}
               />
-              <FormText color="muted">
-                상품 상세 설명 이미지를 넣어주세요 :)
-              </FormText>
+              <FormText color="muted">상품 상세 설명 이미지를 넣어주세요 :)</FormText>
             </FormGroup>
           </Form>
         </Col>
@@ -181,4 +174,4 @@ const ProductDetail: React.FC = () => {
   );
 };
 
-export default ProductDetail;
+export default ProductDetailTemplate;

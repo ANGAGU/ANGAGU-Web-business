@@ -1,13 +1,13 @@
 import { render, fireEvent, waitForElement } from '@testing-library/react';
-import ProductDetail from './index';
+import ProductDetailTemplate from './index';
 
 describe('Product Page', () => {
   it('renders Product page', () => {
-    render(<ProductDetail />);
+    render(<ProductDetailTemplate />);
   });
 
   it('change product name input', () => {
-    const { getByLabelText } = render(<ProductDetail />);
+    const { getByLabelText } = render(<ProductDetailTemplate />);
     const input = getByLabelText('상품명') as HTMLInputElement;
     fireEvent.change(input, {
       target: {
@@ -18,7 +18,7 @@ describe('Product Page', () => {
   });
 
   it('change product price input', () => {
-    const { getByLabelText } = render(<ProductDetail />);
+    const { getByLabelText } = render(<ProductDetailTemplate />);
     const input = getByLabelText('상품 가격') as HTMLInputElement;
     fireEvent.change(input, {
       target: {
@@ -29,7 +29,7 @@ describe('Product Page', () => {
   });
 
   it('change product price input for unexpected type', () => {
-    const { getByLabelText } = render(<ProductDetail />);
+    const { getByLabelText } = render(<ProductDetailTemplate />);
     const input = getByLabelText('상품 가격') as HTMLInputElement;
     fireEvent.change(input, {
       target: {
@@ -40,7 +40,7 @@ describe('Product Page', () => {
   });
 
   it('change product description input', () => {
-    const { getByLabelText } = render(<ProductDetail />);
+    const { getByLabelText } = render(<ProductDetailTemplate />);
     const input = getByLabelText('상품 상세 설명') as HTMLTextAreaElement;
     fireEvent.change(input, {
       target: {
@@ -51,7 +51,7 @@ describe('Product Page', () => {
   });
 
   it('test length limitation of product description input', () => {
-    const { getByLabelText } = render(<ProductDetail />);
+    const { getByLabelText } = render(<ProductDetailTemplate />);
     const input = getByLabelText('상품 상세 설명') as HTMLTextAreaElement;
     const testText =
       '상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트상품 상세 설명 입력 테스트';
@@ -66,7 +66,7 @@ describe('Product Page', () => {
   });
 
   it('change multiple input', () => {
-    const { getByLabelText } = render(<ProductDetail />);
+    const { getByLabelText } = render(<ProductDetailTemplate />);
     const nameInput = getByLabelText('상품명') as HTMLInputElement;
     const priceInput = getByLabelText('상품 가격') as HTMLInputElement;
     const descInput = getByLabelText('상품 상세 설명') as HTMLTextAreaElement;
@@ -99,9 +99,7 @@ describe('Product Page', () => {
   });
 
   it('test 3d model product input', async () => {
-    const { getByLabelText, getByText, getByAltText } = render(
-      <ProductDetail />,
-    );
+    const { getByLabelText, getByText, getByAltText } = render(<ProductDetailTemplate />);
     const file = new File(['testing(⌐□_□)'], 'test.obj');
     const imageInput = getByLabelText('상품 3D 모델') as HTMLInputElement;
     fireEvent.change(imageInput, { target: { files: [file] } });

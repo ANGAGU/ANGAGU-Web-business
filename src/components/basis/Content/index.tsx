@@ -9,7 +9,7 @@ import {
   RegisterCompanyTemplate,
   ManageOrderTemplate,
   InfoTemplate,
-  ProductDetail,
+  ProductDetailTemplate,
 } from '../../template';
 
 type ContentProps = {
@@ -28,6 +28,7 @@ const Content = ({ sidebarIsOpen, toggleSidebar }: ContentProps) => {
           <Route exact path={`${path}/Register`} component={RegisterCompanyTemplate} />
           <Route exact path={`${path}/ManageOrder`} component={ManageOrderTemplate} />
           <Route exact path={`${path}/Product`} component={ProductPageTemplate} />
+          <Route exact path={`${path}/Product/:id`} component={ProductDetailTemplate} />
           <Route exact path={`${path}/Info`} component={InfoTemplate} />
         </Switch>
       </div>
