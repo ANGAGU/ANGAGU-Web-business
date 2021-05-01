@@ -13,6 +13,14 @@ import {
 import { Link, useRouteMatch } from 'react-router-dom';
 import './style.css';
 
+const NavBarStyle = {
+  height: '65px',
+  background: '#232929',
+};
+const ButtonStyle = {
+  background: 'black',
+  borderColor: '#1c5c59',
+}
 type TopBarProps = {
   toggleSidebar: VoidFunction;
 };
@@ -24,13 +32,8 @@ const TopBar = ({ toggleSidebar }: TopBarProps) => {
   };
   const { path } = useRouteMatch();
   return (
-    <Navbar
-      color="light"
-      light
-      className="navbar shadow-sm p-3 mb-5 bg-white rounded"
-      expand="md"
-    >
-      <Button color="info" onClick={toggleSidebar}>
+    <Navbar className="navbar shadow-sm p-3   " expand="md" style={NavBarStyle}>
+      <Button color="info" style={ButtonStyle} onClick={toggleSidebar}>
         <FontAwesomeIcon icon={faAlignLeft} />
       </Button>
       <NavbarToggler onClick={toggleTopbar} />

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SideBar, Content } from '../../components';
+import { SideBar, Content, TopBar } from '../../components';
 import './style.css';
 
 const App: React.FC = () => {
@@ -9,9 +9,13 @@ const App: React.FC = () => {
   return (
     <div className="App wrapper">
       <SideBar toggle={toggleSidebar} isOpen={sidebarIsOpen} />
-      <Content toggleSidebar={toggleSidebar} sidebarIsOpen={sidebarIsOpen} />
+      <div className="flex_vertical">
+        <TopBar toggleSidebar={toggleSidebar} />
+        <Content toggleSidebar={toggleSidebar} sidebarIsOpen={sidebarIsOpen} />
+      </div>
     </div>
   );
 };
+
 
 export default App;
