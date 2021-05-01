@@ -1,7 +1,7 @@
 import Chance from 'chance';
 
 const Dummy = {
-  makeProducts: num => {
+  makeProducts: (num: number) => {
     const chance = new Chance();
 
     const tempArr = [];

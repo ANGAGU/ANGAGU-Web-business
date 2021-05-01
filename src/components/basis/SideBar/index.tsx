@@ -12,54 +12,44 @@ import { NavItem, NavLink, Nav } from 'reactstrap';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import './style.css';
-import { SubMenu } from 'components';
+import { SubMenu } from '../index';
+import { SideBarItem } from '../../molecules';
+import logo from '../../../assets/images/slack.png';
 
+const imgStyle = {
+  width: '65px',
+};
 type SideBarProps = {
   isOpen: boolean;
   toggle: VoidFunction;
 };
-
-const SideBar: React.FC<SideBarProps> = ({ isOpen, toggle }) => (
-  <div className={classNames('sidebar', { 'is-open': isOpen })}>
-    <div className="sidebar-header">
-      <span color="info" onClick={toggle} style={{ color: '#fff' }}>
-        &times;
-      </span>
-      <a href="/Main">안가구</a>
+const SideBar: React.FC<SideBarProps> = ({ isOpen, toggle }) => {
+  return (
+    <div className={classNames('sidebar', { 'is-open': isOpen })}>
+      <div className="sidebar-header">
+        <span color="info" onClick={toggle} style={{ color: '#fff' }}>
+          &times;
+        </span>
+        <a href="/Main">
+          <img src={logo} alt="안가구 로고" style={imgStyle} />
+        </a>
+      </div>
+      <div className="side-menu">
+        <Nav vertical className="list-unstyled pb-3">
+          <br />
+          <SubMenu title="Home" icon={faHome} items={submenus[0]} />
+          <SideBarItem title={'About'} url={'/about'} icon={faBriefcase} />
+          <SubMenu title="Pages" icon={faCopy} items={submenus[1]} />
+          <SideBarItem title={'상품관리'} url={'/Main/Product'} icon={faCopy} />
+          <SideBarItem title={'기업정보'} url={'/Main/Info'} icon={faCopy} />
+          <SideBarItem title={'주문관리'} url={'/Main/ManageOrder'} icon={faImage} />
+          <SideBarItem title={'FAQ'} url={'/faq'} icon={faQuestion} />
+          <SideBarItem title={'Contact'} url={'/contact'} icon={faImage} />
+        </Nav>
+      </div>
     </div>
-    <div className="side-menu">
-      <Nav vertical className="list-unstyled pb-3">
-        <p>Dummy Heading</p>
-        <SubMenu title="Home" icon={faHome} items={submenus[0]} />
-        <NavItem>
-          <NavLink tag={Link} to={'/about'}>
-            <FontAwesomeIcon icon={faBriefcase} className="mr-2" />
-            About
-          </NavLink>
-        </NavItem>
-        <SubMenu title="Pages" icon={faCopy} items={submenus[1]} />
-        <NavItem>
-          <NavLink tag={Link} to={'/pages'}>
-            <FontAwesomeIcon icon={faImage} className="mr-2" />
-            Portfolio
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink tag={Link} to={'/faq'}>
-            <FontAwesomeIcon icon={faQuestion} className="mr-2" />
-            FAQ
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink tag={Link} to={'/contact'}>
-            <FontAwesomeIcon icon={faPaperPlane} className="mr-2" />
-            Contact
-          </NavLink>
-        </NavItem>
-      </Nav>
-    </div>
-  </div>
-);
+  );
+};
 
 const submenus = [
   [
@@ -78,12 +68,16 @@ const submenus = [
   ],
   [
     {
-      title: 'ProductDetail',
-      target: '/Main/Product/1',
+      title: '주문관리',
+      target: `/Main/ManageOrder`,
     },
     {
-      title: 'Product',
-      target: '/Main/Product',
+      title: '상품관리',
+      target: `/Main/Product`,
+    },
+    {
+      title: '기업정보',
+      target: `/Main/Info`,
     },
   ],
 ];

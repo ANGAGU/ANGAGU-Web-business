@@ -10,33 +10,37 @@ import {
   NavItem,
   NavLink,
 } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 import './style.css';
 
+const NavBarStyle = {
+  height: '65px',
+  background: '#232929',
+};
+const ButtonStyle = {
+  background: 'black',
+  borderColor: '#1c5c59',
+}
 type TopBarProps = {
   toggleSidebar: VoidFunction;
 };
 const TopBar = ({ toggleSidebar }: TopBarProps) => {
   const [topbarIsOpen, setTopbarOpen] = useState(true);
   const toggleTopbar = () => setTopbarOpen(!topbarIsOpen);
-  const Logout= (e:any) => {
-    window.localStorage.setItem('', "");
-  }
+  const Logout = (e: any) => {
+    window.localStorage.setItem('', '');
+  };
+  const { path } = useRouteMatch();
   return (
-    <Navbar
-      color="light"
-      light
-      className="navbar shadow-sm p-3 mb-5 bg-white rounded"
-      expand="md"
-    >
-      <Button color="info" onClick={toggleSidebar}>
+    <Navbar className="navbar shadow-sm p-3   " expand="md" style={NavBarStyle}>
+      <Button color="info" style={ButtonStyle} onClick={toggleSidebar}>
         <FontAwesomeIcon icon={faAlignLeft} />
       </Button>
       <NavbarToggler onClick={toggleTopbar} />
       <Collapse isOpen={topbarIsOpen} navbar>
         <Nav className="ml-auto" navbar>
           <NavItem>
-            <NavLink tag={Link} to="/Main/register">
+            <NavLink tag={Link} to={`${path}/Register`}>
               사업자 등록 필요
             </NavLink>
           </NavItem>
@@ -51,9 +55,7 @@ const TopBar = ({ toggleSidebar }: TopBarProps) => {
             </NavLink>
           </NavItem>
           <NavItem>
-            <Button onClick={Logout}>
-              로그아웃
-            </Button>
+            <Button onClick={Logout}>로그아웃</Button>
           </NavItem>
         </Nav>
       </Collapse>
