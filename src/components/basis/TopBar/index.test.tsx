@@ -4,6 +4,7 @@ import { act } from 'react-dom/test-utils';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import TopBar from './index';
+import TopBarLibs from './libs';
 
 let container: HTMLElement;
 const TopBarProps = {
@@ -32,5 +33,14 @@ describe('TopBar Page', () => {
         container,
       );
     });
+  });
+
+  it('logout test', () => {
+    localStorage.setItem('isAdmin', 'true');
+    const spyFn = jest.spyOn(TopBarLibs, 'Logout');
+    TopBarLibs.Logout();
+    expect(spyFn).toBeCalledTimes(1);
+    expect(localStorage.getItem('isAdmin')).toBe(null);
+    // 잘 로그아웃 되었나?
   });
 });

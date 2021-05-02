@@ -47,12 +47,9 @@ const Dummy = {
       tempArr.push({
         id: chance.integer({ min: 0, max: 100 }),
         name: chance.name(),
-        customerId: chance.word(),
         img: testImg,
         count: chance.integer({ min: 0, max: 100 }),
         price: chance.dollar(),
-        deliveryStatus: chance.character({ pool: 'TF' }),
-        deliveryNumber: chance.ssn(),
         confirmTime: chance.date().toDateString(),
       });
     }

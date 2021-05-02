@@ -1,6 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const getLogin = async (titleType, api, id, pw, history) => {
-  localStorage.setItem('isAdmin', true);
   try {
     console.log(id, pw);
     if (titleType === '로그인') {
@@ -11,14 +10,15 @@ const getLogin = async (titleType, api, id, pw, history) => {
       });
       if (result.status === 'success') {
         // eslint-disable-next-line no-alert
-        alert('관리자 로그인 성공');
+        alert('기업 로그인 성공');
         localStorage.setItem('token', result.data.token);
-        localStorage.setItem('isAdmin', true);
+        localStorage.setItem('isAdmin', false);
       } else {
-        localStorage.setItem('isAdmin', true);
+        localStorage.setItem('isAdmin', false);
         console.log(result);
       }
     } else {
+      localStorage.setItem('isAdmin', true);
       const result = await api.post('/admin/login', {
         email: id,
         password: pw,
@@ -26,7 +26,7 @@ const getLogin = async (titleType, api, id, pw, history) => {
       if (result.status === 'success') {
         // eslint-disable-next-line no-alert
         alert('관리자 로그인 성공');
-        localStorage.setItem('isAdmin', false);
+        localStorage.setItem('isAdmin', true);
       } else {
         console.log(result);
       }
