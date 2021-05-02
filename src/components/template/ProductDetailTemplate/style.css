@@ -13,10 +13,3 @@
 .product-img .main-img {
   width: 90%;
 }
-
-@media (min-width: 576px) {
-  .product-3d-model__modal {
-    max-width: 1000px !important;
-    padding: 0 20px;
-  }
-}
