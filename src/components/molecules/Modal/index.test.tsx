@@ -8,7 +8,7 @@ let container: HTMLElement;
 const ModalItemProps = {
   buttonLabel: 'test',
   className: 'test',
-  buttonText: 'test',
+  confirmButtonText: 'test',
   name: 'test',
   title: 'test',
   content: <div>test</div>,

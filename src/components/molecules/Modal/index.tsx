@@ -10,10 +10,13 @@ import {
   InputGroupAddon,
   InputGroupText,
 } from 'reactstrap';
+import './style.css';
 
 type ModalMolProps = {
   buttonLabel: any;
-  buttonText: string;
+  confirmButtonText: string;
+  leftButtonText: string;
+  leftButtonAction: VoidFunction;
   className: any;
   title: string;
   name: any;
@@ -23,7 +26,16 @@ type ModalMolProps = {
 const ModalMol: React.FC<ModalMolProps> & {
   defaultProps: Partial<ModalMolProps>;
 } = props => {
-  const { buttonLabel, buttonText, className, title, name, content } = props;
+  const {
+    buttonLabel,
+    confirmButtonText,
+    leftButtonText,
+    leftButtonAction,
+    className,
+    title,
+    name,
+    content,
+  } = props;
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
   // console.log(className);
@@ -40,8 +52,17 @@ const ModalMol: React.FC<ModalMolProps> & {
           <ModalBody>{getContent(className, name)}</ModalBody>
         )}
         <ModalFooter>
+          {leftButtonText ? (
+            <Button
+              color="secondary"
+              className="modal-btn--left"
+              onClick={leftButtonAction}
+            >
+              {leftButtonText}
+            </Button>
+          ) : null}
           <Button color="primary" onClick={toggle}>
-            {buttonText}
+            {confirmButtonText}
           </Button>
           <Button color="secondary" onClick={toggle}>
             취소
@@ -115,7 +136,8 @@ const getContent = (id: string, value: string) => {
 
 ModalMol.defaultProps = {
   buttonLabel: 'Modal',
-  buttonText: 'Do Something',
+  confirmButtonText: 'Do Something',
+  leftButtonText: '',
   className: 'modal',
   title: '',
   name: 'modal',

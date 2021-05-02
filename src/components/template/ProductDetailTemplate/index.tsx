@@ -95,21 +95,7 @@ const ProductDetailTemplate: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="product-3d-model">
-            <h4>상품 3D 모델</h4>
-
-            <ModalMol
-              className="product-3d-model__modal"
-              title="test"
-              buttonLabel="3D모델 등록"
-              name="fdf"
-              content={
-                <>
-                  <Model3DForm />
-                </>
-              }
-            />
-          </div>
+          <Model3DForm />
         </Col>
         <Col xs="7">
           <Form id="productPrimary" onSubmit={submitProductInfo}>
