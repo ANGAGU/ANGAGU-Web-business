@@ -10,6 +10,7 @@ import {
   Input,
   FormText,
 } from 'reactstrap';
+import { ModalMol } from '../../molecules';
 import './style.css';
 
 // 임시
@@ -96,6 +97,13 @@ const ProductDetailTemplate: React.FC = () => {
           <div>
             <h4>상품 3D 모델</h4>
             <Button>3D 모델 등록</Button>
+            <ModalMol
+              className="test"
+              title="test"
+              buttonLabel="test"
+              name="fdf"
+              content={<div>hihihi</div>}
+            />
           </div>
         </Col>
         <Col xs="7">

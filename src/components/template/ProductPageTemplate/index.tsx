@@ -18,7 +18,7 @@ interface Product {
   create_time: string;
 }
 
-const ProductPage: React.FC = () => {
+const ProductPageTemplate: React.FC = () => {
   const productsTitleList = [
     '',
     '상품 아이디',
@@ -90,4 +90,4 @@ const ProductPage: React.FC = () => {
   );
 };
 
-export default ProductPage;
+export default ProductPageTemplate;
