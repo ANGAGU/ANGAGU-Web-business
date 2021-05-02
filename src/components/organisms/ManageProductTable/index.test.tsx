@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
+import ManageRegister from './libs';
 
 import ManageProductTable from './index';
 
@@ -23,4 +24,5 @@ describe('ManageProductTable Component', () => {
       render(<ManageProductTable />, container);
     });
   });
+
 });

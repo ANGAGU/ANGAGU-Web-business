@@ -35,7 +35,7 @@ describe('TopBar Page', () => {
     });
   });
 
-  it('logout test', () => {
+  it('logout function test', () => {
     localStorage.setItem('isAdmin', 'true');
     const spyFn = jest.spyOn(TopBarLibs, 'Logout');
     TopBarLibs.Logout();

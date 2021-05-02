@@ -10,6 +10,9 @@ const TopBarLibs = {
     }
     if (history) history.push('/');
   },
+  goToRegister: (history: any, url: string) => {
+    history.push(url);
+  }
 };
 
 export default TopBarLibs;

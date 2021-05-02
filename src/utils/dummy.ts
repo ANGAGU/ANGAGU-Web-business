@@ -46,8 +46,10 @@ const Dummy = {
     for (let i = 0; i < num; i += 1) {
       tempArr.push({
         id: chance.integer({ min: 0, max: 100 }),
+        company: chance.name(),
         name: chance.name(),
         img: testImg,
+        url_3d: chance.ip(),
         count: chance.integer({ min: 0, max: 100 }),
         price: chance.dollar(),
         confirmTime: chance.date().toDateString(),
