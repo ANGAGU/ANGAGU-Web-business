@@ -10,8 +10,9 @@ import {
   NavItem,
   NavLink,
 } from 'reactstrap';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link, useRouteMatch, useHistory } from 'react-router-dom';
 import './style.css';
+import TopBarLibs from './libs';
 
 const NavBarStyle = {
   height: '65px',
@@ -20,15 +21,24 @@ const NavBarStyle = {
 const ButtonStyle = {
   background: 'black',
   borderColor: '#1c5c59',
-}
+};
 type TopBarProps = {
   toggleSidebar: VoidFunction;
 };
 const TopBar = ({ toggleSidebar }: TopBarProps) => {
   const [topbarIsOpen, setTopbarOpen] = useState(true);
   const toggleTopbar = () => setTopbarOpen(!topbarIsOpen);
+  const history = useHistory();
   const Logout = (e: any) => {
-    window.localStorage.setItem('', '');
+    if (localStorage.getItem('isAdmin')) {
+      // 관리자이면
+      localStorage.removeItem('isAdmin');
+      localStorage.removeItem('token');
+    } else {
+      // 관리자 아니면
+      localStorage.removeItem('token');
+    }
+    history.push('/');
   };
   const { path } = useRouteMatch();
   return (
@@ -55,7 +65,7 @@ const TopBar = ({ toggleSidebar }: TopBarProps) => {
             </NavLink>
           </NavItem>
           <NavItem>
-            <Button onClick={Logout}>로그아웃</Button>
+            <Button onClick={(e)=>{TopBarLibs.Logout(e, history)}}>로그아웃</Button>
           </NavItem>
         </Nav>
       </Collapse>

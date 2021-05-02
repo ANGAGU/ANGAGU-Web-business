@@ -67,15 +67,14 @@ const ManageProductTable = () => {
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>주문 ID</StyledTableCell>
-            <StyledTableCell>주문고객</StyledTableCell>
+            <StyledTableCell>상품 ID</StyledTableCell>
             <StyledTableCell>상품명</StyledTableCell>
             <StyledTableCell>상품이미지</StyledTableCell>
-            <StyledTableCell>개수&nbsp;(개)</StyledTableCell>
+            <StyledTableCell>재고&nbsp;(개)</StyledTableCell>
             <StyledTableCell>가격&nbsp;(원)</StyledTableCell>
             <StyledTableCell>배송상태</StyledTableCell>
             <StyledTableCell>배송장번호</StyledTableCell>
-            <StyledTableCell>결제 시각</StyledTableCell>
+            <StyledTableCell>등록 시각</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
