@@ -30,9 +30,7 @@ const Model3DForm: React.FC = () => {
   }, []);
 
   const uploadProduct3D = async () => {
-    // const formData = new FormData();
-    // formData.append('data', JSON.stringify(product3D));
-    // const result = await api.post('/company/model', {file: formData});
+    // const result = await api.upload('/company/model', {file: product3D});
     // if (result.status === 'success') {
     //
     //   alert('성공');
