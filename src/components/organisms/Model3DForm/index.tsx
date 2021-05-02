@@ -22,11 +22,11 @@ const Model3DForm: React.FC = () => {
     // }
   };
   useEffect(() => {
+    getProduct3DModel();
     if (inputRef.current !== null) {
       inputRef.current.setAttribute('directory', '');
       inputRef.current.setAttribute('webkitdirectory', '');
     }
-    getProduct3DModel();
   }, []);
 
   const uploadProduct3D = async () => {
@@ -40,6 +40,10 @@ const Model3DForm: React.FC = () => {
     // }
   };
   const handleclickInput = () => {
+    if (inputRef.current !== null) {
+      inputRef.current.setAttribute('directory', '');
+      inputRef.current.setAttribute('webkitdirectory', '');
+    }
     inputRef.current.click();
   };
   const handleOnChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
