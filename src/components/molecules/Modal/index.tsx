@@ -33,10 +33,10 @@ const ModalMol: React.FC<ModalMolProps> = props => {
         <ModalBody>{getContent(className, name)}</ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={toggle}>
-            Do Something
+            변경
           </Button>{' '}
           <Button color="secondary" onClick={toggle}>
-            Cancel
+            취소
           </Button>
         </ModalFooter>
       </Modal>

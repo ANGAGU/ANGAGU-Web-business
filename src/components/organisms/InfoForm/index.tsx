@@ -76,7 +76,7 @@ let data = {
 };
 const rows = [
   createData('쇼핑몰명', 'name', data.name),
-  createData('관리자명', 'ownerName', '관리자명은 4~100byte까지 입력할 수 있습니다.'),
+  createData('관리자명', 'ownerName', data.ownerName),
   createData(
     '사업자등록번호',
     'businessNumber',

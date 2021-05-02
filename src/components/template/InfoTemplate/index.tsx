@@ -55,11 +55,7 @@ const InfoTemplate: React.FC = () => {
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="simple tabs example"
-        >
+        <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
           <Tab label="기업정보" {...a11yProps(0)} />
           {/* <Tab label="Item Two" {...a11yProps(1)} />
           <Tab label="Item Three" {...a11yProps(2)} /> */}
