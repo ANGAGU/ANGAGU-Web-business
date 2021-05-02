@@ -16,10 +16,13 @@ type ModalMolProps = {
   className: any;
   title: string;
   name: any;
+  content: React.ReactElement;
 };
 
-const ModalMol: React.FC<ModalMolProps> = props => {
-  const { buttonLabel, className, title, name } = props;
+const ModalMol: React.FC<ModalMolProps> & {
+  defaultProps: Partial<ModalMolProps>;
+} = props => {
+  const { buttonLabel, className, title, name, content } = props;
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
   // console.log(className);
@@ -30,6 +33,7 @@ const ModalMol: React.FC<ModalMolProps> = props => {
       </Button>
       <Modal isOpen={modal} toggle={toggle} className={className}>
         <ModalHeader toggle={toggle}>{title} 설정</ModalHeader>
+        <ModalBody>{content}</ModalBody>
         <ModalBody>{getContent(className, name)}</ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={toggle}>
@@ -103,5 +107,13 @@ const getContent = (id: string, value: string) => {
     );
   }
   return contents;
+};
+
+ModalMol.defaultProps = {
+  buttonLabel: 'Modal',
+  className: 'modal',
+  title: '',
+  name: 'modal',
+  content: <div />,
 };
 export default ModalMol;

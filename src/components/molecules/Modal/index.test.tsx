@@ -8,7 +8,9 @@ let container: HTMLElement;
 const ModalItemProps = {
   buttonLabel: 'test',
   className: 'test',
-  content: 'test'
+  name: 'test',
+  title: 'test',
+  content: <div>test</div>,
 };
 beforeEach(() => {
   // setup a DOM element as a render target
@@ -29,6 +31,8 @@ describe('SideBarItem Page', () => {
         <ModalMol
           buttonLabel={ModalItemProps.buttonLabel}
           className={ModalItemProps.className}
+          name={ModalItemProps.name}
+          title={ModalItemProps.title}
           content={ModalItemProps.content}
         />,
         container,
