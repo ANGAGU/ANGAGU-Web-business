@@ -13,6 +13,7 @@ import {
 
 type ModalMolProps = {
   buttonLabel: any;
+  buttonText: string;
   className: any;
   title: string;
   name: any;
@@ -22,7 +23,7 @@ type ModalMolProps = {
 const ModalMol: React.FC<ModalMolProps> & {
   defaultProps: Partial<ModalMolProps>;
 } = props => {
-  const { buttonLabel, className, title, name, content } = props;
+  const { buttonLabel, buttonText, className, title, name, content } = props;
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
   // console.log(className);
@@ -33,14 +34,17 @@ const ModalMol: React.FC<ModalMolProps> & {
       </Button>
       <Modal isOpen={modal} toggle={toggle} className={className}>
         <ModalHeader toggle={toggle}>{title} 설정</ModalHeader>
-        <ModalBody>{content}</ModalBody>
-        <ModalBody>{getContent(className, name)}</ModalBody>
+        {content.props.children ? (
+          <ModalBody>{content}</ModalBody>
+        ) : (
+          <ModalBody>{getContent(className, name)}</ModalBody>
+        )}
         <ModalFooter>
           <Button color="primary" onClick={toggle}>
-            Do Something
-          </Button>{' '}
+            {buttonText}
+          </Button>
           <Button color="secondary" onClick={toggle}>
-            Cancel
+            취소
           </Button>
         </ModalFooter>
       </Modal>
@@ -111,6 +115,7 @@ const getContent = (id: string, value: string) => {
 
 ModalMol.defaultProps = {
   buttonLabel: 'Modal',
+  buttonText: 'Do Something',
   className: 'modal',
   title: '',
   name: 'modal',
