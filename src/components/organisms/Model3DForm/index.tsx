@@ -6,16 +6,16 @@ import { ModalMol } from '../../molecules';
 import api from '../../../api';
 
 const Model3DForm: React.FC = () => {
-  // const [name, setName] = useState('');
+  // const [product3D, setProduct3D] = useState('');
   // const [ownerName, setOwnerName] = useState('');
   // const [businessNumber, setBusinessNumber] = useState('');
 
   const getCompanyInfo = async () => {
     // const key = localStorage.getItem('token');
-    // const result = await api.get('/company/info', {"key": key});
+    // const result = await api.post('/company/model', {"key": key});
     // if (result.status === 'success') {
-    //   // eslint-disable-next-line no-alert
-    //   alert('로그인 성공');
+    //
+    //   alert('성공');
     //   data = result.data;
     // } else {
     //   console.log(result);
@@ -24,7 +24,7 @@ const Model3DForm: React.FC = () => {
   useEffect(() => {
     getCompanyInfo();
   }, []);
-  return <>fdfdf</>;
+  return <div>fdfdf</div>;
 };
 
 export default Model3DForm;

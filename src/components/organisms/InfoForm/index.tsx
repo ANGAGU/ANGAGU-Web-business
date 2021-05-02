@@ -9,7 +9,6 @@ const InfoForm: React.FC = () => {
   // const [name, setName] = useState('');
   // const [ownerName, setOwnerName] = useState('');
   // const [businessNumber, setBusinessNumber] = useState('');
-  
 
   const getCompanyInfo = async () => {
     // const key = localStorage.getItem('token');
@@ -21,7 +20,7 @@ const InfoForm: React.FC = () => {
     // } else {
     //   console.log(result);
     // }
-  }
+  };
   useEffect(() => {
     getCompanyInfo();
   }, []);
@@ -37,7 +36,7 @@ const InfoForm: React.FC = () => {
           </Col>
           {item.button === 1 ? (
             <ModalMol
-              title={item.name}
+              title={`${item.name} 설정`}
               buttonLabel={item.buttonText}
               className={item.id}
               name={item.text}

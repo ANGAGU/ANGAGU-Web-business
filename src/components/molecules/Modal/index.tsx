@@ -33,7 +33,7 @@ const ModalMol: React.FC<ModalMolProps> & {
         {buttonLabel}
       </Button>
       <Modal isOpen={modal} toggle={toggle} className={className}>
-        <ModalHeader toggle={toggle}>{title} 설정</ModalHeader>
+        <ModalHeader toggle={toggle}>{title}</ModalHeader>
         {content.props.children ? (
           <ModalBody>{content}</ModalBody>
         ) : (

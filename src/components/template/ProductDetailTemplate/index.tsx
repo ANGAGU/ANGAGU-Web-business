@@ -15,6 +15,7 @@ import './style.css';
 
 // 임시
 import testImg from '../../../assets/product_test.jpeg';
+import { Model3DForm } from '../../organisms';
 
 interface ProductInfo {
   name: string;
@@ -94,15 +95,19 @@ const ProductDetailTemplate: React.FC = () => {
               </div>
             </div>
           </div>
-          <div>
+          <div className="product-3d-model">
             <h4>상품 3D 모델</h4>
-            <Button>3D 모델 등록</Button>
+
             <ModalMol
-              className="test"
+              className="product-3d-model__modal"
               title="test"
-              buttonLabel="test"
+              buttonLabel="3D모델 등록"
               name="fdf"
-              content={<div>hihihi</div>}
+              content={
+                <>
+                  <Model3DForm />
+                </>
+              }
             />
           </div>
         </Col>
