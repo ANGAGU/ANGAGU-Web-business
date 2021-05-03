@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -60,10 +60,11 @@ const LoginTemplate: React.FC = () => {
   const match = useRouteMatch();
   const [id, setId] = useState('');
   const [pw, setPw] = useState('');
+  const [isAdmin, setIsAdmin] = useState(false);
   const history = useHistory();
   const title =
     Object.keys(match.params).length === 0 ? '로그인' : Object.keys(match.params)[0];
- 
+
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -114,10 +115,6 @@ const LoginTemplate: React.FC = () => {
                 setPw(`${e.target.value}`);
               }}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
             <Button
               type="submit"
               fullWidth
@@ -133,12 +130,12 @@ const LoginTemplate: React.FC = () => {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href={`${match.url}/Main`} variant="body2">
+                <Link href={`/Main`} variant="body2">
                   비밀번호를 잊으셨나요?
                 </Link>
               </Grid>
               <Grid item>
-                <Link href={`${match.url}/Signup`} variant="body2">
+                <Link href={`/Login/Signup`} variant="body2">
                   {'아이디가 없으신가요? 회원가입'}
                 </Link>
               </Grid>

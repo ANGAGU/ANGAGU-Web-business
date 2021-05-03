@@ -41,7 +41,7 @@ const ModalMol: React.FC<ModalMolProps> & {
   // console.log(className);
   return (
     <div>
-      <Button color="danger" onClick={toggle}>
+      <Button outline color="secondary" onClick={toggle}>
         {buttonLabel}
       </Button>
       <Modal isOpen={modal} toggle={toggle} className={className}>
@@ -62,8 +62,8 @@ const ModalMol: React.FC<ModalMolProps> & {
             </Button>
           ) : null}
           <Button color="primary" onClick={toggle}>
-            {confirmButtonText}
-          </Button>
+            변경
+          </Button>{' '}
           <Button color="secondary" onClick={toggle}>
             취소
           </Button>
@@ -120,6 +120,17 @@ const getContent = (id: string, value: string) => {
       </div>
     );
   } else if (id === 'businessNumber') {
+    contents = (
+      <div>
+        <InputGroup>
+          <InputGroupAddon addonType="prepend">
+            <InputGroupText>{id}</InputGroupText>
+          </InputGroupAddon>
+          <Input placeholder={value} />
+        </InputGroup>
+      </div>
+    );
+  } else if (id === '3dModelUrl') {
     contents = (
       <div>
         <InputGroup>

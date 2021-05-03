@@ -11,6 +11,7 @@ import {
   InfoTemplate,
   AdjustPageTemplate,
   ProductDetailTemplate,
+  ManageProductTemplate
 } from '../../template';
 
 type ContentProps = {
@@ -27,6 +28,7 @@ const Content = ({ sidebarIsOpen, toggleSidebar }: ContentProps) => {
       fluid
       className={classNames('content', { 'is-open': sidebarIsOpen })}
     >
+    <Container fluid className={classNames('content', { 'is-open': sidebarIsOpen })}>
       <div id="content_container">
         <Switch>
           <Route
@@ -49,8 +51,12 @@ const Content = ({ sidebarIsOpen, toggleSidebar }: ContentProps) => {
             path={`${path}/Product/:id`}
             component={ProductDetailTemplate}
           />
+          <Route exact path={`${path}/Register`} component={RegisterCompanyTemplate} />
+          <Route exact path={`${path}/ManageOrder`} component={ManageOrderTemplate} />
+          <Route exact path={`${path}/Product`} component={ProductPageTemplate} />
           <Route exact path={`${path}/Info`} component={InfoTemplate} />
           <Route exact path={`${path}/Adjust`} component={AdjustPageTemplate} />
+          <Route exact path={`${path}/ManageProduct`} component={ManageProductTemplate} />
         </Switch>
       </div>
     </Container>
