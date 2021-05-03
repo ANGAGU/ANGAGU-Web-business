@@ -11,7 +11,7 @@ const Login: React.FC = () => {
       <Route exact path={`${path}/Signup`} component={SignupTemplate} />
       <Route exact path={`${path}/Admin/:Admin`} component={LoginTemplate} />
       <Route exact path={`${path}`} component={LoginTemplate} />
-      {/* <Route exact path={`${path}/:Admin`} component={LoginTemplate} /> */}
+      <Route exact path={`${path}/Admin/:Admin`} component={LoginTemplate} />
     </div>
   );
 };
