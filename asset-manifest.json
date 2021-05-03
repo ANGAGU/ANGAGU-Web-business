@@ -1,26 +1,27 @@
 {
   "files": {
-    "main.css": "/static/css/main.a6f30827.chunk.css",
-    "main.js": "/static/js/main.6a4ac03c.chunk.js",
-    "main.js.map": "/static/js/main.6a4ac03c.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.55c1df15.js",
-    "runtime-main.js.map": "/static/js/runtime-main.55c1df15.js.map",
-    "static/css/2.4c97ca4f.chunk.css": "/static/css/2.4c97ca4f.chunk.css",
-    "static/js/2.2eea8343.chunk.js": "/static/js/2.2eea8343.chunk.js",
-    "static/js/2.2eea8343.chunk.js.map": "/static/js/2.2eea8343.chunk.js.map",
-    "static/js/3.8014af42.chunk.js": "/static/js/3.8014af42.chunk.js",
-    "static/js/3.8014af42.chunk.js.map": "/static/js/3.8014af42.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/2.4c97ca4f.chunk.css.map": "/static/css/2.4c97ca4f.chunk.css.map",
-    "static/css/main.a6f30827.chunk.css.map": "/static/css/main.a6f30827.chunk.css.map",
-    "static/js/2.2eea8343.chunk.js.LICENSE.txt": "/static/js/2.2eea8343.chunk.js.LICENSE.txt",
-    "static/media/product_test.947ae717.jpeg": "/static/media/product_test.947ae717.jpeg"
+    "main.css": "/ANGAGU_WEB_business/static/css/main.2b709460.chunk.css",
+    "main.js": "/ANGAGU_WEB_business/static/js/main.6dfca23a.chunk.js",
+    "main.js.map": "/ANGAGU_WEB_business/static/js/main.6dfca23a.chunk.js.map",
+    "runtime-main.js": "/ANGAGU_WEB_business/static/js/runtime-main.57c5669a.js",
+    "runtime-main.js.map": "/ANGAGU_WEB_business/static/js/runtime-main.57c5669a.js.map",
+    "static/css/2.4c97ca4f.chunk.css": "/ANGAGU_WEB_business/static/css/2.4c97ca4f.chunk.css",
+    "static/js/2.4c1fbdef.chunk.js": "/ANGAGU_WEB_business/static/js/2.4c1fbdef.chunk.js",
+    "static/js/2.4c1fbdef.chunk.js.map": "/ANGAGU_WEB_business/static/js/2.4c1fbdef.chunk.js.map",
+    "static/js/3.87b5792e.chunk.js": "/ANGAGU_WEB_business/static/js/3.87b5792e.chunk.js",
+    "static/js/3.87b5792e.chunk.js.map": "/ANGAGU_WEB_business/static/js/3.87b5792e.chunk.js.map",
+    "index.html": "/ANGAGU_WEB_business/index.html",
+    "static/css/2.4c97ca4f.chunk.css.map": "/ANGAGU_WEB_business/static/css/2.4c97ca4f.chunk.css.map",
+    "static/css/main.2b709460.chunk.css.map": "/ANGAGU_WEB_business/static/css/main.2b709460.chunk.css.map",
+    "static/js/2.4c1fbdef.chunk.js.LICENSE.txt": "/ANGAGU_WEB_business/static/js/2.4c1fbdef.chunk.js.LICENSE.txt",
+    "static/media/product_test.947ae717.jpeg": "/ANGAGU_WEB_business/static/media/product_test.947ae717.jpeg",
+    "static/media/slack.4c64bd41.png": "/ANGAGU_WEB_business/static/media/slack.4c64bd41.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.55c1df15.js",
+    "static/js/runtime-main.57c5669a.js",
     "static/css/2.4c97ca4f.chunk.css",
-    "static/js/2.2eea8343.chunk.js",
-    "static/css/main.a6f30827.chunk.css",
-    "static/js/main.6a4ac03c.chunk.js"
+    "static/js/2.4c1fbdef.chunk.js",
+    "static/css/main.2b709460.chunk.css",
+    "static/js/main.6dfca23a.chunk.js"
   ]
 }
