@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import { Table, Button } from 'reactstrap';
 import './style.css';
 import { Dummy } from '../../../utils';
 import api from '../../../api';
@@ -17,7 +18,7 @@ interface Product {
   create_time: string;
 }
 
-function ProductPage(): React.ReactElement {
+const ProductPageTemplate: React.FC = () => {
   const productsTitleList = [
     '',
     '상품 아이디',
@@ -47,10 +48,7 @@ function ProductPage(): React.ReactElement {
     <th className="column-title">{ttl}</th>
   ));
   const productList = products.map((product, index) => (
-    <tr
-      key={product.id}
-      className={index % 2 === 0 ? 'even pointer' : 'odd pointer'}
-    >
+    <tr key={product.id} className={index % 2 === 0 ? 'even pointer' : 'odd pointer'}>
       <td className="a-center">
         <input type="checkbox" className="flat" name="table_records" />
       </td>
@@ -66,7 +64,9 @@ function ProductPage(): React.ReactElement {
       <td className=" ">{product.stock}</td>
       <td className="a-right a-right ">{product.create_time}</td>
       <td className="last">
-        <Button color="secondary">수정하기</Button>{' '}
+        <Link to="/Main/Product/1">
+          <Button color="secondary">수정하기</Button>
+        </Link>
       </td>
     </tr>
   ));
@@ -76,18 +76,18 @@ function ProductPage(): React.ReactElement {
       <div className="product-page">
         <div className="x_content">
           <div className="table-responsive">
-            <table className="table table-striped jambo_table bulk_action">
+            <Table className="table table-striped jambo_table bulk_action">
               <thead>
                 <tr className="headings">{productsHeader}</tr>
               </thead>
 
               <tbody>{productList}</tbody>
-            </table>
+            </Table>
           </div>
         </div>
       </div>
     </>
   );
-}
+};
 
-export default ProductPage;
+export default ProductPageTemplate;

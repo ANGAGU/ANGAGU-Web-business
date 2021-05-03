@@ -1,0 +1,5 @@
+.flex_vertical {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}

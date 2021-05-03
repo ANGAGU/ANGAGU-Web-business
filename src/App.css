@@ -4,6 +4,7 @@
   align-items: stretch;
   overflow-y: hidden;
   margin: 0 0 0 0;
+  height: 100%;
 }
 
 @import 'https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700';
@@ -12,6 +13,7 @@ body {
   font-family: 'Poppins', sans-serif;
   background: #fafafa;
   height:100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 html {
