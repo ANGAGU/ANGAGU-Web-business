@@ -1,16 +1,16 @@
-table {
+.product-table {
   width: 100%;
   margin-bottom: 8px;
   text-align: center;
 }
-.table th {
-  line-height: 50px;
+.product-table th {
+  line-height: 60px;
 }
-.table td {
+.product-table td {
   line-height: 70px;
 }
-.table td,
-.table th {
+.product-table td,
+.product-table th {
   padding: 0 16px;
   border-top: none;
   border-bottom: 1px solid gainsboro;

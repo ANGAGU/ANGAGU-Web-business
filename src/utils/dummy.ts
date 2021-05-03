@@ -19,6 +19,41 @@ const Dummy = {
 
     return tempArr;
   },
+  makeAdjusts: (num: number) => {
+    const chance = new Chance();
+
+    const tempArr = [];
+    for (let i = 0; i < num; i += 1) {
+      tempArr.push({
+        id: chance.integer({ min: 0, max: 100 }),
+        company: chance.word(),
+        term: `${chance.date().toDateString()}~${chance.date().toDateString()}`,
+        profit: chance.dollar(),
+        revenue: chance.dollar(),
+        commission: chance.dollar(),
+      });
+    }
+
+    return tempArr;
+  },
+  makeProductProfits: (num: number) => {
+    const chance = new Chance();
+
+    const tempArr = [];
+    for (let i = 0; i < num; i += 1) {
+      tempArr.push({
+        id: chance.integer({ min: 0, max: 100 }),
+        name: chance.word(),
+        price: chance.dollar(),
+        sellCount: chance.integer({ min: 0, max: 100 }),
+        profit: chance.dollar(),
+        revenue: chance.dollar(),
+        commission: chance.dollar(),
+      });
+    }
+
+    return tempArr;
+  },
 };
 
 export default Dummy;

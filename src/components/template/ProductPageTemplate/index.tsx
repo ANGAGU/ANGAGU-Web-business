@@ -48,7 +48,10 @@ const ProductPageTemplate: React.FC = () => {
     <th className="column-title">{ttl}</th>
   ));
   const productList = products.map((product, index) => (
-    <tr key={product.id} className={index % 2 === 0 ? 'even pointer' : 'odd pointer'}>
+    <tr
+      key={product.id}
+      className={index % 2 === 0 ? 'even pointer' : 'odd pointer'}
+    >
       <td className="a-center">
         <input type="checkbox" className="flat" name="table_records" />
       </td>
@@ -75,15 +78,13 @@ const ProductPageTemplate: React.FC = () => {
     <>
       <div className="product-page">
         <div className="x_content">
-          <div className="table-responsive">
-            <Table className="table table-striped jambo_table bulk_action">
-              <thead>
-                <tr className="headings">{productsHeader}</tr>
-              </thead>
+          <Table striped className="product-table">
+            <thead>
+              <tr className="headings">{productsHeader}</tr>
+            </thead>
 
-              <tbody>{productList}</tbody>
-            </Table>
-          </div>
+            <tbody>{productList}</tbody>
+          </Table>
         </div>
       </div>
     </>
