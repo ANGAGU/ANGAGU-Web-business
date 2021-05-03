@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -9,7 +10,7 @@ import {
   faCopy,
   faCashRegister,
   faHouseUser,
-  faChartPie
+  faChartPie,
 } from '@fortawesome/free-solid-svg-icons';
 import { NavItem, NavLink, Nav } from 'reactstrap';
 import classNames from 'classnames';
@@ -51,6 +52,8 @@ const SideBar: React.FC<SideBarProps> = ({ isOpen, toggle }) => {
           )}
           <SideBarItem title={'기업정보'} url={'/Main/Info'} icon={faChartPie} />
           <SideBarItem title={'주문관리'} url={'/Main/ManageOrder'} icon={faCashRegister} />
+          <SideBarItem title={'상품상세'} url={'/Main/Product/:id'} icon={faPaperPlane} />
+          <SideBarItem title={'정산관리'} url={'/Main/Adjust'} icon={faBriefcase} />
           <SideBarItem title={'FAQ'} url={'/faq'} icon={faQuestion} />
           <SideBarItem title={'Contact'} url={'/contact'} icon={faImage} />
         </Nav>
