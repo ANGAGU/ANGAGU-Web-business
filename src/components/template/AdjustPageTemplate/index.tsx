@@ -1,6 +1,6 @@
 import api from 'api';
 import React, { useState, useEffect } from 'react';
-import { Table, Container, Input, Button } from 'reactstrap';
+import { Table, Container, Input, Button, Row } from 'reactstrap';
 import { Dummy } from 'utils';
 import { CompanyFilter } from '../../molecules';
 import {
@@ -36,7 +36,9 @@ const AdjustPageTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
   const [productProfitsDummy] = useState(
     Dummy.makeProductProfits(10) as Array<ProductProfit>,
   );
-
+  const [company, setCompany] = useState('' as string);
+  const [toggle, setToggle] = useState(false as boolean);
+  const [searchMonth, setSearchMonth] = useState('' as string);
   // methods
   const requestAdjust = async () => {
     // const result = api.post('send adjust api', {});
@@ -78,6 +80,11 @@ const AdjustPageTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
     <option key={index}>{month}</option>
   ));
 
+  const handleOnChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = evt.target as HTMLInputElement;
+    setSearchMonth(value);
+  };
+
   return (
     <>
       <Container className="adjust-page">
@@ -85,10 +92,15 @@ const AdjustPageTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
           <h5> 검색 </h5>
           <div className="filter-form">
             <div className="filter-form__content">
-              {true ? <CompanyFilter isAdmin /> : <></>}
+              {true ? <CompanyFilter selectCompanyFunc={setCompany} /> : <></>}
               <span className="content__ttl">정산 일자</span>
               <span>
-                <Input type="select" name="month" id="filter-month">
+                <Input
+                  type="select"
+                  name="month"
+                  id="filter-month"
+                  onChange={handleOnChange}
+                >
                   {monthOptions}
                 </Input>
               </span>
@@ -96,15 +108,31 @@ const AdjustPageTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
             <Button>검색</Button>
           </div>
         </div>
-        <div className="adjust-table-blk">
-          <Table borderless className="adjust-table">
-            <thead>
-              <tr className="headings">{adjustHeader}</tr>
-            </thead>
+        <div className="adjust-block">
+          <div className="adjust-content">
+            <div className="content__profit">
+              <span className="company-name content-highlight">{company}</span>
+              의
+              <span className="adjust-month content-highlight">
+                {searchMonth}
+              </span>
+              입금 금액은
+              <span className="adjust-profit content-highlight">200000원</span>
+              입니다.
+            </div>
+            <div className="content__profit-detail">
+              총 매출 {`250000원`} - 수수료 {`50000원`}
+            </div>
+          </div>
+          <Button
+            onClick={() => {
+              setToggle(!toggle);
+            }}
+          >
+            토글
+          </Button>
 
-            <tbody>{adjusts}</tbody>
-          </Table>
-          <div>
+          {toggle ? (
             <Table size="sm" className="product-profit-table">
               <thead>
                 <tr>{productProfitHeader}</tr>
@@ -112,7 +140,7 @@ const AdjustPageTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
 
               <tbody>{productProfits}</tbody>
             </Table>
-          </div>
+          ) : null}
         </div>
       </Container>
     </>

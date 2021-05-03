@@ -6,9 +6,9 @@ import { adjustTitleList, monthList } from '../../../commons/constants/string';
 import './style.css';
 
 type CompanyFilterProps = {
-  isAdmin: boolean;
+  selectCompanyFunc: React.Dispatch<React.SetStateAction<string>>;
 };
-const CompanyFilter: React.FC<CompanyFilterProps> = ({ isAdmin }) => {
+const CompanyFilter: React.FC<CompanyFilterProps> = ({ selectCompanyFunc }) => {
   const [company, setCompany] = useState('' as string);
   // const [companyList, setCompanyList] = useState([] as Array<string>);
   const [filteredList, setFilteredList] = useState([] as Array<string>);
@@ -53,6 +53,7 @@ const CompanyFilter: React.FC<CompanyFilterProps> = ({ isAdmin }) => {
   };
   const selectCompany = (value: string) => {
     setCompany(value);
+    selectCompanyFunc(value);
   };
   return (
     <div className="filter-form__content">
