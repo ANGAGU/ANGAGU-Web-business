@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Table } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import { Table, Button } from 'reactstrap';
 import './style.css';
 import { Dummy } from '../../../utils';
 import api from '../../../api';
@@ -17,7 +18,7 @@ interface Product {
   create_time: string;
 }
 
-function ProductPage(): React.ReactElement {
+const ProductPageTemplate: React.FC = () => {
   const productsTitleList = [
     '',
     '상품 아이디',
@@ -66,7 +67,9 @@ function ProductPage(): React.ReactElement {
       <td className=" ">{product.stock}</td>
       <td className="a-right a-right ">{product.create_time}</td>
       <td className="last">
-        <Button color="secondary">수정하기</Button>{' '}
+        <Link to="/Main/Product/1">
+          <Button color="secondary">수정하기</Button>
+        </Link>
       </td>
     </tr>
   ));
@@ -86,6 +89,6 @@ function ProductPage(): React.ReactElement {
       </div>
     </>
   );
-}
+};
 
-export default ProductPage;
+export default ProductPageTemplate;

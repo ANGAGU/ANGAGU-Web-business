@@ -10,6 +10,7 @@ import {
   ManageOrderTemplate,
   InfoTemplate,
   AdjustPageTemplate,
+  ProductDetailTemplate,
 } from '../../template';
 
 type ContentProps = {
@@ -22,13 +23,32 @@ const Content = ({ sidebarIsOpen, toggleSidebar }: ContentProps) => {
   const { path } = useRouteMatch(); // 요청시의 path?
   console.log('path : ', path);
   return (
-    <Container fluid className={classNames('content', { 'is-open': sidebarIsOpen })}>
-      <Topbar toggleSidebar={toggleSidebar} />
+    <Container
+      fluid
+      className={classNames('content', { 'is-open': sidebarIsOpen })}
+    >
       <div id="content_container">
         <Switch>
-          <Route exact path={`${path}/Register`} component={RegisterCompanyTemplate} />
-          <Route exact path={`${path}/ManageOrder`} component={ManageOrderTemplate} />
-          <Route exact path={`${path}/Product`} component={ProductPageTemplate} />
+          <Route
+            exact
+            path={`${path}/Register`}
+            component={RegisterCompanyTemplate}
+          />
+          <Route
+            exact
+            path={`${path}/ManageOrder`}
+            component={ManageOrderTemplate}
+          />
+          <Route
+            exact
+            path={`${path}/Product`}
+            component={ProductPageTemplate}
+          />
+          <Route
+            exact
+            path={`${path}/Product/:id`}
+            component={ProductDetailTemplate}
+          />
           <Route exact path={`${path}/Info`} component={InfoTemplate} />
           <Route exact path={`${path}/Adjust`} component={AdjustPageTemplate} />
         </Switch>
