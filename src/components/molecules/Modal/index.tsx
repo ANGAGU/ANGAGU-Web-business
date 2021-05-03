@@ -10,16 +10,32 @@ import {
   InputGroupAddon,
   InputGroupText,
 } from 'reactstrap';
+import './style.css';
 
 type ModalMolProps = {
   buttonLabel: any;
+  confirmButtonText: string;
+  leftButtonText: string;
+  leftButtonAction: VoidFunction;
   className: any;
   title: string;
   name: any;
+  content: React.ReactElement;
 };
 
-const ModalMol: React.FC<ModalMolProps> = props => {
-  const { buttonLabel, className, title, name } = props;
+const ModalMol: React.FC<ModalMolProps> & {
+  defaultProps: Partial<ModalMolProps>;
+} = props => {
+  const {
+    buttonLabel,
+    confirmButtonText,
+    leftButtonText,
+    leftButtonAction,
+    className,
+    title,
+    name,
+    content,
+  } = props;
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
   // console.log(className);
@@ -29,14 +45,27 @@ const ModalMol: React.FC<ModalMolProps> = props => {
         {buttonLabel}
       </Button>
       <Modal isOpen={modal} toggle={toggle} className={className}>
-        <ModalHeader toggle={toggle}>{title} 설정</ModalHeader>
-        <ModalBody>{getContent(className, name)}</ModalBody>
+        <ModalHeader toggle={toggle}>{title}</ModalHeader>
+        {content.props.children ? (
+          <ModalBody>{content}</ModalBody>
+        ) : (
+          <ModalBody>{getContent(className, name)}</ModalBody>
+        )}
         <ModalFooter>
+          {leftButtonText ? (
+            <Button
+              color="secondary"
+              className="modal-btn--left"
+              onClick={leftButtonAction}
+            >
+              {leftButtonText}
+            </Button>
+          ) : null}
           <Button color="primary" onClick={toggle}>
-            Do Something
-          </Button>{' '}
+            {confirmButtonText}
+          </Button>
           <Button color="secondary" onClick={toggle}>
-            Cancel
+            취소
           </Button>
         </ModalFooter>
       </Modal>
@@ -103,5 +132,15 @@ const getContent = (id: string, value: string) => {
     );
   }
   return contents;
+};
+
+ModalMol.defaultProps = {
+  buttonLabel: 'Modal',
+  confirmButtonText: 'Do Something',
+  leftButtonText: '',
+  className: 'modal',
+  title: '',
+  name: 'modal',
+  content: <div />,
 };
 export default ModalMol;

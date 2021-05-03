@@ -63,12 +63,21 @@ const LoginTemplate: React.FC = () => {
   const history = useHistory();
   const title =
     Object.keys(match.params).length === 0 ? '로그인' : Object.keys(match.params)[0];
-
+ 
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
-      <Grid item xs={12} sm={8} md={5} component={Paper} className={classes.main} elevation={6} square>
+      <Grid
+        item
+        xs={12}
+        sm={8}
+        md={5}
+        component={Paper}
+        className={classes.main}
+        elevation={6}
+        square
+      >
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
