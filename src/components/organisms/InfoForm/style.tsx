@@ -20,7 +20,7 @@ const thStyle = {
 };
 const formStyle = {
   margin: '30px',
-}
+};
 
 export {
   trStyle,

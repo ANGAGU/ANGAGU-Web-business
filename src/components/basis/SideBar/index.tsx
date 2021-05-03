@@ -18,7 +18,7 @@ import logo from '../../../assets/images/slack.png';
 
 const imgStyle = {
   width: '65px',
-}
+};
 type SideBarProps = {
   isOpen: boolean;
   toggle: VoidFunction;
@@ -31,7 +31,7 @@ const SideBar: React.FC<SideBarProps> = ({ isOpen, toggle }) => {
           &times;
         </span>
         <a href="/Main">
-          <img src={logo} alt="안가구 로고" style={imgStyle}/>
+          <img src={logo} alt="안가구 로고" style={imgStyle} />
         </a>
       </div>
       <div className="side-menu">
@@ -41,6 +41,7 @@ const SideBar: React.FC<SideBarProps> = ({ isOpen, toggle }) => {
           <SideBarItem title={'About'} url={'/about'} icon={faBriefcase} />
           <SubMenu title="Pages" icon={faCopy} items={submenus[1]} />
           <SideBarItem title={'상품관리'} url={'/Main/Product'} icon={faCopy} />
+          <SideBarItem title={'상품상세'} url={'/Main/Product/1'} icon={faImage} />
           <SideBarItem title={'기업정보'} url={'/Main/Info'} icon={faCopy} />
           <SideBarItem title={'주문관리'} url={'/Main/ManageOrder'} icon={faImage} />
           <SideBarItem title={'FAQ'} url={'/faq'} icon={faQuestion} />
