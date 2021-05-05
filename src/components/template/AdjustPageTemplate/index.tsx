@@ -36,9 +36,9 @@ const AdjustPageTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
   const [productProfitsDummy] = useState(
     Dummy.makeProductProfits(10) as Array<ProductProfit>,
   );
-  const [company, setCompany] = useState('' as string);
+  const [company, setCompany] = useState('회사' as string);
   const [toggle, setToggle] = useState(false as boolean);
-  const [searchMonth, setSearchMonth] = useState('' as string);
+  const [searchMonth, setSearchMonth] = useState('1월' as string);
   // methods
   const requestAdjust = async () => {
     // const result = api.post('send adjust api', {});
@@ -117,6 +117,39 @@ const AdjustPageTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
                 {searchMonth}
               </span>
               입금 금액은
+              <span className="adjust-profit content-highlight">200000원</span>
+              입니다.
+            </div>
+            <div className="content__profit-detail">
+              총 매출 {`250000원`} - 수수료 {`50000원`}
+            </div>
+          </div>
+          <Button
+            onClick={() => {
+              setToggle(!toggle);
+            }}
+          >
+            토글
+          </Button>
+
+          {toggle ? (
+            <Table size="sm" className="product-profit-table">
+              <thead>
+                <tr>{productProfitHeader}</tr>
+              </thead>
+
+              <tbody>{productProfits}</tbody>
+            </Table>
+          ) : null}
+        </div>
+        <div className="adjust-block">
+          <div className="adjust-content">
+            <div className="content__profit">
+              <span className="company-name content-highlight">Scanit</span>의
+              <span className="adjust-month content-highlight">
+                {searchMonth}
+              </span>
+              수익 수수료는
               <span className="adjust-profit content-highlight">200000원</span>
               입니다.
             </div>
