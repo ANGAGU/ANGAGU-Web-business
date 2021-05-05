@@ -1,18 +1,10 @@
 import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
-import ModalMol from './index';
+import Modal3D from './index';
 
 let container: HTMLElement;
 
-const ModalItemProps = {
-  buttonLabel: 'test',
-  className: 'test',
-  confirmButtonText: 'test',
-  name: 'test',
-  title: 'test',
-  content: <div>test</div>,
-};
 beforeEach(() => {
   // setup a DOM element as a render target
   container = document.createElement('div');
@@ -25,19 +17,10 @@ afterEach(() => {
   container.remove();
 });
 
-describe('SideBarItem Page', () => {
+describe('Modal3D Page', () => {
   it('renders', () => {
     act(() => {
-      render(
-        <ModalMol
-          buttonLabel={ModalItemProps.buttonLabel}
-          className={ModalItemProps.className}
-          name={ModalItemProps.name}
-          title={ModalItemProps.title}
-          content={ModalItemProps.content}
-        />,
-        container,
-      );
+      render(<Modal3D />, container);
     });
   });
 });

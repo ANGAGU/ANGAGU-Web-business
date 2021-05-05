@@ -9,12 +9,9 @@ import './style.css';
 const Modal3D: React.FC = props => {
   const [modal, setModal] = useState(false);
   const [product3D, setProduct3D] = useState(null);
-  const [width, setWidth] = useState(500);
-  const [height, setHeight] = useState(500);
 
   const toggle = () => setModal(!modal);
   const inputRef = useRef(null as HTMLInputElement | null) as React.MutableRefObject<HTMLInputElement>;
-  const parentRef = useRef(null as HTMLInputElement | null) as React.MutableRefObject<HTMLInputElement>;
 
   const handleclickInput = () => {
     if (inputRef.current !== null) {
