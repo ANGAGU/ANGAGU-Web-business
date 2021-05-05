@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Button,
   Input,
@@ -16,29 +16,21 @@ type ModalMolProps = {
   buttonLabel: any;
   confirmButtonText: string;
   leftButtonText: string;
-  leftButtonAction: VoidFunction;
   className: any;
   title: string;
   name: any;
   content: React.ReactElement;
+  file: any;
 };
 
 const ModalMol: React.FC<ModalMolProps> & {
   defaultProps: Partial<ModalMolProps>;
 } = props => {
-  const {
-    buttonLabel,
-    confirmButtonText,
-    leftButtonText,
-    leftButtonAction,
-    className,
-    title,
-    name,
-    content,
-  } = props;
+  const { buttonLabel, confirmButtonText, leftButtonText, className, title, name, content, file } = props;
   const [modal, setModal] = useState(false);
+  // eslint-disable-next-line react/destructuring-assignment
   const toggle = () => setModal(!modal);
-  // console.log(className);
+
   return (
     <div>
       <Button outline color="secondary" onClick={toggle}>
@@ -46,21 +38,8 @@ const ModalMol: React.FC<ModalMolProps> & {
       </Button>
       <Modal isOpen={modal} toggle={toggle} className={className}>
         <ModalHeader toggle={toggle}>{title}</ModalHeader>
-        {content.props.children ? (
-          <ModalBody>{content}</ModalBody>
-        ) : (
-          <ModalBody>{getContent(className, name)}</ModalBody>
-        )}
+        <ModalBody>{getContent(className, name)}</ModalBody>
         <ModalFooter>
-          {leftButtonText ? (
-            <Button
-              color="secondary"
-              className="modal-btn--left"
-              onClick={leftButtonAction}
-            >
-              {leftButtonText}
-            </Button>
-          ) : null}
           <Button color="primary" onClick={toggle}>
             변경
           </Button>{' '}
