@@ -26,7 +26,7 @@
     "gh-pages": "^3.1.0",
     "http-proxy-middleware": "^0.19.1",
     "jest-dom": "^4.0.0",
-    "mdbreact": "^5.0.2",
+    "mdbreact": "4.6.1",
     "querystring": "^0.2.1",
     "react": "^17.0.2",
     "react-bootstrap": "^1.5.2",
@@ -37,6 +37,7 @@
     "react-testing-library": "^8.0.1",
     "reactstrap": "^8.9.0",
     "styled-components": "^5.2.3",
+    "three": "^0.128.0",
     "typescript": "^4.2.3",
     "web-vitals": "^1.1.1"
   },

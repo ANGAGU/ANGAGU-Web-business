@@ -2,14 +2,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Col, Form, FormGroup, Label, Input, Container, Row } from 'reactstrap';
 import './style.css';
-import { ModalMol } from '../../molecules';
+import { ModalMol, View3dModel } from '../../molecules';
 import api from '../../../api';
 
 const Model3DForm: React.FC = () => {
   const [product3D, setProduct3D] = useState(null as FileList | null);
-  const inputRef = useRef(
-    null as HTMLInputElement | null,
-  ) as React.MutableRefObject<HTMLInputElement>;
+  const inputRef = useRef(null as HTMLInputElement | null) as React.MutableRefObject<HTMLInputElement>;
 
   const getProduct3DModel = async () => {
     // const result = await api.post('/company/model', {});
@@ -61,7 +59,9 @@ const Model3DForm: React.FC = () => {
         </Col>
       </Row>
       <Row>
-        <Col className="model-view">요기에 미리보기 띄어도 좋을거 같아요옹!</Col>
+        <Col className="model-view">
+          <View3dModel file={product3D} />
+        </Col>
       </Row>
     </Container>
   );
