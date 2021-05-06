@@ -21,7 +21,7 @@ const MonthSelector: React.FC<MonthSelectorProps> = ({
 
   useEffect(() => {
     getCurrentDate();
-  });
+  }, []);
   const getCurrentDate = () => {
     const today = new Date();
     const year = today.getFullYear();
@@ -30,9 +30,16 @@ const MonthSelector: React.FC<MonthSelectorProps> = ({
     if (month < 10) setDate(`${year}-0${month}`);
     else setDate(`${year}-${month}`);
   };
+
+  const string2Date = (value: string) => {
+    const year = parseInt(value.substr(0, 4), 10);
+    const month = parseInt(value.substr(5, 2), 10);
+    return new Date(year, month - 1);
+  };
   const handleOnChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = evt.target as HTMLInputElement;
-    console.log(value);
+    setDate(value);
+    selectDateFunc(string2Date(value));
   };
 
   return (

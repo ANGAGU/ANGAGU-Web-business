@@ -87,6 +87,9 @@ const AdjustPageTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
     setSearchMonth(value);
   };
 
+  const test = () => {
+    console.log('date: ', adminDate);
+  };
   return (
     <>
       <Container className="adjust-page">
@@ -96,7 +99,7 @@ const AdjustPageTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
           <div className="adjust-filter">
             <h5> </h5>
             <div className="filter-form">
-              <MonthSelector selectDateFunc={setAdminDate} />
+              <MonthSelector title="정산일자" selectDateFunc={setAdminDate} />
 
               <Button>검색</Button>
             </div>
@@ -106,7 +109,7 @@ const AdjustPageTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
               <div className="content__profit">
                 <span className="company-name content-highlight">Scanit</span>의
                 <span className="adjust-month content-highlight">
-                  {searchMonth}
+                  {`${adminDate.getFullYear()}년 ${adminDate.getMonth() + 1}월`}
                 </span>
                 수익 수수료는
                 <span className="adjust-profit content-highlight">
