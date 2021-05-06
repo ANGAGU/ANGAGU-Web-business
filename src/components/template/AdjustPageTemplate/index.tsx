@@ -88,92 +88,117 @@ const AdjustPageTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
   return (
     <>
       <Container className="adjust-page">
-        <div className="adjust-filter">
-          <h5> 검색 </h5>
-          <div className="filter-form">
-            <div className="filter-form__content">
-              {true ? <CompanyFilter selectCompanyFunc={setCompany} /> : <></>}
-              <span className="content__ttl">정산 일자</span>
-              <span>
-                <Input
-                  type="select"
-                  name="month"
-                  id="filter-month"
-                  onChange={handleOnChange}
-                >
-                  {monthOptions}
-                </Input>
-              </span>
+        <h3>정산 관리</h3>
+        <hr />
+        <div className="admin-adjust">
+          <div className="adjust-filter">
+            <h5> </h5>
+            <div className="filter-form">
+              <div className="filter-form__content">
+                <span className="content__ttl">정산 일자</span>
+                <span>
+                  <Input
+                    type="select"
+                    name="year"
+                    id="filter-year"
+                    onChange={handleOnChange}
+                  >
+                    {monthOptions}
+                  </Input>
+                </span>
+                <span>
+                  <Input
+                    type="select"
+                    name="month"
+                    id="filter-month"
+                    onChange={handleOnChange}
+                  >
+                    {monthOptions}
+                  </Input>
+                </span>
+              </div>
+              <Button>검색</Button>
             </div>
-            <Button>검색</Button>
+          </div>
+          <div className="adjust-block">
+            <div className="adjust-content">
+              <div className="content__profit">
+                <span className="company-name content-highlight">Scanit</span>의
+                <span className="adjust-month content-highlight">
+                  {searchMonth}
+                </span>
+                수익 수수료는
+                <span className="adjust-profit content-highlight">
+                  200000원
+                </span>
+                입니다.
+              </div>
+              <div className="content__profit-detail">
+                총 매출 {`250000원`} - 수수료 {`50000원`}
+              </div>
+            </div>
           </div>
         </div>
-        <div className="adjust-block">
-          <div className="adjust-content">
-            <div className="content__profit">
-              <span className="company-name content-highlight">{company}</span>
-              의
-              <span className="adjust-month content-highlight">
-                {searchMonth}
-              </span>
-              입금 금액은
-              <span className="adjust-profit content-highlight">200000원</span>
-              입니다.
-            </div>
-            <div className="content__profit-detail">
-              총 매출 {`250000원`} - 수수료 {`50000원`}
-            </div>
-          </div>
-          <Button
-            onClick={() => {
-              setToggle(!toggle);
-            }}
-          >
-            토글
-          </Button>
-
-          {toggle ? (
-            <Table size="sm" className="product-profit-table">
-              <thead>
-                <tr>{productProfitHeader}</tr>
-              </thead>
-
-              <tbody>{productProfits}</tbody>
-            </Table>
-          ) : null}
-        </div>
-        <div className="adjust-block">
-          <div className="adjust-content">
-            <div className="content__profit">
-              <span className="company-name content-highlight">Scanit</span>의
-              <span className="adjust-month content-highlight">
-                {searchMonth}
-              </span>
-              수익 수수료는
-              <span className="adjust-profit content-highlight">200000원</span>
-              입니다.
-            </div>
-            <div className="content__profit-detail">
-              총 매출 {`250000원`} - 수수료 {`50000원`}
+        <hr />
+        <div className="company-adjust">
+          <div className="adjust-filter">
+            <h5> 검색 </h5>
+            <div className="filter-form">
+              <div className="filter-form__content">
+                {true && <CompanyFilter selectCompanyFunc={setCompany} />}
+                <span className="content__ttl">정산 일자</span>
+                <span>
+                  <Input
+                    type="select"
+                    name="month"
+                    id="filter-month"
+                    onChange={handleOnChange}
+                  >
+                    {monthOptions}
+                  </Input>
+                </span>
+              </div>
+              <Button>검색</Button>
             </div>
           </div>
-          <Button
-            onClick={() => {
-              setToggle(!toggle);
-            }}
-          >
-            토글
-          </Button>
+          <div className="adjust-block">
+            <div className="adjust-content">
+              <div className="content__profit">
+                <span className="company-name content-highlight">
+                  {company}
+                </span>
+                의
+                <span className="adjust-month content-highlight">
+                  {searchMonth}
+                </span>
+                입금 금액은
+                <span className="adjust-profit content-highlight">
+                  200000원
+                </span>
+                입니다.
+              </div>
+              <div className="content__profit-detail">
+                총 매출 {`250000원`} - 수수료 {`50000원`}
+              </div>
+            </div>
+            <Button
+              onClick={() => {
+                setToggle(!toggle);
+              }}
+            >
+              토글
+            </Button>
 
-          {toggle ? (
-            <Table size="sm" className="product-profit-table">
-              <thead>
-                <tr>{productProfitHeader}</tr>
-              </thead>
+            {toggle && (
+              <Table size="sm" className="product-profit-table">
+                <thead>
+                  <tr>{productProfitHeader}</tr>
+                </thead>
 
-              <tbody>{productProfits}</tbody>
-            </Table>
-          ) : null}
+                <tbody>{productProfits}</tbody>
+              </Table>
+            )}
+          </div>
         </div>
       </Container>
     </>

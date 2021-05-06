@@ -1,3 +1,14 @@
+.adjust-page {
+  padding: 20px 0;
+}
+
+.admin-adjust {
+  padding: 45px 25px;
+}
+
+.company-adjust {
+  padding: 45px 25px 80px;
+}
 .adjust-filter {
   margin-bottom: 20px;
 }
