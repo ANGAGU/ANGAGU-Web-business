@@ -130,17 +130,10 @@ const AdjustPageTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
             <div className="filter-form">
               <div className="filter-form__content">
                 {true && <CompanyFilter selectCompanyFunc={setCompany} />}
-                <span className="content__ttl">정산 일자</span>
-                <span>
-                  <Input
-                    type="select"
-                    name="month"
-                    id="filter-month"
-                    onChange={handleOnChange}
-                  >
-                    {monthOptions}
-                  </Input>
-                </span>
+                <MonthSelector
+                  title="정산일자"
+                  selectDateFunc={setCompanyDate}
+                />
               </div>
               <Button>검색</Button>
             </div>
@@ -153,7 +146,9 @@ const AdjustPageTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
                 </span>
                 의
                 <span className="adjust-month content-highlight">
-                  {searchMonth}
+                  {`${companyDate.getFullYear()}년 ${
+                    companyDate.getMonth() + 1
+                  }월`}
                 </span>
                 입금 금액은
                 <span className="adjust-profit content-highlight">
