@@ -2,7 +2,7 @@ import api from 'api';
 import React, { useState, useEffect } from 'react';
 import { Table, Container, Input, Button, Row } from 'reactstrap';
 import { Dummy } from 'utils';
-import { CompanyFilter } from '../../molecules';
+import { CompanyFilter, MonthSelector } from '../../molecules';
 import {
   adjustTitleList,
   projuctProfitTitleList,
@@ -39,6 +39,8 @@ const AdjustPageTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
   const [company, setCompany] = useState('회사' as string);
   const [toggle, setToggle] = useState(false as boolean);
   const [searchMonth, setSearchMonth] = useState('1월' as string);
+  const [adminDate, setAdminDate] = useState(new Date());
+  const [companyDate, setCompanyDate] = useState(new Date());
   // methods
   const requestAdjust = async () => {
     // const result = api.post('send adjust api', {});
@@ -94,29 +96,8 @@ const AdjustPageTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
           <div className="adjust-filter">
             <h5> </h5>
             <div className="filter-form">
-              <div className="filter-form__content">
-                <span className="content__ttl">정산 일자</span>
-                <span>
-                  <Input
-                    type="select"
-                    name="year"
-                    id="filter-year"
-                    onChange={handleOnChange}
-                  >
-                    {monthOptions}
-                  </Input>
-                </span>
-                <span>
-                  <Input
-                    type="select"
-                    name="month"
-                    id="filter-month"
-                    onChange={handleOnChange}
-                  >
-                    {monthOptions}
-                  </Input>
-                </span>
-              </div>
+              <MonthSelector selectDateFunc={setAdminDate} />
+
               <Button>검색</Button>
             </div>
           </div>
