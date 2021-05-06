@@ -1,11 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Col, Form, FormGroup, Label, Input, Container, Row } from 'reactstrap';
-import * as THREE from 'three';
+import React from 'react';
 import './style.css';
-import { OBJModel } from 'react-3d-viewer';
-import { ModalMol, Modal3D } from '../../molecules';
-import model from './Koltuk.obj';
-import api from '../../../api';
+import { Modal3D } from '../../molecules';
 
 const Model3DForm = () => {
   return (
