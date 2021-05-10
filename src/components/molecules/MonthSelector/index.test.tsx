@@ -7,7 +7,7 @@ const MonthSelectorProps = {
     console.log('dummy');
   },
 };
-describe('Product Page', () => {
+describe('Month selector', () => {
   it('renders Product page', () => {
     render(
       <MonthSelector
