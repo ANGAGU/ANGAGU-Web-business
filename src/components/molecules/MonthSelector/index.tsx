@@ -16,7 +16,7 @@ const MonthSelector: React.FC<MonthSelectorProps> = ({
 }) => {
   // const [date, setDate] = useState(new Date());
   const [date, setDate] = useState('' as string);
-
+  const [maxDate, setMaxDate] = useState('' as string);
   // methods
 
   useEffect(() => {
@@ -26,9 +26,13 @@ const MonthSelector: React.FC<MonthSelectorProps> = ({
     const today = new Date();
     const year = today.getFullYear();
     const month = today.getMonth() + 1;
-    console.log(`${year}-${month}`);
-    if (month < 10) setDate(`${year}-0${month}`);
-    else setDate(`${year}-${month}`);
+    let tempDate = '';
+    if (month < 10) tempDate = `${year}-0${month}`;
+    else tempDate = `${year}-${month}`;
+
+    setDate(tempDate);
+    setMaxDate(tempDate);
+    console.log('max:', date);
   };
 
   const string2Date = (value: string) => {
@@ -39,16 +43,19 @@ const MonthSelector: React.FC<MonthSelectorProps> = ({
   const handleOnChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = evt.target as HTMLInputElement;
     setDate(value);
+
     selectDateFunc(string2Date(value));
   };
 
   return (
     <div className="filter-form__content">
-      <span className="content__ttl">정산 일자</span>
+      <span className="content__ttl">{title}</span>
       <span>
         <Input
           type="month"
           value={date}
+          min="2020-01"
+          max={maxDate}
           name="date"
           id="select-month"
           onChange={handleOnChange}
