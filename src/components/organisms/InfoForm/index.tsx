@@ -11,16 +11,20 @@ const InfoForm: React.FC = () => {
   // const [businessNumber, setBusinessNumber] = useState('');
 
   const getCompanyInfo = async () => {
-    // const key = localStorage.getItem('token');
-    // const result = await api.get('/company/info', {"key": key});
-    // if (result.status === 'success') {
-    //   // eslint-disable-next-line no-alert
-    //   alert('로그인 성공');
-    //   data = result.data;
-    // } else {
-    //   console.log(result);
-    // }
-  };
+    const key = localStorage.getItem('token');
+    try{
+      const result = await api.get('/company/info', {"key": key});
+      if (result.status === 'success') {
+        // eslint-disable-next-line no-alert
+        alert('로그인 성공');
+        data = result.data;
+      } else {
+        console.log(result);
+      }
+    } catch {
+      console.log('error');
+    }
+  }
   useEffect(() => {
     getCompanyInfo();
   }, []);
@@ -57,7 +61,7 @@ const createData = (
 ) => {
   return { name, id, text, button, buttonText };
 };
-const data = {
+let data = {
   name: 'test',
   ownerName: 'test',
   phoneNumber: '010-0000-0000',
@@ -71,7 +75,7 @@ const data = {
 };
 const rows = [
   createData('쇼핑몰명', 'name', data.name),
-  createData('관리자명', 'ownerName', '관리자명은 4~100byte까지 입력할 수 있습니다.'),
+  createData('관리자명', 'ownerName', data.ownerName),
   createData(
     '사업자등록번호',
     'businessNumber',

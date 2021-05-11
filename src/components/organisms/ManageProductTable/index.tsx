@@ -7,8 +7,10 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
 import { Dummy } from '../../../utils';
-import api from '../../../api';
+import ManageRegister from './libs';
+import { ModalMol } from '../../molecules';
 
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
@@ -32,66 +34,80 @@ const StyledTableRow = withStyles((theme: Theme) =>
   }),
 )(TableRow);
 
-const useStyles = makeStyles({
-  table: {
-    minWidth: 700,
-  },
-  img: {
-    width: '105px',
-  },
-});
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    table: {
+      minWidth: 700,
+    },
+    img: {
+      width: '105px',
+    },
+    root: {
+      '& > *': {
+        margin: theme.spacing(1),
+      },
+    },
+  }),
+);
 
-const OrderTable = () => {
-  const [orders, setOrders] = useState(Dummy.makeOrder(10));
+const ManageProductTable = () => {
+  const [isAdmin, setIsAdmin] = useState(localStorage.getItem('isAdmin'));
+  const [registers, setRegisters]: any = useState([]);
   const classes = useStyles();
-  // const getOrder = async () => {
-  //   const key = localStorage.getItem('token');
-  //   try {
-  //     const result = await api.get('/company/orders', { key: key });
-  //     if (result.status === 'success') {
-  //       setOrders(result.data);
-  //     } else {
-  //       console.error('주문 조회 실패');
-  //     }
-  //   } catch {
-  //     console.error('주문 조회 실패');
-  //   }
-  // };
 
-  // useEffect(() => {
-  //   getOrder();
-  // }, []);
+  useEffect(() => {
+    // setRegisters(ManageRegister.getRegisterProduct());
+    setRegisters(Dummy.makeRegister(10));
+  }, []);
 
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>주문 ID</StyledTableCell>
-            <StyledTableCell>주문고객</StyledTableCell>
+            <StyledTableCell>상품 ID</StyledTableCell>
+            <StyledTableCell>기업 ID</StyledTableCell>
             <StyledTableCell>상품명</StyledTableCell>
             <StyledTableCell>상품이미지</StyledTableCell>
-            <StyledTableCell>개수&nbsp;(개)</StyledTableCell>
+            <StyledTableCell>3D모델확인</StyledTableCell>
+            <StyledTableCell>재고&nbsp;(개)</StyledTableCell>
             <StyledTableCell>가격&nbsp;(원)</StyledTableCell>
-            <StyledTableCell>배송상태</StyledTableCell>
-            <StyledTableCell>배송장번호</StyledTableCell>
-            <StyledTableCell>결제 시각</StyledTableCell>
+            <StyledTableCell>등록 시각</StyledTableCell>
+            <StyledTableCell> </StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {orders.map((row: any) => (
+          {registers.map((row: any) => (
             <StyledTableRow key={row.id}>
               <StyledTableCell>{row.id}</StyledTableCell>
-              <StyledTableCell>{row.customerId}</StyledTableCell>
+              <StyledTableCell>{row.company}</StyledTableCell>
               <StyledTableCell>{row.name}</StyledTableCell>
               <StyledTableCell>
                 <img className={classes.img} alt="" src={row.img} />
               </StyledTableCell>
+              <StyledTableCell>
+                <ModalMol
+                  title={'3D모델 확인'}
+                  buttonLabel={'3D 모델 확인'}
+                  className={'3dModelUrl'}
+                  name={row.url_3d}
+                />
+              </StyledTableCell>
               <StyledTableCell>{row.count}</StyledTableCell>
               <StyledTableCell>{row.price}</StyledTableCell>
-              <StyledTableCell>{row.deliveryStatus}</StyledTableCell>
-              <StyledTableCell>{row.deliveryNumber}</StyledTableCell>
               <StyledTableCell>{row.confirmTime}</StyledTableCell>
+              <StyledTableCell>
+                <div className={classes.root}>
+                  <Button
+                    variant="outlined"
+                    onClick={e => {
+                      ManageRegister.registerProduct(row.id);
+                    }}
+                  >
+                    승인
+                  </Button>
+                </div>
+              </StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
@@ -99,4 +115,4 @@ const OrderTable = () => {
     </TableContainer>
   );
 };
-export default OrderTable;
+export default ManageProductTable;
