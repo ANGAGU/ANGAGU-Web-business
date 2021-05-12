@@ -10,12 +10,13 @@ type AdjustPageProps = {
   isAdmin: boolean;
 };
 type Adjust = {
+  company_id: number;
+  create_time: string;
+  fee: number;
   id: number;
-  company: string;
-  term: string;
-  commission: string;
-  revenue: string;
-  profit: string; // revenue - commission
+  order_id: number;
+  price: number;
+  update_time: string;
 };
 
 type ProductProfit = {
@@ -28,7 +29,17 @@ type ProductProfit = {
   sellCount: number;
 };
 const AdjustPageTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
-  const [adjustsDummy] = useState(Dummy.makeAdjusts(1) as Array<Adjust>);
+  // const [adjustsDummy] = useState(Dummy.makeAdjusts(1) as Array<Adjust>);
+  const [adjustList, setAdjustList] = useState([] as Array<Adjust>);
+  const [adjust, setAdjust] = useState({
+    company_id: 0,
+    create_time: '',
+    fee: 0,
+    id: 0,
+    order_id: 0,
+    price: 0,
+    update_time: '',
+  });
   const [productProfitsDummy] = useState(Dummy.makeProductProfits(10) as Array<ProductProfit>);
   const [company, setCompany] = useState('회사' as string);
   const [toggle, setToggle] = useState(false as boolean);
@@ -45,6 +56,10 @@ const AdjustPageTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
     // header 설정 여기서 각각 말고 한번에 하기
     api.setAxiosDefaultHeader();
     const result = await api.get('/company/sale', {});
+    if (result.status === 'success') {
+      // setAdjustList(result.data);
+      setAdjust(result.data[0]);
+    }
   };
 
   const adjustHeader = adjustTitleList.map(ttl => <th className="column-title">{ttl}</th>);
@@ -62,16 +77,16 @@ const AdjustPageTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
   ));
   // 추후 기간 검색 결과로 한줄만 띄울 예정
   // 아래 상세 목록 토글 추가? => 여유될 경우
-  const adjusts = adjustsDummy.map((adjust, index) => (
+  const adjusts = adjustList.map((ad, index) => (
     <tr key={index}>
-      <td>{`${adjust.id}`}</td>
-      <td>{`${adjust.company}`}</td>
-      <td>{`${adjust.term}`}</td>
+      <td>{`${ad.id}`}</td>
+      <td>{`${ad.company_id}`}</td>
+      <td>{`${ad.create_time}`}</td>
       <td>
-        {adjust.revenue} <i />
+        {ad.price} <i />
       </td>
-      <td>{adjust.commission}</td>
-      <td>{adjust.profit}</td>
+      <td>{ad.fee}</td>
+      <td>{ad.price - ad.fee}</td>
     </tr>
   ));
 
@@ -136,11 +151,11 @@ const AdjustPageTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
                   {`${companyDate.getFullYear()}년 ${companyDate.getMonth() + 1}월`}
                 </span>
                 입금 금액은
-                <span className="adjust-profit content-highlight">200000원</span>
+                <span className="adjust-profit content-highlight">{adjust.price - adjust.fee}원</span>
                 입니다.
               </div>
               <div className="content__profit-detail">
-                총 매출 {`250000원`} - 수수료 {`50000원`}
+                총 매출 {adjust.price}원 - 수수료 {adjust.fee}원
               </div>
             </div>
             <Button
