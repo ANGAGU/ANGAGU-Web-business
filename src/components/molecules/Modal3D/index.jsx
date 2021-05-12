@@ -63,35 +63,24 @@ const Modal3D = props => {
     setProduct3D(null);
     toggle();
   };
-  useEffect(() => {
+
+  const get3DContents = () => {
+    let contentsLoader = null;
+
     if (modelExten === 'dae') {
-      setContent3D(
+      contentsLoader = (
         <DAEModel src={product3D} width={700} height={500}>
           <DirectionLight color={0xff00ff} />
-        </DAEModel>,
+        </DAEModel>
       );
     } else if (modelExten === 'obj') {
-      setContent3D(<MTLModel src={product3D} mtl={mesh} texPath="" width={700} height={500} />);
+      contentsLoader = <MTLModel src={product3D} mtl={mesh} texPath="" width={700} height={500} />;
     }
-  }, [product3D, modelExten]);
-
-  // const get3DContents = () => {
-  //   let contentsLoader = null;
-
-  //   if (modelExten === 'dae') {
-  //     contentsLoader = (
-  //       <DAEModel src={product3D} width={700} height={500}>
-  //         <DirectionLight color={0xff00ff} />
-  //       </DAEModel>
-  //     );
-  //   } else if (modelExten === 'obj') {
-  //     contentsLoader = <MTLModel src={product3D} mtl={mesh} texPath="" width={700} height={500} />;
-  //   }
-  //   while (contentsLoader === null) {
-  //     if (contentsLoader !== null) break;
-  //   }
-  //   return contentsLoader;
-  // };
+    // while (contentsLoader === null) {
+    //   if (contentsLoader !== null) break;
+    // }
+    return contentsLoader;
+  };
 
   return (
     <div>
@@ -109,8 +98,18 @@ const Modal3D = props => {
             </Row>
             <Row>
               <Col className="model-view" style={visStyle}>
-                {/* {product3D && get3DContents()} */}
-                {product3D !== null ? content3D : null}
+                {/* {product3D && get3DContents} */}
+                {
+                  <DAEModel
+                    src={'http://d3u3zwu9bmcdht.cloudfront.net/testModel/DesignChair1.dae'}
+                    width={700}
+                    height={500}
+                  >
+                    <DirectionLight color={0xff00ff} />
+                  </DAEModel>
+                }
+                {/* {product3D && <MTLModel src={model} mtl={mesh} texPath="" width={700} height={500} />} */}
+                {/* {product3D !== null ? content3D : null} */}
               </Col>
             </Row>
           </Container>

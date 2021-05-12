@@ -1,15 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAlignLeft } from '@fortawesome/free-solid-svg-icons';
-import {
-  Navbar,
-  Button,
-  NavbarToggler,
-  Collapse,
-  Nav,
-  NavItem,
-  NavLink,
-} from 'reactstrap';
+import { Navbar, Button, NavbarToggler, Collapse, Nav, NavItem, NavLink } from 'reactstrap';
 import { Link, useRouteMatch, useHistory } from 'react-router-dom';
 import TopBarLibs from './libs';
 import { NavBarStyle, ButtonStyle, ButtonMargin } from './style';
