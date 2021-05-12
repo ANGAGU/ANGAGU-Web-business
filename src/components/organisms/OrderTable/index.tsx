@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Dummy } from '../../../utils';
+import testImg from '../../../assets/product_test.jpeg';
 import api from '../../../api';
 
 const StyledTableCell = withStyles((theme: Theme) =>
@@ -43,13 +44,24 @@ const useStyles = makeStyles({
 
 const OrderTable = () => {
   const [orders, setOrders] = useState(Dummy.makeOrder(10));
+  // const [orders, setOrders] = useState([...{
+  //   id: '12',
+  //   name: 'name',
+  //   customerId: 'customerid',
+  //   img: testImg,
+  //   count: 'counts',
+  //   price: '12',
+  //   deliveryStatus: 'T',
+  //   deliveryNumber: '242-78-7100',
+  //   confirmTime: 'Tue Nov 03 2093',
+  // }]);
   const classes = useStyles();
   // const getOrder = async () => {
   //   const key = localStorage.getItem('token');
   //   try {
-  //     const result = await api.get('/company/orders', { key: key });
+  //     const result = await api.get('/company/orders');
   //     if (result.status === 'success') {
-  //       setOrders(result.data);
+  //       setOrders(result.data.list);
   //     } else {
   //       console.error('주문 조회 실패');
   //     }
