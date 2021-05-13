@@ -10,11 +10,11 @@ import {
   Container,
   Row,
 } from 'reactstrap';
-import { DaeModelLoader, ObjModelLoader } from 'components/atoms';
+import { DaeModelLoader, ObjModelLoader, Cube } from 'components/atoms';
 import api from '../../../api';
 import model from '../../../assets/modernobj.obj';
-import model1 from '../../../assets/DesignChair1.dae';
 import mesh from '../../../assets/modernobj.mtl';
+import model1 from '../../../assets/DesignChair1.dae';
 
 import './style.css';
 
@@ -22,6 +22,7 @@ const Modal3D = props => {
   // set states
   const [modal, setModal] = useState(false);
   const [product3D, setProduct3D] = useState(null);
+  const [productMTL, setProductMTL] = useState(null);
   const [modelExten, setModelExten] = useState('');
 
   const toggle = () => setModal(!modal);
@@ -40,7 +41,17 @@ const Modal3D = props => {
     const buffer = new Uint8Array(evt.target.files[0]);
     const blob = new Blob([buffer.buffer]);
     const fileDownloadUrl = URL.createObjectURL(blob);
+    // const reader = new FileReader();
+    // reader.onload = e => {
+    //   setProduct3D(reader.result);
+    // };
+    // reader.readAsDataURL(fileDownloadUrl);
     setProduct3D(fileDownloadUrl);
+    // const bufferMtl = new Uint8Array(evt.target.files[1]);
+    // const blobMtl = new Blob([bufferMtl.buffer]);
+    // const fileDownloadUrlMtl = URL.createObjectURL(blobMtl);
+    // setProduct3D(fileDownloadUrl);
+    // setProductMTL(fileDownloadUrlMtl);
   };
 
   const confirmModel = () => {
@@ -67,7 +78,8 @@ const Modal3D = props => {
             </Row>
             <Row>
               <Col className="model-view" style={visStyle}>
-                {product3D && <ObjModelLoader model3D={product3D} />}
+                {/* {product3D && <ObjModelLoader model3D={product3D} />} */}
+                {product3D && <Cube model={product3D} mtl={productMTL} />}
               </Col>
             </Row>
           </Container>
