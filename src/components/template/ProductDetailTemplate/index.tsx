@@ -20,7 +20,8 @@ const ProductDetailTemplate: React.FC = () => {
   // state & variable
   const [submitValue, setSubmitValue] = useState({} as ProductInfo);
   const [descImg, setDescImg] = useState(null as File | null);
-
+  const [imgOrder, setImgOrder] = useState({});
+  const imgFormData = new FormData();
   const productsGroupList: Array<string> = ['폭신폭신 의자', '안폭신폭신 의자', '물침대', '돌침대'];
 
   // comp
@@ -56,8 +57,17 @@ const ProductDetailTemplate: React.FC = () => {
     handleOnChange(evt);
   };
 
-  const orderProductImg = () => {
-    // Object o;
+  const handleProductImgOrder = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    const { name } = evt.target as HTMLInputElement;
+    const files = evt.target.files as FileList;
+
+    setImgOrder({ ...imgOrder, [files[0].name]: name });
+    imgFormData.append(name, files[0]);
+    console.log(imgOrder, imgFormData);
+  };
+
+  const test = () => {
+    console.log(imgOrder);
   };
 
   return (
@@ -74,17 +84,17 @@ const ProductDetailTemplate: React.FC = () => {
             <div className="product-img__content">
               <Form>
                 <FormGroup>
-                  <Input type="file" name="productImg_1" id="productExFile" />
-                  <Input type="file" name="productImg_2" id="productExFile" />
-                  <Input type="file" name="productImg_3" id="productExFile" />
-                  <Input type="file" name="productImg_4" id="productExFile" />
-                  <Input type="file" name="productImg_5" id="productExFile" />
+                  <Input type="file" name="1" onChange={handleProductImgOrder} />
+                  <Input type="file" name="2" onChange={handleProductImgOrder} />
+                  <Input type="file" name="3" onChange={handleProductImgOrder} />
+                  <Input type="file" name="4" onChange={handleProductImgOrder} />
+                  <Input type="file" name="5" onChange={handleProductImgOrder} />
                 </FormGroup>
-                <Button type="button">이미지 저장</Button>
+                <Button type="button" onClick={test}>
+                  이미지 저장
+                </Button>
               </Form>
-              <div className="content__main">
-                <img className="main-img" src={testImg} alt="" />
-              </div>
+              <div className="content__main">{/* <img className="main-img" src={testImg} alt="" /> */}</div>
             </div>
           </div>
           <Model3DForm />

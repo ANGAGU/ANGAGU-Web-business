@@ -4,7 +4,6 @@ import * as querystring from 'querystring';
 
 axios.defaults.baseURL = 'https://angagu.github.io/ANGAGU_WEB_business/';
 
-const hostId = window.location.hostname.split('.')[0];
 const server = 'http://54.180.62.210:3000';
 
 // get user token
