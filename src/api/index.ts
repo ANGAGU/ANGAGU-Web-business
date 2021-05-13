@@ -3,14 +3,9 @@ import axios from 'axios';
 import * as querystring from 'querystring';
 
 axios.defaults.baseURL = 'https://angagu.github.io/ANGAGU_WEB_business/';
-axios.defaults.withCredentials = true;
 
 const hostId = window.location.hostname.split('.')[0];
-let server = 'http://localhost:3002';
-
-// set server url
-if (hostId === 'dev') server = 'https://dev-bapi.angadu.com';
-else if (hostId === 'real') server = 'https://real-bapi.angagu.com';
+const server = 'http://54.180.62.210:3000';
 
 // get user token
 const setCommonParams = (params: any) => {
@@ -40,11 +35,7 @@ const api = {
     const headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
     };
-    const response = await axios.post(
-      `${server}${endpoint}`,
-      querystring.stringify(params),
-      { headers },
-    );
+    const response = await axios.post(`${server}${endpoint}`, querystring.stringify(params), { headers });
 
     return response.data;
   },

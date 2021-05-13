@@ -1,15 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  FormText,
-} from 'reactstrap';
+import { Container, Row, Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import { ModalMol } from '../../molecules';
 import './style.css';
 
@@ -31,17 +21,10 @@ const ProductDetailTemplate: React.FC = () => {
   const [submitValue, setSubmitValue] = useState({} as ProductInfo);
   const [descImg, setDescImg] = useState(null as File | null);
 
-  const productsGroupList: Array<string> = [
-    '폭신폭신 의자',
-    '안폭신폭신 의자',
-    '물침대',
-    '돌침대',
-  ];
+  const productsGroupList: Array<string> = ['폭신폭신 의자', '안폭신폭신 의자', '물침대', '돌침대'];
 
   // comp
-  const productGroup = productsGroupList.map(group => (
-    <option key={group}>{group}</option>
-  ));
+  const productGroup = productsGroupList.map(group => <option key={group}>{group}</option>);
 
   // method
   const submitProductInfo = async (evt: React.FormEvent<EventTarget>) => {
@@ -73,6 +56,10 @@ const ProductDetailTemplate: React.FC = () => {
     handleOnChange(evt);
   };
 
+  const orderProductImg = () => {
+    // Object o;
+  };
+
   return (
     <Container>
       <Row>
@@ -87,8 +74,13 @@ const ProductDetailTemplate: React.FC = () => {
             <div className="product-img__content">
               <Form>
                 <FormGroup>
-                  <Input type="file" multiple name="productExFile" id="productExFile" />
+                  <Input type="file" name="productImg_1" id="productExFile" />
+                  <Input type="file" name="productImg_2" id="productExFile" />
+                  <Input type="file" name="productImg_3" id="productExFile" />
+                  <Input type="file" name="productImg_4" id="productExFile" />
+                  <Input type="file" name="productImg_5" id="productExFile" />
                 </FormGroup>
+                <Button type="button">이미지 저장</Button>
               </Form>
               <div className="content__main">
                 <img className="main-img" src={testImg} alt="" />
@@ -134,13 +126,7 @@ const ProductDetailTemplate: React.FC = () => {
             </FormGroup>
             <FormGroup>
               <Label for="productGroup">그룹</Label>
-              <Input
-                type="select"
-                name="group"
-                id="productGroup"
-                value={submitValue.name}
-                onChange={handleOnChange}
-              >
+              <Input type="select" name="group" id="productGroup" value={submitValue.name} onChange={handleOnChange}>
                 {productGroup}
               </Input>
             </FormGroup>
@@ -158,12 +144,7 @@ const ProductDetailTemplate: React.FC = () => {
             </FormGroup>
             <FormGroup>
               <Label for="productDescImg">상품 상세 이미지</Label>
-              <Input
-                type="file"
-                name="descImgUrl"
-                id="productDescImg"
-                onChange={handleOnChangeImg}
-              />
+              <Input type="file" name="descImgUrl" id="productDescImg" onChange={handleOnChangeImg} />
               <FormText color="muted">상품 상세 설명 이미지를 넣어주세요 :)</FormText>
             </FormGroup>
           </Form>
