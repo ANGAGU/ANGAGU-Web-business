@@ -1,9 +1,16 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Col, Container, Row } from 'reactstrap';
-import JSZip from 'jszip';
-import { saveAs } from 'file-saver';
-import * as THREE from 'three';
-import { MTLModel, DAEModel, DirectionLight } from 'react-3d-viewer';
+/* eslint-disable spaced-comment */
+import React, { useState, useRef, useEffect, useReducer } from 'react';
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Col,
+  Container,
+  Row,
+} from 'reactstrap';
+import { DaeModelLoader, ObjModelLoader } from 'components/atoms';
 import api from '../../../api';
 import model from '../../../assets/modernobj.obj';
 import model1 from '../../../assets/DesignChair1.dae';
@@ -12,11 +19,10 @@ import mesh from '../../../assets/modernobj.mtl';
 import './style.css';
 
 const Modal3D = props => {
+  // set states
   const [modal, setModal] = useState(false);
   const [product3D, setProduct3D] = useState(null);
-  const [modelData, setModelData] = useState(null);
   const [modelExten, setModelExten] = useState('');
-  const [content3D, setContent3D] = useState(null);
 
   const toggle = () => setModal(!modal);
   const inputRef = useRef(null);
@@ -27,59 +33,22 @@ const Modal3D = props => {
     }
     inputRef.current.click();
   };
+  // const modelOnLoad = () => {
+  //   forceUpdate();
+  // };
   const handleOnChange = evt => {
-    const fileName = evt.target.files[0].name;
     const buffer = new Uint8Array(evt.target.files[0]);
     const blob = new Blob([buffer.buffer]);
     const fileDownloadUrl = URL.createObjectURL(blob);
-
-    console.log(fileDownloadUrl);
-
     setProduct3D(fileDownloadUrl);
-    setModelExten(fileName.split('.').slice(-1)[0]);
-    setModelData(blob);
   };
 
-  const makeZip = _blob => {
-    const zip = new JSZip();
-    zip.file('file', _blob);
-    zip.generateAsync({ type: 'blob' }).then(blob => {
-      // console.log(blob);
-      modelToServer(blob);
-      // saveAs(blob, _name.concat('.zip'));
-    });
-  };
-  const modelToServer = async _blob => {
-    const sendingData = new FormData();
-    sendingData.append('file', _blob);
-    // await api.post(`/company/products/{productId}/ar`, {});
-  };
   const confirmModel = () => {
     toggle();
-    // makeZip(modelData);
   };
   const rejectModel = () => {
-    setModelData(null);
     setProduct3D(null);
     toggle();
-  };
-
-  const get3DContents = () => {
-    let contentsLoader = null;
-
-    if (modelExten === 'dae') {
-      contentsLoader = (
-        <DAEModel src={product3D} width={700} height={500}>
-          <DirectionLight color={0xff00ff} />
-        </DAEModel>
-      );
-    } else if (modelExten === 'obj') {
-      contentsLoader = <MTLModel src={product3D} mtl={mesh} texPath="" width={700} height={500} />;
-    }
-    // while (contentsLoader === null) {
-    //   if (contentsLoader !== null) break;
-    // }
-    return contentsLoader;
   };
 
   return (
@@ -98,24 +67,17 @@ const Modal3D = props => {
             </Row>
             <Row>
               <Col className="model-view" style={visStyle}>
-                {/* {product3D && get3DContents} */}
-                {
-                  <DAEModel
-                    src={'http://d3u3zwu9bmcdht.cloudfront.net/testModel/DesignChair1.dae'}
-                    width={700}
-                    height={500}
-                  >
-                    <DirectionLight color={0xff00ff} />
-                  </DAEModel>
-                }
-                {/* {product3D && <MTLModel src={model} mtl={mesh} texPath="" width={700} height={500} />} */}
-                {/* {product3D !== null ? content3D : null} */}
+                {product3D && <ObjModelLoader model3D={product3D} />}
               </Col>
             </Row>
           </Container>
         </ModalBody>
         <ModalFooter>
-          <Button color="secondary" className="modal-btn--left" onClick={handleclickInput}>
+          <Button
+            color="secondary"
+            className="modal-btn--left"
+            onClick={handleclickInput}
+          >
             {'3D모델 업로드'}
           </Button>
           <Button color="primary" onClick={confirmModel}>
@@ -141,4 +103,5 @@ const visStyle = {
   justifyContent: 'center',
   overflow: 'hidden',
 };
+
 export default Modal3D;
