@@ -24,7 +24,7 @@ interface UserInfo {
   email: string;
   password: string;
   passwordConfirm: string;
-  phone: string;
+  phone_number: string;
   name: string;
   account_bank: string;
   account_number: string;
@@ -42,19 +42,28 @@ const SignupTemplate: React.FC = () => {
     evt.preventDefault();
 
     // 보내기 전 validation 필요
-    const formData = new FormData();
+    // const formData = new FormData();
 
-    formData.append('data', JSON.stringify(submitValue));
+    // formData.append('data', JSON.stringify(submitValue));
     // formData.append('name', JSON.stringify(submitValue.price));
-    console.log(formData);
-    const config = {
-      headers: {
-        'content-type': 'multipart/form-data',
-      },
-    };
+    // console.log(formData);
+    // const config = {
+    //   headers: {
+    //     'content-type': 'multipart/form-data',
+    //   },
+    // };
     // send api
     // await post(url, formData, config)
+    console.log(authToken);
+    console.log(submitValue);
+    api.setHeaderVerification(authToken);
 
+    const { status, data } = await api.post('/company/signup', submitValue);
+    if (status === 'success') {
+      alert('OK!');
+    } else {
+      console.log('fail for send sms');
+    }
     alert(`submit Data!${submitValue.email}`);
   };
 
@@ -84,7 +93,7 @@ const SignupTemplate: React.FC = () => {
 
   const requestAuthNumber = async () => {
     const { status, data } = await api.post('/company/signup/sms/code', {
-      phone_number: submitValue.phone,
+      phone_number: submitValue.phone_number,
     });
     if (status === 'success') {
       alert('OK!');
@@ -98,13 +107,13 @@ const SignupTemplate: React.FC = () => {
     const { status, data } = await api.post(
       '/company/signup/sms/verification',
       {
-        phone_number: submitValue.phone,
+        phone_number: submitValue.phone_number,
         code: verifyNumber,
       },
     );
     if (status === 'success') {
       alert('OK!');
-      setAuthToken(data);
+      setAuthToken(data.token);
     } else {
       console.log('fail for verify sms');
     }
@@ -191,9 +200,9 @@ const SignupTemplate: React.FC = () => {
                 <Input
                   className="form-block__input input--phone "
                   type="text"
-                  name="phone"
+                  name="phone_number"
                   id="userPhone"
-                  value={submitValue.phone}
+                  value={submitValue.phone_number}
                   onChange={handleOnChange}
                   placeholder="휴대폰 번호를 적어주세요."
                 />
@@ -225,9 +234,9 @@ const SignupTemplate: React.FC = () => {
               <Label for="userCommpany">회사명</Label>
               <Input
                 type="text"
-                name="commpany"
+                name="name"
                 id="userCommpany"
-                value={submitValue.commpany}
+                value={submitValue.name}
                 onChange={handleOnChange}
                 placeholder="회사 이름을 적어주세요."
               />
@@ -238,7 +247,7 @@ const SignupTemplate: React.FC = () => {
                   <Label for="userAccount">은행</Label>
                   <Input
                     type="text"
-                    name="account"
+                    name="account_bank"
                     value={submitValue.account_bank}
                     onChange={handleOnChange}
                     placeholder="은행명"
@@ -250,7 +259,7 @@ const SignupTemplate: React.FC = () => {
                   <Label for="userAccount">계좌번호</Label>
                   <Input
                     type="text"
-                    name="account"
+                    name="account_number"
                     value={submitValue.account_number}
                     onChange={handleOnChange}
                     placeholder="계좌번호를 적어주세요."
@@ -262,8 +271,8 @@ const SignupTemplate: React.FC = () => {
                   <Label for="userAccount">계좌주</Label>
                   <Input
                     type="text"
-                    name="account"
-                    value={submitValue.account_owner}
+                    name="account_holder"
+                    value={submitValue.account_holder}
                     onChange={handleOnChange}
                     placeholder="계좌주명"
                   />
