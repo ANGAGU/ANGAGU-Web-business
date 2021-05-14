@@ -15,7 +15,7 @@ import {
   ModalFooter,
   ModalHeader,
 } from 'reactstrap';
-
+import api from '../../../api';
 import { isEmail, isPassword, isSame } from '../../../utils';
 import './style.css';
 
@@ -25,15 +25,17 @@ interface UserInfo {
   password: string;
   passwordConfirm: string;
   phone: string;
-  commpany: string;
+  name: string;
   account_bank: string;
   account_number: string;
-  account_owner: string;
+  account_holder: string;
 }
 const SignupTemplate: React.FC = () => {
   // state & variable
   const [submitValue, setSubmitValue] = useState({} as UserInfo);
   const [isValid, setIsValid] = useState(false as boolean);
+  const [verifyNumber, setVerifyNumber] = useState('' as string);
+  const [authToken, setAuthToken] = useState('' as string);
   const [viewModal, setViewModal] = useState(false as boolean);
 
   const submitUserInfo = async (evt: React.FormEvent<EventTarget>) => {
@@ -62,17 +64,50 @@ const SignupTemplate: React.FC = () => {
     setSubmitValue({ ...submitValue, [name]: value });
   };
 
-  const checkDuplicatedEmail = () => {
-    // send api 필요
+  const handleVerifyNumber = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = evt.target as HTMLInputElement;
+    console.log(value);
+    setVerifyNumber(value);
   };
 
-  const requestAuthNumber = () => {
-    // send api 필요
+  const checkDuplicatedEmail = async () => {
+    console.log(submitValue.email);
+    const { status, data } = await api.post('/company/signup/email', {
+      email: submitValue.email,
+    });
+    if (status === 'success') {
+      alert('OK!');
+    } else {
+      console.log('fail email check');
+    }
+  };
+
+  const requestAuthNumber = async () => {
+    const { status, data } = await api.post('/company/signup/sms/code', {
+      phone_number: submitValue.phone,
+    });
+    if (status === 'success') {
+      alert('OK!');
+    } else {
+      console.log('fail for send sms');
+    }
     toggleModal();
   };
 
-  const checkAuthNumber = () => {
-    // send api 필요
+  const checkAuthNumber = async () => {
+    const { status, data } = await api.post(
+      '/company/signup/sms/verification',
+      {
+        phone_number: submitValue.phone,
+        code: verifyNumber,
+      },
+    );
+    if (status === 'success') {
+      alert('OK!');
+      setAuthToken(data);
+    } else {
+      console.log('fail for verify sms');
+    }
     toggleModal();
   };
 
@@ -109,7 +144,7 @@ const SignupTemplate: React.FC = () => {
                   }}
                   placeholder="이메일을 적어주세요."
                 />
-                <Button type="button" size="sm">
+                <Button type="button" size="sm" onClick={checkDuplicatedEmail}>
                   중복확인
                 </Button>
               </div>
@@ -169,12 +204,17 @@ const SignupTemplate: React.FC = () => {
               <Modal isOpen={viewModal} toggle={toggleModal} size="sm" centered>
                 <ModalHeader toggle={toggleModal}>인증번호 입력</ModalHeader>
                 <ModalBody>
-                  <Input type="text" placeholder="인증번호를 입력해주세요." />
+                  <Input
+                    type="text"
+                    value={verifyNumber}
+                    laceholder="인증번호를 입력해주세요."
+                    onChange={handleVerifyNumber}
+                  />
                 </ModalBody>
                 <ModalFooter>
                   <Button color="primary" onClick={checkAuthNumber}>
                     인증번호확인
-                  </Button>{' '}
+                  </Button>
                   <Button color="secondary" onClick={toggleModal}>
                     취소
                   </Button>
@@ -199,7 +239,6 @@ const SignupTemplate: React.FC = () => {
                   <Input
                     type="text"
                     name="account"
-                    id="userAccount"
                     value={submitValue.account_bank}
                     onChange={handleOnChange}
                     placeholder="은행명"
@@ -212,7 +251,6 @@ const SignupTemplate: React.FC = () => {
                   <Input
                     type="text"
                     name="account"
-                    id="userAccount"
                     value={submitValue.account_number}
                     onChange={handleOnChange}
                     placeholder="계좌번호를 적어주세요."
@@ -225,7 +263,6 @@ const SignupTemplate: React.FC = () => {
                   <Input
                     type="text"
                     name="account"
-                    id="userAccount"
                     value={submitValue.account_owner}
                     onChange={handleOnChange}
                     placeholder="계좌주명"
