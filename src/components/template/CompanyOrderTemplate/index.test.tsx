@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import ManageOrderTemplate from './index';
@@ -17,7 +16,7 @@ afterEach(() => {
   container.remove();
 });
 
-describe('RegisterBusin Page', () => {
+describe('RegisterBusiness Page', () => {
   it('renders', () => {
     act(() => {
       render(<ManageOrderTemplate />, container);
