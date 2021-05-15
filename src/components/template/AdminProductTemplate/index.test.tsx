@@ -1,8 +1,7 @@
-import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 
-import ManageProductTemplate from './index';
+import AdminProductTemplate from './index';
 
 let container: HTMLElement;
 beforeEach(() => {
@@ -17,10 +16,10 @@ afterEach(() => {
   container.remove();
 });
 
-describe('ManageProductTemplate Component', () => {
+describe('AdminProductTemplate Component', () => {
   it('renders component', () => {
     act(() => {
-      render(<ManageProductTemplate />, container);
+      render(<AdminProductTemplate />, container);
     });
   });
 });

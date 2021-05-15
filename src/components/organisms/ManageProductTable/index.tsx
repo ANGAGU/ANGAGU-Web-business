@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { withStyles, Theme, createStyles, makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
+import {
+  Button,
+  Paper,
+  TableRow,
+  TableHead,
+  TableContainer,
+  TableCell,
+  TableBody,
+  Table,
+} from '@material-ui/core';
+
 import { Dummy } from '../../../utils';
 import ManageRegister from './libs';
 import { ModalMol } from '../../molecules';
@@ -77,8 +80,8 @@ const ManageProductTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {registers.map((row: any) => (
-            <StyledTableRow key={row.id}>
+          {registers.map((row: any, idx: any) => (
+            <StyledTableRow key={idx}>
               <StyledTableCell>{row.id}</StyledTableCell>
               <StyledTableCell>{row.company}</StyledTableCell>
               <StyledTableCell>{row.name}</StyledTableCell>

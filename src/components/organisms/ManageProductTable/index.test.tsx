@@ -24,5 +24,4 @@ describe('ManageProductTable Component', () => {
       render(<ManageProductTable />, container);
     });
   });
-
 });
