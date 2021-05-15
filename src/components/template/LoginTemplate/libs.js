@@ -30,6 +30,7 @@ const getLogin = async (titleType, api, id, pw, history) => {
         localStorage.setItem('isAdmin', true);
         history.push('/Main');
         alert('관리자 로그인 성공');
+        localStorage.setItem('isAdmin', true);
       } else {
         console.log(result);
       }

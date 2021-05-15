@@ -18,9 +18,12 @@ const setCommonParams = (params: any) => {
 };
 
 const api = {
-  setAxiosDefaultHeader() {
-    const accessToken = localStorage.getItem('token');
-    axios.defaults.headers.common.Authorization = `${accessToken}`;
+  setAxiosDefaultHeader(accessToken: any) {
+    // const accessToken = localStorage.getItem('token');
+    axios.defaults.headers.common.Authorization = accessToken;
+  },
+  setHeaderVerification(token: string) {
+    axios.defaults.headers.common.Verification = token;
   },
 
   async get(endpoint: string, param: any) {
