@@ -4,7 +4,7 @@ const getLogin = async (titleType, api, id, pw, history) => {
     console.log(id, pw);
     if (titleType === '로그인') {
       // 기업 로그인
-      const result = await api.post('/customer/login', {
+      const result = await api.post('/company/login', {
         email: id,
         password: pw,
       });
@@ -13,6 +13,7 @@ const getLogin = async (titleType, api, id, pw, history) => {
         alert('기업 로그인 성공');
         localStorage.setItem('token', result.data.token);
         localStorage.setItem('isAdmin', false);
+        history.push('/Main');
       } else {
         localStorage.setItem('isAdmin', false);
         console.log(result);
@@ -27,6 +28,7 @@ const getLogin = async (titleType, api, id, pw, history) => {
         // eslint-disable-next-line no-alert
         alert('관리자 로그인 성공');
         localStorage.setItem('isAdmin', true);
+        history.push('/Main');
       } else {
         console.log(result);
       }

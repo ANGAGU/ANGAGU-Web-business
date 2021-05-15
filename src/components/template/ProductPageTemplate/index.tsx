@@ -19,39 +19,29 @@ interface Product {
 }
 
 const ProductPageTemplate: React.FC = () => {
-  const productsTitleList = [
-    '',
-    '상품 아이디',
-    '이미지',
-    '상품명',
-    '판매가',
-    '별점',
-    '재고',
-    '등록일자',
-    '',
-  ];
+  const productsTitleList = ['', '상품 아이디', '이미지', '상품명', '판매가', '별점', '재고', '등록일자', ''];
   // set state
 
-  const [products, setProducts] = useState(Dummy.makeProducts(10));
-  // for api data binding
-  // const [products, setProducts] = useState([] as Array<Product>);
-  // useEffect(() => {
-  //   const getProducts = async () => {
-  //     const result = await api.get('/customer/products', {});
-  //     if (result.status === 'success') {
-  //       setProducts(result.data);
-  //     }
-  //   };
-  //   getProducts();
-  // }, []);
-  const productsHeader = productsTitleList.map(ttl => (
-    <th className="column-title">{ttl}</th>
-  ));
+  const [products, setProducts] = useState([] as Array<Product>);
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
+  const getProducts = async () => {
+    // 나중에 한번에 api.ts에서 통합하기
+    api.setAxiosDefaultHeader(localStorage.getItem('token'));
+    const result = await api.get('/company/products', {});
+    if (result.status === 'success') {
+      setProducts(result.data);
+    } else {
+      console.log('ERROR: in customer products');
+    }
+  };
+
+  const productsHeader = productsTitleList.map(ttl => <th className="column-title">{ttl}</th>);
   const productList = products.map((product, index) => (
-    <tr
-      key={product.id}
-      className={index % 2 === 0 ? 'even pointer' : 'odd pointer'}
-    >
+    <tr key={product.id} className={index % 2 === 0 ? 'even pointer' : 'odd pointer'}>
       <td className="a-center">
         <input type="checkbox" className="flat" name="table_records" />
       </td>

@@ -1,8 +1,13 @@
 import { render, screen } from '@testing-library/react';
-import ProductPage from './index';
+import { BrowserRouter as Router } from 'react-router-dom';
+import ProductPageTemplate from './index';
 
 describe('Product Page', () => {
   it('renders Product page', () => {
-    render(<ProductPage />);
+    render(
+      <Router>
+        <ProductPageTemplate />
+      </Router>,
+    );
   });
 });
