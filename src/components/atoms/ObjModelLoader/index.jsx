@@ -1,10 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { CenterFocusStrong, LaptopWindowsTwoTone } from '@material-ui/icons';
-import React, { useState, useReducer, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
-import { ThreeJs } from '../../../utils';
 
 const ObjModelLoader = ({ model3D }) => {
   const canvasRef = useRef(null);
