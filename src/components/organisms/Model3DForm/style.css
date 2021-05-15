@@ -1,9 +1,9 @@
 @media (min-width: 576px) {
   .product-3d-model__modal {
-    max-width: 1000px !important;
+    max-width: 1350px !important;
     padding: 0 20px;
   }
 }
 .product-3d-model__modal .model-view {
-  min-height: 450px;
+  min-height: 700px;
 }
