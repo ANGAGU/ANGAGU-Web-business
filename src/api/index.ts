@@ -27,9 +27,13 @@ const api = {
 
   async get(endpoint: string, param: any) {
     const params = setCommonParams(param);
-    const response = await axios.get(`${server}${endpoint}`, { params });
-
-    return response.data;
+    try {
+      const response = await axios.get(`${server}${endpoint}`, { params });
+      return response.data;
+    } catch (error) {
+      alert(`ERROR: ${error.response.data.message}`);
+      return false;
+    }
   },
 
   async post(endpoint: string, param: any) {
@@ -37,9 +41,18 @@ const api = {
     const headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
     };
-    const response = await axios.post(`${server}${endpoint}`, querystring.stringify(params), { headers });
 
-    return response.data;
+    try {
+      const response = await axios.post(
+        `${server}${endpoint}`,
+        querystring.stringify(params),
+        { headers },
+      );
+      return response.data;
+    } catch (error) {
+      alert(`ERROR: ${error.response.data.message}`);
+      return error;
+    }
   },
   async upload(endpoint: string, param: any) {
     const params = setCommonParams(param);
@@ -51,26 +64,41 @@ const api = {
       formData.append(key, params[key]);
       return '';
     });
-    const response = await axios.post(`${server}${endpoint}`, formData, {
-      headers,
-    });
-    return response.data;
+    try {
+      const response = await axios.post(`${server}${endpoint}`, formData, {
+        headers,
+      });
+      return response.data;
+    } catch (error) {
+      alert(`ERROR: ${error.response.data.message}`);
+      return false;
+    }
   },
 
   async put(endpoint: string, param: any) {
     const params = setCommonParams(param);
-    const response = await axios.put(`${server}${endpoint}`, params);
+    try {
+      const response = await axios.put(`${server}${endpoint}`, params);
 
-    return response.data;
+      return response.data;
+    } catch (error) {
+      alert(`ERROR: ${error.response.data.message}`);
+      return false;
+    }
   },
 
   async delete(endpoint: string, param: any) {
     const params = setCommonParams(param);
-    const response = await axios.delete(`${server}${endpoint}`, {
-      data: params,
-    });
+    try {
+      const response = await axios.delete(`${server}${endpoint}`, {
+        data: params,
+      });
 
-    return response.data;
+      return response.data;
+    } catch (error) {
+      alert(`ERROR: ${error.response.data.message}`);
+      return false;
+    }
   },
 };
 
