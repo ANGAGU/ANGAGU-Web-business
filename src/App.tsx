@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import './App.css';
 import { Main, Login } from './page';
@@ -7,10 +7,19 @@ import { LoginTemplate } from './components/template';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App: React.FC = () => {
-  const isAdmin = localStorage.getItem('isAdmin');
-  const token = localStorage.getItem('token');
-
-  console.log('app', isAdmin);
+  const [auth, setAuth] = useState<any>({
+    isAdmin: null,
+    token: null,
+  });
+  useEffect(
+    () =>
+      setAuth({
+        isAdmin: localStorage.getItem('isAdmin'),
+        token: localStorage.getItem('token'),
+      }),
+    [],
+  );
+  console.log('app', auth);
   return (
     <Router>
       <Switch>
@@ -21,7 +30,7 @@ const App: React.FC = () => {
         <Route
           path="/"
           render={() =>
-            token !== null ? (
+            auth.token !== null ? (
               <Redirect
                 to={{
                   pathname: '/Main',

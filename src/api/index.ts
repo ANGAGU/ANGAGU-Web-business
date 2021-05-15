@@ -2,7 +2,8 @@
 import axios from 'axios';
 import * as querystring from 'querystring';
 
-axios.defaults.baseURL = 'https://angagu.github.io/ANGAGU_WEB_business/';
+// axios.defaults.baseURL = 'http://angagu.github.io/ANGAGU_WEB_business/';
+axios.defaults.baseURL = 'http://localhost:3000/';
 
 const server = 'http://54.180.62.210:3000';
 
@@ -25,7 +26,9 @@ const api = {
     const token = localStorage.getItem('token');
     axios.defaults.headers.common.Authorization = `${token}`;
   },
-
+  getBaseURL() {
+    return axios.defaults.baseURL;
+  },
   async get(endpoint: string, param: any) {
     const params = setCommonParams(param);
     const response = await axios.get(`${server}${endpoint}`, { params });
