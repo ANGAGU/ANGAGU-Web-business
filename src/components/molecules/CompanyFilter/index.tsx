@@ -61,6 +61,7 @@ const CompanyFilter: React.FC<CompanyFilterProps> = ({ selectCompanyFunc }) => {
       <div className="content__input">
         <Input
           autoComplete="off"
+          alt="company-name-input"
           type="text"
           name="companyName"
           id="filter__company-name"
@@ -70,17 +71,11 @@ const CompanyFilter: React.FC<CompanyFilterProps> = ({ selectCompanyFunc }) => {
           onFocus={() => setViewList(true)}
           onBlur={() => setViewList(false)}
         />
-        <ul
-          className={
-            viewList ? 'result-list' : 'result-list result-list--hidden'
-          }
-        >
+        <ul className={viewList ? 'result-list' : 'result-list result-list--hidden'}>
           {filteredList.map((el, index) => (
             <li
               className={
-                filteredList.length !== index + 1
-                  ? 'result-list__item'
-                  : 'result-list__item result-list__item--last'
+                filteredList.length !== index + 1 ? 'result-list__item' : 'result-list__item result-list__item--last'
               }
               onClick={() => selectCompany(el)}
             >
