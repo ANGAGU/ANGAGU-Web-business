@@ -18,6 +18,9 @@ const setCommonParams = (params: any) => {
 };
 
 const api = {
+  setHeaderVerification(token: string) {
+    axios.defaults.headers.common.Verification = token;
+  },
   setAxiosDefaultHeader(accessToken: any) {
     axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
   },

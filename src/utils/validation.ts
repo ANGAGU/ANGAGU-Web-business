@@ -5,7 +5,7 @@ export const isEmail = (value: string): boolean => {
 };
 export const isPassword = (value: string): boolean => {
   // eslint-disable-next-line no-useless-escape
-  const regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,12}$/;
+  const regExp = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
   return regExp.test(value);
 };
 export const isSame = (str1: string, str2: string): boolean => {
