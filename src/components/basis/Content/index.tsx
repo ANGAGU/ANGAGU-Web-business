@@ -1,17 +1,15 @@
-import React from 'react';
 import classNames from 'classnames';
 import { Container } from 'reactstrap';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import './style.css';
-import Topbar from '../TopBar';
 import {
-  ProductPageTemplate,
-  RegisterCompanyTemplate,
-  ManageOrderTemplate,
-  InfoTemplate,
-  AdjustPageTemplate,
+  CompanyProductTemplate,
+  CompanyRegisterTemplate,
+  CompanyOrderTemplate,
+  CompanyInfoTemplate,
+  CompanyAdjustTemplate,
   ProductDetailTemplate,
-  ManageProductTemplate,
+  AdminProductTemplate,
 } from '../../template';
 
 type ContentProps = {
@@ -27,13 +25,13 @@ const Content = ({ sidebarIsOpen, toggleSidebar }: ContentProps) => {
     <Container fluid className={classNames('content', { 'is-open': sidebarIsOpen })}>
       <div id="content_container">
         <Switch>
-          <Route exact path={`${path}/Register`} component={RegisterCompanyTemplate} />
-          <Route exact path={`${path}/Product`} component={ProductPageTemplate} />
+          <Route exact path={`${path}/Register`} component={CompanyRegisterTemplate} />
+          <Route exact path={`${path}/Product`} component={CompanyProductTemplate} />
           <Route exact path={`${path}/Product/:id`} component={ProductDetailTemplate} />
-          <Route exact path={`${path}/ManageOrder`} component={ManageOrderTemplate} />
-          <Route exact path={`${path}/Info`} component={InfoTemplate} />
-          <Route exact path={`${path}/Adjust`} component={AdjustPageTemplate} />
-          <Route exact path={`${path}/ManageProduct`} component={ManageProductTemplate} />
+          <Route exact path={`${path}/ManageOrder`} component={CompanyOrderTemplate} />
+          <Route exact path={`${path}/Info`} component={CompanyInfoTemplate} />
+          <Route exact path={`${path}/Adjust`} component={CompanyAdjustTemplate} />
+          <Route exact path={`${path}/ManageProduct`} component={AdminProductTemplate} />
         </Switch>
       </div>
     </Container>

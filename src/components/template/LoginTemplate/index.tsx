@@ -60,7 +60,6 @@ const LoginTemplate: React.FC = () => {
   const match = useRouteMatch();
   const [id, setId] = useState('');
   const [pw, setPw] = useState('');
-  const [isAdmin, setIsAdmin] = useState(false);
   const history = useHistory();
   const title =
     Object.keys(match.params).length === 0 ? '로그인' : Object.keys(match.params)[0];
@@ -130,7 +129,7 @@ const LoginTemplate: React.FC = () => {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href={`/Main`} variant="body2">
+                <Link href={`/`} variant="body2">
                   비밀번호를 잊으셨나요?
                 </Link>
               </Grid>
