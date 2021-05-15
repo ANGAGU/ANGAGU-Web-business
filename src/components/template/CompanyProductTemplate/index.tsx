@@ -97,14 +97,17 @@ const CompanyProductTemplate: React.FC = () => {
         <Table className={classes.table} aria-label="customized table">
           <TableHead>
             <TableRow>
-              {productsTitleList.map(row => (
-                <StyledTableCell>row</StyledTableCell>
+              {productsTitleList.map((row, idx) => (
+                <StyledTableCell key={`product_title ${idx}`}>row</StyledTableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
             {products.map((product, index) => (
-              <StyledTableRow key={product.id} className={index % 2 === 0 ? 'even pointer' : 'odd pointer'}>
+              <StyledTableRow
+                key={`product_body ${index}`}
+                className={index % 2 === 0 ? 'even pointer' : 'odd pointer'}
+              >
                 <StyledTableCell className="a-center">
                   <input type="checkbox" className="flat" name="table_records" />
                 </StyledTableCell>

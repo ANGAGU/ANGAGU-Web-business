@@ -4,7 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
-import { InfoForm } from '../../organisms';
+import { CompanyInfoForm } from '../../organisms';
 
 interface TabPanelProps {
   // eslint-disable-next-line react/require-default-props
@@ -61,7 +61,7 @@ const CompanyInfoTemplate: React.FC = () => {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <InfoForm />
+        <CompanyInfoForm />
       </TabPanel>
       <TabPanel value={value} index={1}>
         Item Two

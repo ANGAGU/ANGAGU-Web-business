@@ -5,7 +5,7 @@ import { Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import api from '../../../api';
 import { formStyle } from './style';
 
-const InfoForm: React.FC = () => {
+const CompanyInfoForm: React.FC = () => {
   const [data, setData] = useState({
     name: 'test',
     phoneNumber: '010-0000-0000',
@@ -148,4 +148,4 @@ const visStyle = {
   justifyContent: 'center',
   overflow: 'hidden',
 };
-export default InfoForm;
+export default CompanyInfoForm;

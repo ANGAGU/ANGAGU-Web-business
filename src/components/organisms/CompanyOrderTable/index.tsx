@@ -41,7 +41,7 @@ const useStyles = makeStyles({
   },
 });
 
-const OrderTable = () => {
+const CompanyOrderTable = () => {
   const [orders, setOrders] = useState(Dummy.makeOrder(10));
   const classes = useStyles();
   // const getOrder = async () => {
@@ -99,4 +99,4 @@ const OrderTable = () => {
     </TableContainer>
   );
 };
-export default OrderTable;
+export default CompanyOrderTable;

@@ -1,9 +1,9 @@
 import React from 'react';
-import { OrderTable } from '../../organisms';
+import { CompanyOrderTable } from '../../organisms';
 import './style.css';
 
 const ManageOrderTemplate: React.FC = () => {
-  return <OrderTable />;
+  return <CompanyOrderTable />;
 };
 
 export default ManageOrderTemplate;

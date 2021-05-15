@@ -13,6 +13,7 @@ const getLogin = async (titleType, api, id, pw, history) => {
         // eslint-disable-next-line no-alert
         alert('기업 로그인 성공');
         localStorage.setItem('token', result.data.token);
+        localStorage.setItem('isAdmin', '');
         history.push('/Main');
       } else {
         alert('로그인에 실패하였습니다.');

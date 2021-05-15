@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const ManageProductTable = () => {
+const AdminProductTable = () => {
   const [isAdmin, setIsAdmin] = useState(localStorage.getItem('isAdmin'));
   const [registers, setRegisters]: any = useState([]);
   const classes = useStyles();
@@ -118,4 +118,4 @@ const ManageProductTable = () => {
     </TableContainer>
   );
 };
-export default ManageProductTable;
+export default AdminProductTable;

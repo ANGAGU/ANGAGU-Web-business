@@ -1,9 +1,9 @@
 import React from 'react';
-import { ManageProductTable } from '../../organisms';
+import { AdminProductTable } from '../../organisms';
 import './style.css';
 
 const AdminProductTemplate: React.FC = () => {
-  return <ManageProductTable />;
+  return <AdminProductTable />;
 };
 
 export default AdminProductTemplate;

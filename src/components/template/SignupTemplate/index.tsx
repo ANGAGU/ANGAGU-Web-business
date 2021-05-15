@@ -276,13 +276,7 @@ const SignupTemplate: React.FC = () => {
               </Col>
             </Row>
             <Row className="form-btn">
-              <Button
-                className="form-btn__submit"
-                type="submit"
-                form="signup"
-                color="info"
-                block
-              >
+              <Button className="form-btn__submit" type="submit" form="signup" color="info" block>
                 안오구에 회원가입 하기
               </Button>
               <Col className="form-btn">

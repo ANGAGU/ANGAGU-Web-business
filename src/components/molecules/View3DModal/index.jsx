@@ -1,20 +1,14 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable spaced-comment */
 import { useState, useRef } from 'react';
-import {
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Col,
-  Container,
-  Row,
-} from 'reactstrap';
-import { Cube } from 'components/atoms';
-
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Col, Container, Row } from 'reactstrap';
+import { ObjModelLoader } from 'components/atoms';
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
+import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
+import { Canvas, useLoader } from '@react-three/fiber';
 import './style.css';
 
-const Modal3D = props => {
+const View3DModal = props => {
   // set states
   const [modal, setModal] = useState(false);
   const [product3D, setProduct3D] = useState(null);
@@ -33,16 +27,41 @@ const Modal3D = props => {
   // const modelOnLoad = () => {
   //   forceUpdate();
   // };
-  const handleOnChange = evt => {
+
+  const handleOnChange = async evt => {
     const buffer = new Uint8Array(evt.target.files[0]);
     const blob = new Blob([buffer.buffer]);
     const fileDownloadUrl = URL.createObjectURL(blob);
+    setProduct3D(fileDownloadUrl);
     // const reader = new FileReader();
     // reader.onload = e => {
     //   setProduct3D(reader.result);
     // };
     // reader.readAsDataURL(fileDownloadUrl);
-    setProduct3D(fileDownloadUrl);
+    // console.log(evt.target.files);
+    // const mtlReader = new FileReader();
+    // mtlReader.onload = event => {
+    //   setProductMTL(new MTLLoader().parse(event.target.result));
+    // };
+    // const file = evt.target.files[0];
+    // const objReader = new FileReader();
+    // objReader.addEventListener(
+    //   'load',
+    //   () => {
+    //     const fileUrlList = objReader.result;
+    //     setProduct3D(fileUrlList);
+    //   },
+    //   false,
+    // );
+    // objReader.readAsDataURL(blob);
+
+    // for (let i = 0; i < 2; i += 1) {
+    //   if (evt.target.files[i].name.indexOf('mtl')) {
+    //     await mtlReader.readAsArrayBuffer(evt.target.files[i]);
+    //   } else {
+    //     objReader.readAsArrayBuffer(evt.target.files[i]);
+    //   }
+    // }
   };
 
   const confirmModel = () => {
@@ -70,17 +89,13 @@ const Modal3D = props => {
             <Row>
               <Col className="model-view" style={visStyle}>
                 {/* {product3D && <ObjModelLoader model3D={product3D} />} */}
-                {product3D && <Cube model={product3D} mtl={productMTL} />}
+                {product3D && <ObjModelLoader model={product3D} mtl={productMTL} />}
               </Col>
             </Row>
           </Container>
         </ModalBody>
         <ModalFooter>
-          <Button
-            color="secondary"
-            className="modal-btn--left"
-            onClick={handleclickInput}
-          >
+          <Button color="secondary" className="modal-btn--left" onClick={handleclickInput}>
             {'3D모델 업로드'}
           </Button>
           <Button color="primary" onClick={confirmModel}>
@@ -107,4 +122,4 @@ const visStyle = {
   overflow: 'hidden',
 };
 
-export default Modal3D;
+export default View3DModal;

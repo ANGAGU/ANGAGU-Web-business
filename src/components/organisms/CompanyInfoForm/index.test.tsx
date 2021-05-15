@@ -2,7 +2,7 @@ import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 
-import InfoForm from './index';
+import CompanyInfoForm from './index';
 
 let container: HTMLElement;
 beforeEach(() => {
@@ -20,7 +20,7 @@ afterEach(() => {
 describe('InfoForm Component', () => {
   it('renders component', () => {
     act(() => {
-      render(<InfoForm />, container);
+      render(<CompanyInfoForm />, container);
     });
   });
 });

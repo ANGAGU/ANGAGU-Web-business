@@ -1,9 +1,7 @@
-import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
-import ManageRegister from './libs';
 
-import ManageProductTable from './index';
+import CompanyOrderTable from './index';
 
 let container: HTMLElement;
 beforeEach(() => {
@@ -18,10 +16,10 @@ afterEach(() => {
   container.remove();
 });
 
-describe('ManageProductTable Component', () => {
+describe('CompanyOrderTable Component', () => {
   it('renders component', () => {
     act(() => {
-      render(<ManageProductTable />, container);
+      render(<CompanyOrderTable />, container);
     });
   });
 });
