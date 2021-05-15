@@ -1,6 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
-import { ModalMol } from '../../molecules';
+import React, { useState } from 'react';
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  FormText,
+} from 'reactstrap';
 import './style.css';
 
 // 임시
@@ -21,10 +30,17 @@ const ProductDetailTemplate: React.FC = () => {
   const [submitValue, setSubmitValue] = useState({} as ProductInfo);
   const [descImg, setDescImg] = useState(null as File | null);
 
-  const productsGroupList: Array<string> = ['폭신폭신 의자', '안폭신폭신 의자', '물침대', '돌침대'];
+  const productsGroupList: Array<string> = [
+    '폭신폭신 의자',
+    '안폭신폭신 의자',
+    '물침대',
+    '돌침대',
+  ];
 
   // comp
-  const productGroup = productsGroupList.map(group => <option key={group}>{group}</option>);
+  const productGroup = productsGroupList.map(group => (
+    <option key={group}>{group}</option>
+  ));
 
   // method
   const submitProductInfo = async (evt: React.FormEvent<EventTarget>) => {
@@ -117,7 +133,13 @@ const ProductDetailTemplate: React.FC = () => {
             </FormGroup>
             <FormGroup>
               <Label for="productGroup">그룹</Label>
-              <Input type="select" name="group" id="productGroup" value={submitValue.name} onChange={handleOnChange}>
+              <Input
+                type="select"
+                name="group"
+                id="productGroup"
+                value={submitValue.name}
+                onChange={handleOnChange}
+              >
                 {productGroup}
               </Input>
             </FormGroup>
@@ -135,7 +157,12 @@ const ProductDetailTemplate: React.FC = () => {
             </FormGroup>
             <FormGroup>
               <Label for="productDescImg">상품 상세 이미지</Label>
-              <Input type="file" name="descImgUrl" id="productDescImg" onChange={handleOnChangeImg} />
+              <Input
+                type="file"
+                name="descImgUrl"
+                id="productDescImg"
+                onChange={handleOnChangeImg}
+              />
               <FormText color="muted">상품 상세 설명 이미지를 넣어주세요 :)</FormText>
             </FormGroup>
           </Form>

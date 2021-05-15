@@ -12,6 +12,7 @@
                 },
                 "cwd": "babelrc"
             }
-        ]
+        ],
+        "transform-remove-console"
     ]
 }

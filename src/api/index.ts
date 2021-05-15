@@ -21,8 +21,9 @@ const api = {
   setHeaderVerification(token: string) {
     axios.defaults.headers.common.Verification = token;
   },
-  setAxiosDefaultHeader(accessToken: any) {
-    axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+  setAxiosDefaultHeader() {
+    const token = localStorage.getItem('token');
+    axios.defaults.headers.common.Authorization = `${token}`;
   },
 
   async get(endpoint: string, param: any) {
