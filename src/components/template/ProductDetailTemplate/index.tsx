@@ -16,11 +16,17 @@ interface ProductInfo {
   descImgUrl: string;
 }
 
+type PreviewURL = {
+  productImg1: string;
+  productImg2: string;
+};
+
 const ProductDetailTemplate: React.FC = () => {
   // state & variable
   const [submitValue, setSubmitValue] = useState({} as ProductInfo);
   const [descImg, setDescImg] = useState(null as File | null);
   const [imgOrder, setImgOrder] = useState({});
+  const [previewURL, setPreviewURL] = useState({} as PreviewURL);
   const imgFormData = new FormData();
   const productsGroupList: Array<string> = ['폭신폭신 의자', '안폭신폭신 의자', '물침대', '돌침대'];
 
@@ -47,10 +53,17 @@ const ProductDetailTemplate: React.FC = () => {
     handleOnChange(evt);
   };
 
-  const handleProductImgOrder = (evt: React.ChangeEvent<HTMLInputElement>) => {
+  const handleProductDetailImg = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { name } = evt.target as HTMLInputElement;
     const files = evt.target.files as FileList;
+    // set preview
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setPreviewURL({ ...previewURL, [name]: reader.result });
+    };
+    reader.readAsDataURL(files[0]);
 
+    // set order
     setImgOrder({ ...imgOrder, [files[0].name]: name });
     imgFormData.append(name, files[0]);
     console.log(imgOrder, imgFormData);
@@ -74,11 +87,12 @@ const ProductDetailTemplate: React.FC = () => {
             <div className="product-img__content">
               <Form>
                 <FormGroup>
-                  <Input type="file" name="1" onChange={handleProductImgOrder} />
-                  <Input type="file" name="2" onChange={handleProductImgOrder} />
-                  <Input type="file" name="3" onChange={handleProductImgOrder} />
-                  <Input type="file" name="4" onChange={handleProductImgOrder} />
-                  <Input type="file" name="5" onChange={handleProductImgOrder} />
+                  <Input type="file" name="productImg1" onChange={handleProductDetailImg} />
+                  {/* {previewURL.productImg1 && <img src={previewURL.productImg1} alt="" />} */}
+                  <Input type="file" name="productImg2" onChange={handleProductDetailImg} />
+                  <Input type="file" name="productImg3" onChange={handleProductDetailImg} />
+                  <Input type="file" name="productImg4" onChange={handleProductDetailImg} />
+                  <Input type="file" name="productImg5" onChange={handleProductDetailImg} />
                 </FormGroup>
                 <Button type="button" onClick={test}>
                   이미지 저장
