@@ -1,15 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import {
-  Button,
-  Input,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-} from 'reactstrap';
+import React, { useState } from 'react';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import './style.css';
 
 type ModalMolProps = {
@@ -26,7 +16,7 @@ type ModalMolProps = {
 const ModalMol: React.FC<ModalMolProps> & {
   defaultProps: Partial<ModalMolProps>;
 } = props => {
-  const { buttonLabel, confirmButtonText, leftButtonText, className, title, name, content, file } = props;
+  const { buttonLabel, className, title, name } = props;
   const [modal, setModal] = useState(false);
   // eslint-disable-next-line react/destructuring-assignment
   const toggle = () => setModal(!modal);
@@ -38,7 +28,7 @@ const ModalMol: React.FC<ModalMolProps> & {
       </Button>
       <Modal isOpen={modal} toggle={toggle} className={className}>
         <ModalHeader toggle={toggle}>{title}</ModalHeader>
-        <ModalBody>{getContent(className, name)}</ModalBody>
+        <ModalBody>{getContent(className)}</ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={toggle}>
             변경
@@ -51,7 +41,7 @@ const ModalMol: React.FC<ModalMolProps> & {
     </div>
   );
 };
-const getContent = (id: string, value: string) => {
+const getContent = (id: string) => {
   let contents;
   console.log(id);
   return contents;

@@ -1,5 +1,5 @@
 /* eslint-disable spaced-comment */
-import React, { useState, useRef, useEffect, useReducer } from 'react';
+import { useState, useRef } from 'react';
 import {
   Button,
   Modal,
@@ -10,11 +10,7 @@ import {
   Container,
   Row,
 } from 'reactstrap';
-import { DaeModelLoader, ObjModelLoader, Cube } from 'components/atoms';
-import api from '../../../api';
-import model from '../../../assets/modernobj.obj';
-import mesh from '../../../assets/modernobj.mtl';
-import model1 from '../../../assets/DesignChair1.dae';
+import { Cube } from 'components/atoms';
 
 import './style.css';
 
@@ -47,11 +43,6 @@ const Modal3D = props => {
     // };
     // reader.readAsDataURL(fileDownloadUrl);
     setProduct3D(fileDownloadUrl);
-    // const bufferMtl = new Uint8Array(evt.target.files[1]);
-    // const blobMtl = new Blob([bufferMtl.buffer]);
-    // const fileDownloadUrlMtl = URL.createObjectURL(blobMtl);
-    // setProduct3D(fileDownloadUrl);
-    // setProductMTL(fileDownloadUrlMtl);
   };
 
   const confirmModel = () => {
@@ -111,7 +102,7 @@ const modalBodyStyle = {
 const visStyle = {
   width: '100%',
   height: '100%',
-  display: 'flex',
+  // display: 'flex',
   justifyContent: 'center',
   overflow: 'hidden',
 };
