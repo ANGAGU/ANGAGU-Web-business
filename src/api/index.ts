@@ -2,15 +2,9 @@
 import axios from 'axios';
 import * as querystring from 'querystring';
 
-// axios.defaults.baseURL = 'https://angagu.github.io/ANGAGU_WEB_business/';
-// axios.defaults.withCredentials = true;
+axios.defaults.baseURL = 'https://angagu.github.io/ANGAGU_WEB_business/';
 
-const hostId = window.location.hostname.split('.')[0];
-let server = 'http://54.180.62.210:3000';
-
-// set server url
-if (hostId === 'dev') server = 'https://dev-bapi.angadu.com';
-else if (hostId === 'real') server = 'https://real-bapi.angagu.com';
+const server = 'http://54.180.62.210:3000';
 
 // get user token
 const setCommonParams = (params: any) => {
@@ -24,6 +18,9 @@ const setCommonParams = (params: any) => {
 };
 
 const api = {
+  setHeaderVerification(token: string) {
+    axios.defaults.headers.common.Verification = token;
+  },
   setAxiosDefaultHeader(accessToken: any) {
     axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
   },
