@@ -1,6 +1,5 @@
-import api from 'api';
-import React, { useState, useEffect } from 'react';
-import { Table, Container, Input, Button, Row } from 'reactstrap';
+import React, { useState } from 'react';
+import { Table, Container, Input, Button } from 'reactstrap';
 import { Dummy } from 'utils';
 import { CompanyFilter } from '../../molecules';
 import {
@@ -31,7 +30,7 @@ type ProductProfit = {
   profit: string; // revenue - commission
   sellCount: number;
 };
-const AdjustPageTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
+const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
   const [adjustsDummy] = useState(Dummy.makeAdjusts(1) as Array<Adjust>);
   const [productProfitsDummy] = useState(
     Dummy.makeProductProfits(10) as Array<ProductProfit>,
@@ -111,11 +110,8 @@ const AdjustPageTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
         <div className="adjust-block">
           <div className="adjust-content">
             <div className="content__profit">
-              <span className="company-name content-highlight">{company}</span>
-              의
-              <span className="adjust-month content-highlight">
-                {searchMonth}
-              </span>
+              <span className="company-name content-highlight">{company}</span>의
+              <span className="adjust-month content-highlight">{searchMonth}</span>
               입금 금액은
               <span className="adjust-profit content-highlight">200000원</span>
               입니다.
@@ -147,4 +143,4 @@ const AdjustPageTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
   );
 };
 
-export default AdjustPageTemplate;
+export default CompanyAdjustTemplate;

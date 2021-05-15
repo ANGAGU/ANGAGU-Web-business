@@ -1,8 +1,7 @@
-import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 
-import InfoTemplate from './index';
+import CompanyInfoTemplate from './index';
 
 let container: HTMLElement;
 beforeEach(() => {
@@ -20,7 +19,7 @@ afterEach(() => {
 describe('InfoTemplate Component', () => {
   it('renders component', () => {
     act(() => {
-      render(<InfoTemplate />, container);
+      render(<CompanyInfoTemplate />, container);
     });
   });
 });

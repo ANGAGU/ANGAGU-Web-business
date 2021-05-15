@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { InfoForm } from '../../organisms';
 
@@ -44,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const InfoTemplate: React.FC = () => {
+const CompanyInfoTemplate: React.FC = () => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -62,7 +61,7 @@ const InfoTemplate: React.FC = () => {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        {InfoForm}
+        <InfoForm />
       </TabPanel>
       <TabPanel value={value} index={1}>
         Item Two
@@ -77,4 +76,4 @@ const TapStyle = {
   backgroundColor: 'black',
 };
 
-export default InfoTemplate;
+export default CompanyInfoTemplate;
