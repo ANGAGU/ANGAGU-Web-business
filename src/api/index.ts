@@ -22,7 +22,7 @@ const api = {
     axios.defaults.headers.common.Verification = token;
   },
   setAxiosDefaultHeader(accessToken: any) {
-    axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+    axios.defaults.headers.common.Authorization = accessToken;
   },
 
   async get(endpoint: string, param: any) {
