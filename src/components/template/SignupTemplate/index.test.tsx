@@ -31,7 +31,7 @@ describe('Signup Page', () => {
         <SignupTemplate />
       </Router>,
     );
-    const input = getByLabelText('이메일') as HTMLInputElement;
+    const input = getByLabelText('아이디(이메일)') as HTMLInputElement;
     fireEvent.change(input, {
       target: {
         value: 'test@gmail.com',
@@ -83,7 +83,11 @@ describe('Signup Page', () => {
   });
 
   it('validate password checking function', () => {
-    expect(isPassword('password1')).toBe(true);
+    expect(isPassword('password1')).toBe(false);
+  });
+
+  it('validate password checking function', () => {
+    expect(isPassword('password1!')).toBe(true);
   });
 
   it('check both passwords are same', () => {
