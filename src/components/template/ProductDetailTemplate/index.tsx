@@ -1,16 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  FormText,
-} from 'reactstrap';
+import { Container, Row, Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import { ModalMol } from '../../molecules';
+import api from '../../../api';
 import './style.css';
 
 // 임시
@@ -31,17 +22,10 @@ const ProductDetailTemplate: React.FC = () => {
   const [submitValue, setSubmitValue] = useState({} as ProductInfo);
   const [descImg, setDescImg] = useState(null as File | null);
 
-  const productsGroupList: Array<string> = [
-    '폭신폭신 의자',
-    '안폭신폭신 의자',
-    '물침대',
-    '돌침대',
-  ];
+  const productsGroupList: Array<string> = ['폭신폭신 의자', '안폭신폭신 의자', '물침대', '돌침대'];
 
   // comp
-  const productGroup = productsGroupList.map(group => (
-    <option key={group}>{group}</option>
-  ));
+  const productGroup = productsGroupList.map(group => <option key={group}>{group}</option>);
 
   // method
   const submitProductInfo = async (evt: React.FormEvent<EventTarget>) => {
@@ -60,6 +44,20 @@ const ProductDetailTemplate: React.FC = () => {
     // await post(url, formData, config)
 
     alert(`submit Data!${submitValue.name}`);
+  };
+
+  const submitImages = async () => {
+    const orderContent = JSON.stringify({ 'metal-s6.png': 1 });
+    api.setAxiosDefaultHeader(localStorage.getItem('token'));
+    const { status, data } = await api.upload('/company/products/1/image', {
+      product_image: descImg,
+      order: orderContent,
+    });
+    if (status === 'success') {
+      alert('OK!');
+    } else {
+      console.log('fail for send Image');
+    }
   };
 
   const handleOnChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -134,13 +132,7 @@ const ProductDetailTemplate: React.FC = () => {
             </FormGroup>
             <FormGroup>
               <Label for="productGroup">그룹</Label>
-              <Input
-                type="select"
-                name="group"
-                id="productGroup"
-                value={submitValue.name}
-                onChange={handleOnChange}
-              >
+              <Input type="select" name="group" id="productGroup" value={submitValue.name} onChange={handleOnChange}>
                 {productGroup}
               </Input>
             </FormGroup>
@@ -157,15 +149,13 @@ const ProductDetailTemplate: React.FC = () => {
               />
             </FormGroup>
             <FormGroup>
-              <Label for="productDescImg">상품 상세 이미지</Label>
-              <Input
-                type="file"
-                name="descImgUrl"
-                id="productDescImg"
-                onChange={handleOnChangeImg}
-              />
+              <Label for="productDescImg">상품 설명 이미지</Label>
+              <Input type="file" name="descImgUrl" id="productDescImg" onChange={handleOnChangeImg} />
               <FormText color="muted">상품 상세 설명 이미지를 넣어주세요 :)</FormText>
             </FormGroup>
+            <Button type="button" onClick={submitImages}>
+              이미지
+            </Button>
           </Form>
         </Col>
       </Row>

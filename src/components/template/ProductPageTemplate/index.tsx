@@ -30,7 +30,7 @@ const ProductPageTemplate: React.FC = () => {
 
   const getProducts = async () => {
     // 나중에 한번에 api.ts에서 통합하기
-    api.setAxiosDefaultHeader(localStorage.getItem('companyKey'));
+    api.setAxiosDefaultHeader(localStorage.getItem('token'));
     const result = await api.get('/company/products', {});
     if (result.status === 'success') {
       setProducts(result.data);

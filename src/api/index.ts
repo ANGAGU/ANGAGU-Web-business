@@ -8,12 +8,12 @@ const server = 'http://54.180.62.210:3000';
 
 // get user token
 const setCommonParams = (params: any) => {
-  const key = localStorage.getItem('key');
-  if (params) {
-    params.key = key;
-  } else {
-    params = { key };
-  }
+  // const key = localStorage.getItem('key');
+  // if (params) {
+  //   params.key = key;
+  // } else {
+  //   params = { key };
+  // }
   return params;
 };
 
