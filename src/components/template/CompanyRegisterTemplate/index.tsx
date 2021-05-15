@@ -1,17 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import {
-  Jumbotron,
-  Col,
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  FormText,
-} from 'reactstrap';
+import React, { useEffect } from 'react';
+import { Jumbotron, Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import './style.css';
 
-const RegisterCompanyTemplate: React.FC = (props:any) => {
+const CompanyRegisterTemplate: React.FC = (props: any) => {
   useEffect(() => {
     console.log(props);
   }, []);
@@ -23,12 +14,7 @@ const RegisterCompanyTemplate: React.FC = (props:any) => {
             사업자 명
           </Label>
           <Col sm={10}>
-            <Input
-              type="email"
-              name="email"
-              id="businessName"
-              placeholder="사업자 명을 입력하세요"
-            />
+            <Input type="email" name="email" id="businessName" placeholder="사업자 명을 입력하세요" />
           </Col>
         </FormGroup>
         <FormGroup row>
@@ -36,12 +22,7 @@ const RegisterCompanyTemplate: React.FC = (props:any) => {
             연락처
           </Label>
           <Col sm={10}>
-            <Input
-              type="email"
-              name="phone"
-              id="phoneNumber"
-              placeholder="000-0000-0000"
-            />
+            <Input type="email" name="phone" id="phoneNumber" placeholder="000-0000-0000" />
           </Col>
         </FormGroup>
         <FormGroup row>
@@ -58,9 +39,7 @@ const RegisterCompanyTemplate: React.FC = (props:any) => {
           </Label>
           <Col sm={10}>
             <Input type="file" name="file" id="exampleFile" />
-            <FormText color="muted">
-              사업자 등록증, 통신판매업 신고증을 업로드해주세요
-            </FormText>
+            <FormText color="muted">사업자 등록증, 통신판매업 신고증을 업로드해주세요</FormText>
           </Col>
         </FormGroup>
         <FormGroup check row>
@@ -73,4 +52,4 @@ const RegisterCompanyTemplate: React.FC = (props:any) => {
   );
 };
 
-export default RegisterCompanyTemplate;
+export default CompanyRegisterTemplate;
