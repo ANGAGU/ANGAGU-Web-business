@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable prettier/prettier */
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faHome,
@@ -7,6 +8,9 @@ import {
   faQuestion,
   faImage,
   faCopy,
+  faCashRegister,
+  faHouseUser,
+  faChartPie,
 } from '@fortawesome/free-solid-svg-icons';
 import { NavItem, NavLink, Nav } from 'reactstrap';
 import classNames from 'classnames';
@@ -24,6 +28,7 @@ type SideBarProps = {
   toggle: VoidFunction;
 };
 const SideBar: React.FC<SideBarProps> = ({ isOpen, toggle }) => {
+  const [isAdmin, setIsAdmin] = useState(localStorage.getItem('isAdmin'));
   return (
     <div className={classNames('sidebar', { 'is-open': isOpen })}>
       <div className="sidebar-header">
@@ -37,27 +42,18 @@ const SideBar: React.FC<SideBarProps> = ({ isOpen, toggle }) => {
       <div className="side-menu">
         <Nav vertical className="list-unstyled pb-3">
           <br />
-          <SubMenu title="Home" icon={faHome} items={submenus[0]} />
+          {/* <SubMenu title="Home" icon={faHome} items={submenus[0]} />
           <SideBarItem title={'About'} url={'/about'} icon={faBriefcase} />
-          <SubMenu title="Pages" icon={faCopy} items={submenus[1]} />
-          <SideBarItem title={'상품관리'} url={'/Main/Product'} icon={faCopy} />
-          <SideBarItem
-            title={'상품상세'}
-            url={'/Main/Product/1'}
-            icon={faImage}
-          />
-          <SideBarItem title={'기업정보'} url={'/Main/Info'} icon={faCopy} />
-          <SideBarItem
-            title={'주문관리'}
-            url={'/Main/ManageOrder'}
-            icon={faImage}
-          />
-          <SideBarItem title={'정산관리'} url={'/Main/Adjust'} icon={faCopy} />
-          <SideBarItem
-            title={'주문관리'}
-            url={'/Main/ManageOrder'}
-            icon={faImage}
-          />
+          <SubMenu title="Pages" icon={faCopy} items={submenus[1]} /> */}
+          {isAdmin === 'true' ? (
+            <SideBarItem title={'상품관리'} url={'/Main/ManageProduct'} icon={faHouseUser} />
+          ) : (
+            <SideBarItem title={'상품관리'} url={'/Main/Product'} icon={faHouseUser} />
+          )}
+          <SideBarItem title={'기업정보'} url={'/Main/Info'} icon={faChartPie} />
+          <SideBarItem title={'주문관리'} url={'/Main/ManageOrder'} icon={faCashRegister} />
+          <SideBarItem title={'상품상세'} url={'/Main/Product/:id'} icon={faPaperPlane} />
+          <SideBarItem title={'정산관리'} url={'/Main/Adjust'} icon={faBriefcase} />
           <SideBarItem title={'FAQ'} url={'/faq'} icon={faQuestion} />
           <SideBarItem title={'Contact'} url={'/contact'} icon={faImage} />
         </Nav>

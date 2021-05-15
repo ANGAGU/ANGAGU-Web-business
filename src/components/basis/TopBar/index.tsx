@@ -10,26 +10,18 @@ import {
   NavItem,
   NavLink,
 } from 'reactstrap';
-import { Link, useRouteMatch } from 'react-router-dom';
-import './style.css';
+import { Link, useRouteMatch, useHistory } from 'react-router-dom';
+import TopBarLibs from './libs';
+import { NavBarStyle, ButtonStyle, ButtonMargin } from './style';
 
-const NavBarStyle = {
-  height: '65px',
-  background: '#232929',
-};
-const ButtonStyle = {
-  background: 'black',
-  borderColor: '#1c5c59',
-}
 type TopBarProps = {
   toggleSidebar: VoidFunction;
 };
+
 const TopBar = ({ toggleSidebar }: TopBarProps) => {
   const [topbarIsOpen, setTopbarOpen] = useState(true);
   const toggleTopbar = () => setTopbarOpen(!topbarIsOpen);
-  const Logout = (e: any) => {
-    window.localStorage.setItem('', '');
-  };
+  const history = useHistory();
   const { path } = useRouteMatch();
   return (
     <Navbar className="navbar shadow-sm p-3   " expand="md" style={NavBarStyle}>
@@ -39,24 +31,25 @@ const TopBar = ({ toggleSidebar }: TopBarProps) => {
       <NavbarToggler onClick={toggleTopbar} />
       <Collapse isOpen={topbarIsOpen} navbar>
         <Nav className="ml-auto" navbar>
-          <NavItem>
-            <NavLink tag={Link} to={`${path}/Register`}>
-              사업자 등록 필요
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink tag={Link} to="/page-2">
-              page 2
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink tag={Link} to="/page-3">
-              page 3
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <Button onClick={Logout}>로그아웃</Button>
-          </NavItem>
+          <Button
+            outline
+            color="secondary"
+            onClick={e => {
+              TopBarLibs.goToRegister(history, `${path}/Register`);
+            }}
+            style={ButtonMargin}
+          >
+            사업자 등록 필요
+          </Button>{' '}
+          <Button
+            outline
+            color="secondary"
+            onClick={e => {
+              TopBarLibs.Logout(e, history);
+            }}
+          >
+            로그아웃
+          </Button>
         </Nav>
       </Collapse>
     </Navbar>
