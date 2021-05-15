@@ -30,16 +30,6 @@ const ProductDetailTemplate: React.FC = () => {
   // method
   const submitProductInfo = async (evt: React.FormEvent<EventTarget>) => {
     evt.preventDefault();
-    const formData = new FormData();
-
-    formData.append('data', JSON.stringify(submitValue));
-    // formData.append('name', JSON.stringify(submitValue.price));
-    console.log(formData);
-    const config = {
-      headers: {
-        'content-type': 'multipart/form-data',
-      },
-    };
 
     // await post(url, formData, config)
 
