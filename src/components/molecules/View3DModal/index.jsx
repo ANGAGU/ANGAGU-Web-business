@@ -2,7 +2,9 @@
 /* eslint-disable spaced-comment */
 import { useState, useRef } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Col, Container, Row } from 'reactstrap';
+import { OBJModel } from 'react-3d-viewer';
 import { ObjModelLoader } from 'components/atoms';
+import * as THREE from 'three';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
 import { Canvas, useLoader } from '@react-three/fiber';
@@ -13,7 +15,7 @@ const View3DModal = props => {
   // set states
   const [modal, setModal] = useState(false);
   const [product3D, setProduct3D] = useState(null);
-  const [productMTL, setProductMTL] = useState(null);
+  const [productEl, setProductEl] = useState(null);
   const [modelExten, setModelExten] = useState('');
 
   const toggle = () => setModal(!modal);
@@ -21,7 +23,7 @@ const View3DModal = props => {
 
   const handleclickInput = () => {
     if (inputRef.current !== null) {
-      inputRef.current.setAttribute('multiple', '');
+      // inputRef.current.setAttribute('multiple', '');
     }
     inputRef.current.click();
   };
@@ -30,6 +32,7 @@ const View3DModal = props => {
   // };
 
   const handleOnChange = async evt => {
+    console.log(evt.target.files);
     const buffer = new Uint8Array(evt.target.files[0]);
     const blob = new Blob([buffer.buffer]);
     const fileDownloadUrl = URL.createObjectURL(blob);
@@ -89,7 +92,23 @@ const View3DModal = props => {
             </Row>
             <Row>
               <Col className="model-view" style={visStyle}>
-                {product3D && <ThreeRender size={['1000', '700']} modeURL={product3D} />}
+                {/* {
+                  <div>
+                    <OBJModel
+                      width="400"
+                      height="400"
+                      position={{ x: 0, y: -100, z: 0 }}
+                      src={'http://d3u3zwu9bmcdht.cloudfront.net/testModel/modernchair11obj.obj'}
+                      onLoad={() => {
+                        //...
+                      }}
+                      onProgress={xhr => {
+                        //...
+                      }}
+                    />
+                  </div>
+                } */}
+                {product3D && <ThreeRender size={['1200', '700']} modelURL={product3D} />}
                 {/* {product3D && <ObjModelLoader model={product3D} mtl={productMTL} />} */}
               </Col>
             </Row>

@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import api from '../../../api';
 import { formStyle } from './style';
@@ -29,8 +29,9 @@ const CompanyInfoForm: React.FC = () => {
   const rows = [
     createData('기업이름', 'name', data.name),
     createData('대표 이메일', 'email', data.email),
-    createData('사업자등록번호', 'businessNumber', data.businessNumber),
+    // createData('사업자등록번호', 'businessNumber', data.businessNumber),
     createData('대표 휴대전화', 'phoneNumber', data.phoneNumber),
+    createData('비밀번호', 'password', ''),
     createData('계좌정보', 'accountBank', data.accountBank, data.accountNumber, 1),
   ];
 
@@ -70,7 +71,7 @@ const CompanyInfoForm: React.FC = () => {
       if (result.status === 'success') {
         // eslint-disable-next-line no-alert
         alert('업데이트 성공');
-        history.push('./');
+        window.location.reload();
       } else {
         console.log(result);
       }
@@ -98,7 +99,7 @@ const CompanyInfoForm: React.FC = () => {
                   name="select"
                   id="exampleSelect"
                   onChange={e => setData({ ...data, [item.id]: e.target.value })}
-                  defaultValue={item.text}
+                  value={item.text}
                 >
                   {bankList.map((i, idx) => (
                     <option key={`formGroup_${index} ${idx}`}>{i}</option>
@@ -111,6 +112,7 @@ const CompanyInfoForm: React.FC = () => {
                   name={item.id}
                   id={item.id}
                   placeholder={item.account}
+                  value={item.account}
                   onChange={e => setData({ ...data, [item.id]: e.target.value })}
                 />
               </Col>
@@ -126,6 +128,7 @@ const CompanyInfoForm: React.FC = () => {
                   name={item.id}
                   id={item.id}
                   placeholder={item.text}
+                  value={item.text}
                   onChange={e => setData({ ...data, [item.id]: e.target.value })}
                 />
               </Col>

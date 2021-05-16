@@ -7,6 +7,7 @@
 /* eslint-disable no-var */
 /* eslint-disable vars-on-top */
 /* eslint-disable react/no-this-in-sfc */
+import { RoomTwoTone } from '@material-ui/icons';
 import React, { useEffect, useState, useRef } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
@@ -78,7 +79,7 @@ function main(div, url, size) {
   const near = 0.1;
   const far = 100;
   const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-  camera.position.set(0, 10, 20);
+  camera.position.set(0, 10, 50);
 
   const controls = new OrbitControls(camera, canvas);
   controls.target.set(0, 5, 0);
@@ -128,12 +129,21 @@ function main(div, url, size) {
 
   {
     const objLoader = new OBJLoader();
-    objLoader.load('https://threejsfundamentals.org/threejs/resources/models/windmill/windmill.obj', root => {
-      scene.add(root);
-    });
-    // objLoader.load(url, root => {
+    // objLoader.load('http://d3u3zwu9bmcdht.cloudfront.net/testModel/modernchair11obj.obj', root => {
     //   scene.add(root);
     // });
+    objLoader.load(url, root => {
+      const geometry = root.content;
+      const material = new THREE.MeshPhongMaterial({
+        ambient: 0xff5533,
+        color: 0xff5533,
+        specular: 0x111111,
+        shininess: 200,
+      });
+      const mesh = new THREE.Mesh(geometry, material);
+      scene.add(mesh);
+      // URL.revokeObjectURL(url);
+    });
   }
 
   function resizeRendererToDisplaySize(renderer) {
@@ -166,6 +176,7 @@ function ThreeRender({ size: initialSize, modelURL }) {
   // const { canvas, mountRef, size } = useResponsiveCanvas(initialSize);
   const [width, height] = initialSize;
   const mountRef = useRef();
+  // console.log(modelURL.substring(5));
   // const fov = 45;
   // const aspect = 2; // the canvas default
   // const near = 0.1;
@@ -248,6 +259,7 @@ function ThreeRender({ size: initialSize, modelURL }) {
   // }, [height, width]);
 
   useEffect(() => {
+    // main(mountRef.current, modelURL.substring(5), initialSize);
     main(mountRef.current, modelURL, initialSize);
   }, []);
   return <div style={{ height: '100%', width: '100%' }} ref={mountRef} />;
