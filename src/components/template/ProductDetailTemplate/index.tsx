@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useRouteMatch, useHistory } from 'react-router-dom';
 import { Container, Row, Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import './style.css';
 import api from '../../../api';
@@ -29,6 +30,7 @@ const ProductDetailTemplate: React.FC = () => {
   const [detailImgOrder, setDetailImgOrder] = useState({});
   const [previewURL, setPreviewURL] = useState({} as PreviewURL);
 
+  const history = useHistory();
   const imgFormData = new FormData();
   const productsGroupList: Array<string> = ['폭신폭신 의자', '안폭신폭신 의자', '물침대', '돌침대'];
 
@@ -53,24 +55,10 @@ const ProductDetailTemplate: React.FC = () => {
     });
     if (status === 'success') {
       alert('OK!');
+      alert(`submit Data!${productValue.name}`);
+      history.push('/Main/Product');
     } else {
       console.log('fail for send product info');
-    }
-
-    alert(`submit Data!${productValue.name}`);
-  };
-
-  const submitImages = async () => {
-    const orderContent = JSON.stringify({ 'metal-s6.png': 1 });
-    api.setAxiosDefaultHeader();
-    const { status, data } = await api.upload('/company/products/1/image', {
-      product_image: descImg,
-      order: orderContent,
-    });
-    if (status === 'success') {
-      alert('OK!');
-    } else {
-      console.log('fail for send Image');
     }
   };
 
@@ -110,39 +98,47 @@ const ProductDetailTemplate: React.FC = () => {
     // imgFormData.append(name, files[0]);
   };
 
-  const test = () => {
-    console.log(detailImgOrder);
-  };
-
   return (
     <Container>
-      <Row>
-        <Button type="submit" form="productPrimary">
-          Submit
-        </Button>
+      <Row className="product-detail__header">
+        <Col className="product-detail__ttl-blk">
+          <h4 className="product__title">상품 정보</h4>
+        </Col>
+        <Col className="product-detail__btn-blk">
+          <Button type="submit" form="productPrimary">
+            Submit
+          </Button>
+        </Col>
       </Row>
       <Row>
         <Col xs="5">
           <div className="product-img">
-            <h4 className="produnct-img__title">상품 이미지</h4>
             <div className="product-img__content">
               <Form>
                 <FormGroup>
+                  <Label for="productThumbImg">상품 썸네일 이미지</Label>
+                  <Input type="file" name="thumb_image" id="productThumbImg" onChange={handleThumbImg} />
+                  <FormText color="muted">상품 썸네일 이미지를 넣어주세요 :)</FormText>
+                </FormGroup>
+                <FormGroup>
+                  <Label for="productDetailImg">상품 상세 이미지</Label>
                   <Input type="file" name="1" onChange={handleDetailImg} />
                   {/* {previewURL.productImg1 && <img src={previewURL.productImg1} alt="" />} */}
                   <Input type="file" name="2" onChange={handleDetailImg} />
                   <Input type="file" name="3" onChange={handleDetailImg} />
                   <Input type="file" name="4" onChange={handleDetailImg} />
                   <Input type="file" name="5" onChange={handleDetailImg} />
+                  <FormText color="muted">상품 상세 이미지를 넣어주세요 :)</FormText>
                 </FormGroup>
-                <Button type="button" onClick={test}>
-                  이미지 저장
-                </Button>
+                <FormGroup>
+                  <Label for="productDescImg">상품 설명 이미지</Label>
+                  <Input type="file" name="desc_image" id="productDescImg" onChange={handleDescImg} />
+                  <FormText color="muted">상품 설명 이미지를 넣어주세요 :)</FormText>
+                </FormGroup>
               </Form>
               <div className="content__main">{/* <img className="main-img" src={testImg} alt="" /> */}</div>
             </div>
           </div>
-          <Model3DForm />
         </Col>
         <Col xs="7">
           <Form id="productPrimary" onSubmit={submitProductInfo}>
@@ -152,7 +148,7 @@ const ProductDetailTemplate: React.FC = () => {
                 type="text"
                 name="name"
                 id="productName"
-                value={productValue.name}
+                defaultValue={productValue.name}
                 onChange={handleOnChange}
                 placeholder="상품 이름을 적어주세요."
               />
@@ -163,7 +159,7 @@ const ProductDetailTemplate: React.FC = () => {
                 type="number"
                 name="price"
                 id="productPrice"
-                value={productValue.price}
+                defaultValue={productValue.price}
                 onChange={handleOnChange}
                 placeholder="판매 가격을 적어주세요."
               />
@@ -174,7 +170,7 @@ const ProductDetailTemplate: React.FC = () => {
                 type="number"
                 name="delivery_charge"
                 id="deliveryCharge"
-                value={productValue.delivery_charge}
+                defaultValue={productValue.delivery_charge}
                 onChange={handleOnChange}
                 placeholder="배송비를 적어주세요."
               />
@@ -185,7 +181,7 @@ const ProductDetailTemplate: React.FC = () => {
                 type="number"
                 name="stock"
                 id="productStock"
-                value={productValue.stock}
+                defaultValue={productValue.stock}
                 onChange={handleOnChange}
                 placeholder="판매 수량을 적어주세요."
               />
@@ -196,7 +192,7 @@ const ProductDetailTemplate: React.FC = () => {
                 type="select"
                 name="group"
                 id="productGroup"
-                value={productValue.group}
+                defaultValue={productValue.group}
                 onChange={handleOnChange}
               >
                 {productGroup}
@@ -208,25 +204,12 @@ const ProductDetailTemplate: React.FC = () => {
                 type="textarea"
                 name="desc"
                 id="productDesc"
-                value={productValue.desc}
+                defaultValue={productValue.desc}
                 onChange={handleOnChange}
                 maxLength={500}
                 placeholder="상품에 대한 간단한 설명을 적어주세요 :)"
               />
             </FormGroup>
-            <FormGroup>
-              <Label for="productDescImg">상품 썸네일</Label>
-              <Input type="file" name="thumb_image" id="productDescImg" onChange={handleThumbImg} />
-              <FormText color="muted">상품 썸네일 이미지를 넣어주세요 :)</FormText>
-            </FormGroup>
-            <FormGroup>
-              <Label for="productDescImg">상품 상세 이미지</Label>
-              <Input type="file" name="desc_image" id="productDescImg" onChange={handleDescImg} />
-              <FormText color="muted">상품 상세 설명 이미지를 넣어주세요 :)</FormText>
-            </FormGroup>
-            <Button type="button" onClick={submitImages}>
-              이미지
-            </Button>
           </Form>
         </Col>
       </Row>

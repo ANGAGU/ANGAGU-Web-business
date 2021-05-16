@@ -24,6 +24,7 @@ interface Product {
   price: string;
   stock: number;
   rate: number;
+  thumb_url: string;
   create_time: string;
 }
 const StyledTableCell = withStyles((theme: Theme) =>
@@ -90,32 +91,31 @@ const CompanyProductTemplate: React.FC = () => {
           <TableHead>
             <TableRow>
               {productsTitleList.map((row, idx) => (
-                <StyledTableCell key={`product_title ${idx}`}>row</StyledTableCell>
+                <StyledTableCell key={`product_title ${idx}`}>{row}</StyledTableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {products.map((product, index) => (
-              <StyledTableRow
-                key={`product_body ${index}`}
-                className={index % 2 === 0 ? 'even pointer' : 'odd pointer'}
-              >
+            {products.map(product => (
+              <StyledTableRow key={product.id}>
                 <StyledTableCell className="a-center">
                   <input type="checkbox" className="flat" name="table_records" />
                 </StyledTableCell>
-                <StyledTableCell className=" ">{product.id}</StyledTableCell>
-                <StyledTableCell className=" ">
-                  <img className="product__img" alt="" src={testImg} />
+                <StyledTableCell>{product.id}</StyledTableCell>
+                <StyledTableCell>
+                  <img
+                    className="product__img"
+                    alt=""
+                    src={`http://d3u3zwu9bmcdht.cloudfront.net/${product.thumb_url}`}
+                  />
                 </StyledTableCell>
-                <StyledTableCell className=" ">
-                  {product.name} <i className="success fa fa-long-arrow-up" />
-                </StyledTableCell>
-                <StyledTableCell className=" ">{product.price}</StyledTableCell>
-                <StyledTableCell className=" ">{5.0}</StyledTableCell>
-                <StyledTableCell className=" ">{product.stock}</StyledTableCell>
+                <StyledTableCell>{product.name}</StyledTableCell>
+                <StyledTableCell>{product.price}</StyledTableCell>
+                <StyledTableCell>{5.0}</StyledTableCell>
+                <StyledTableCell>{product.stock}</StyledTableCell>
                 <StyledTableCell className="a-right a-right ">{product.create_time}</StyledTableCell>
                 <StyledTableCell className="last">
-                  <Link to="/Main/Product/1">
+                  <Link to={`/Main/Product/${product.id}`}>
                     <Button color="secondary">수정하기</Button>
                   </Link>
                 </StyledTableCell>
