@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useRouteMatch, useHistory } from 'react-router-dom';
 import { Container, Row, Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import './style.css';
 import api from '../../../api';
@@ -29,6 +30,7 @@ const ProductDetailTemplate: React.FC = () => {
   const [detailImgOrder, setDetailImgOrder] = useState({});
   const [previewURL, setPreviewURL] = useState({} as PreviewURL);
 
+  const history = useHistory();
   const imgFormData = new FormData();
   const productsGroupList: Array<string> = ['폭신폭신 의자', '안폭신폭신 의자', '물침대', '돌침대'];
 
@@ -53,11 +55,11 @@ const ProductDetailTemplate: React.FC = () => {
     });
     if (status === 'success') {
       alert('OK!');
+      alert(`submit Data!${productValue.name}`);
+      history.push('/Main/Product');
     } else {
       console.log('fail for send product info');
     }
-
-    alert(`submit Data!${productValue.name}`);
   };
 
   const handleOnChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
