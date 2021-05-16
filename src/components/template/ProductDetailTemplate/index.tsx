@@ -152,7 +152,7 @@ const ProductDetailTemplate: React.FC = () => {
                 type="text"
                 name="name"
                 id="productName"
-                value={productValue.name}
+                defaultValue={productValue.name}
                 onChange={handleOnChange}
                 placeholder="상품 이름을 적어주세요."
               />
@@ -163,7 +163,7 @@ const ProductDetailTemplate: React.FC = () => {
                 type="number"
                 name="price"
                 id="productPrice"
-                value={productValue.price}
+                defaultValue={productValue.price}
                 onChange={handleOnChange}
                 placeholder="판매 가격을 적어주세요."
               />
@@ -174,7 +174,7 @@ const ProductDetailTemplate: React.FC = () => {
                 type="number"
                 name="delivery_charge"
                 id="deliveryCharge"
-                value={productValue.delivery_charge}
+                defaultValue={productValue.delivery_charge}
                 onChange={handleOnChange}
                 placeholder="배송비를 적어주세요."
               />
@@ -185,7 +185,7 @@ const ProductDetailTemplate: React.FC = () => {
                 type="number"
                 name="stock"
                 id="productStock"
-                value={productValue.stock}
+                defaultValue={productValue.stock}
                 onChange={handleOnChange}
                 placeholder="판매 수량을 적어주세요."
               />
@@ -196,7 +196,7 @@ const ProductDetailTemplate: React.FC = () => {
                 type="select"
                 name="group"
                 id="productGroup"
-                value={productValue.group}
+                defaultValue={productValue.group}
                 onChange={handleOnChange}
               >
                 {productGroup}
@@ -208,7 +208,7 @@ const ProductDetailTemplate: React.FC = () => {
                 type="textarea"
                 name="desc"
                 id="productDesc"
-                value={productValue.desc}
+                defaultValue={productValue.desc}
                 onChange={handleOnChange}
                 maxLength={500}
                 placeholder="상품에 대한 간단한 설명을 적어주세요 :)"
