@@ -1,0 +1,18 @@
+{
+    "presets": [
+        "babel-preset-expo"
+    ],
+    "plugins": [
+        "transform-react-jsx-source",
+        [
+            "module-resolver",
+            {
+                "alias": {
+                    "~/*": "./src"
+                },
+                "cwd": "babelrc"
+            }
+        ],
+        "transform-remove-console"
+    ]
+}

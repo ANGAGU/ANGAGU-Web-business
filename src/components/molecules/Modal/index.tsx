@@ -1,44 +1,26 @@
 import React, { useState } from 'react';
-import {
-  Button,
-  Input,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-} from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import './style.css';
 
 type ModalMolProps = {
   buttonLabel: any;
   confirmButtonText: string;
   leftButtonText: string;
-  leftButtonAction: VoidFunction;
   className: any;
   title: string;
   name: any;
   content: React.ReactElement;
+  file: any;
 };
 
 const ModalMol: React.FC<ModalMolProps> & {
   defaultProps: Partial<ModalMolProps>;
 } = props => {
-  const {
-    buttonLabel,
-    confirmButtonText,
-    leftButtonText,
-    leftButtonAction,
-    className,
-    title,
-    name,
-    content,
-  } = props;
+  const { buttonLabel, className, title, name } = props;
   const [modal, setModal] = useState(false);
+  // eslint-disable-next-line react/destructuring-assignment
   const toggle = () => setModal(!modal);
-  // console.log(className);
+
   return (
     <div>
       <Button outline color="secondary" onClick={toggle}>
@@ -46,21 +28,8 @@ const ModalMol: React.FC<ModalMolProps> & {
       </Button>
       <Modal isOpen={modal} toggle={toggle} className={className}>
         <ModalHeader toggle={toggle}>{title}</ModalHeader>
-        {content.props.children ? (
-          <ModalBody>{content}</ModalBody>
-        ) : (
-          <ModalBody>{getContent(className, name)}</ModalBody>
-        )}
+        <ModalBody>{getContent(className)}</ModalBody>
         <ModalFooter>
-          {leftButtonText ? (
-            <Button
-              color="secondary"
-              className="modal-btn--left"
-              onClick={leftButtonAction}
-            >
-              {leftButtonText}
-            </Button>
-          ) : null}
           <Button color="primary" onClick={toggle}>
             변경
           </Button>{' '}
@@ -72,76 +41,9 @@ const ModalMol: React.FC<ModalMolProps> & {
     </div>
   );
 };
-const getContent = (id: string, value: string) => {
+const getContent = (id: string) => {
   let contents;
   console.log(id);
-  if (id === 'password') {
-    contents = (
-      <div>
-        <InputGroup>
-          <InputGroupAddon addonType="prepend">
-            <InputGroupText>{id}</InputGroupText>
-          </InputGroupAddon>
-          <Input placeholder={value} />
-        </InputGroup>
-      </div>
-    );
-  } else if (id === 'accountNumber') {
-    contents = (
-      <div>
-        <InputGroup>
-          <InputGroupAddon addonType="prepend">
-            <InputGroupText>{id}</InputGroupText>
-          </InputGroupAddon>
-          <Input placeholder={value} />
-        </InputGroup>
-      </div>
-    );
-  } else if (id === 'email') {
-    contents = (
-      <div>
-        <InputGroup>
-          <InputGroupAddon addonType="prepend">
-            <InputGroupText>{id}</InputGroupText>
-          </InputGroupAddon>
-          <Input placeholder={value} />
-        </InputGroup>
-      </div>
-    );
-  } else if (id === 'phoneNumber') {
-    contents = (
-      <div>
-        <InputGroup>
-          <InputGroupAddon addonType="prepend">
-            <InputGroupText>{id}</InputGroupText>
-          </InputGroupAddon>
-          <Input placeholder={value} />
-        </InputGroup>
-      </div>
-    );
-  } else if (id === 'businessNumber') {
-    contents = (
-      <div>
-        <InputGroup>
-          <InputGroupAddon addonType="prepend">
-            <InputGroupText>{id}</InputGroupText>
-          </InputGroupAddon>
-          <Input placeholder={value} />
-        </InputGroup>
-      </div>
-    );
-  } else if (id === '3dModelUrl') {
-    contents = (
-      <div>
-        <InputGroup>
-          <InputGroupAddon addonType="prepend">
-            <InputGroupText>{id}</InputGroupText>
-          </InputGroupAddon>
-          <Input placeholder={value} />
-        </InputGroup>
-      </div>
-    );
-  }
   return contents;
 };
 

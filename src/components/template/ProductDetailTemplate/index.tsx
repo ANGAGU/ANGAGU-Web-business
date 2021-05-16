@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Container,
   Row,
@@ -10,7 +10,6 @@ import {
   Input,
   FormText,
 } from 'reactstrap';
-import { ModalMol } from '../../molecules';
 import './style.css';
 
 // 임시

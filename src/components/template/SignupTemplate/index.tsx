@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Container,
@@ -9,7 +9,6 @@ import {
   FormGroup,
   Label,
   Input,
-  FormText,
   Modal,
   ModalBody,
   ModalFooter,
@@ -104,13 +103,10 @@ const SignupTemplate: React.FC = () => {
   };
 
   const checkAuthNumber = async () => {
-    const { status, data } = await api.post(
-      '/company/signup/sms/verification',
-      {
-        phone_number: submitValue.phone_number,
-        code: verifyNumber,
-      },
-    );
+    const { status, data } = await api.post('/company/signup/sms/verification', {
+      phone_number: submitValue.phone_number,
+      code: verifyNumber,
+    });
     if (status === 'success') {
       alert('OK!');
       setAuthToken(data.token);
@@ -280,13 +276,7 @@ const SignupTemplate: React.FC = () => {
               </Col>
             </Row>
             <Row className="form-btn">
-              <Button
-                className="form-btn__submit"
-                type="submit"
-                form="signup"
-                color="info"
-                block
-              >
+              <Button className="form-btn__submit" type="submit" form="signup" color="info" block>
                 안오구에 회원가입 하기
               </Button>
               <Col className="form-btn">

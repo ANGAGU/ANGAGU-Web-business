@@ -1,8 +1,7 @@
-import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 
-import InfoForm from './index';
+import Model3DForm from './index';
 
 let container: HTMLElement;
 beforeEach(() => {
@@ -17,10 +16,10 @@ afterEach(() => {
   container.remove();
 });
 
-describe('InfoForm Component', () => {
+describe('Model3DForm Component', () => {
   it('renders component', () => {
     act(() => {
-      render(<InfoForm />, container);
+      render(<Model3DForm />, container);
     });
   });
 });

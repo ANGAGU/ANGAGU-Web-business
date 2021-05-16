@@ -10,6 +10,7 @@ const SideBarProps = {
   isOpen: true,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   toggle: () => {},
+  menu: [],
 };
 beforeEach(() => {
   // setup a DOM element as a render target
@@ -28,7 +29,7 @@ describe('SideBar Page', () => {
     act(() => {
       render(
         <Router>
-          <SideBar isOpen={SideBarProps.isOpen} toggle={SideBarProps.toggle}/>
+          <SideBar isOpen={SideBarProps.isOpen} toggle={SideBarProps.toggle} menu={SideBarProps.menu} />
         </Router>,
         container,
       );

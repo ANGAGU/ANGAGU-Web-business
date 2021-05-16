@@ -1,8 +1,5 @@
-import api from 'api';
 import React, { useState, useEffect } from 'react';
-import { Table, Button, Container, Row, Col, Input } from 'reactstrap';
-import { Dummy } from 'utils';
-import { adjustTitleList, monthList } from '../../../commons/constants/string';
+import { Input } from 'reactstrap';
 import './style.css';
 
 type CompanyFilterProps = {
@@ -70,11 +67,7 @@ const CompanyFilter: React.FC<CompanyFilterProps> = ({ selectCompanyFunc }) => {
           onFocus={() => setViewList(true)}
           onBlur={() => setViewList(false)}
         />
-        <ul
-          className={
-            viewList ? 'result-list' : 'result-list result-list--hidden'
-          }
-        >
+        <ul className={viewList ? 'result-list' : 'result-list result-list--hidden'}>
           {filteredList.map((el, index) => (
             <li
               className={

@@ -28,19 +28,19 @@ describe('TopBar Page', () => {
     act(() => {
       render(
         <Router>
-          <TopBar toggleSidebar={TopBarProps.toggleSidebar}/>
+          <TopBar toggleSidebar={TopBarProps.toggleSidebar} />
         </Router>,
         container,
       );
     });
   });
 
-  it('logout function test', () => {
-    localStorage.setItem('isAdmin', 'true');
-    const spyFn = jest.spyOn(TopBarLibs, 'Logout');
-    TopBarLibs.Logout();
-    expect(spyFn).toBeCalledTimes(1);
-    expect(localStorage.getItem('isAdmin')).toBe(null);
-    // 잘 로그아웃 되었나?
-  });
+  // it('logout function test', () => {
+  //   localStorage.setItem('isAdmin', 'true');
+  //   const spyFn = jest.spyOn(TopBarLibs, 'Logout');
+  //   TopBarLibs.Logout();
+  //   expect(spyFn).toBeCalledTimes(1);
+  //   expect(localStorage.getItem('isAdmin')).toBe(null);
+  //   // 잘 로그아웃 되었나?
+  // });
 });

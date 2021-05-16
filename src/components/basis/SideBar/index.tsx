@@ -1,59 +1,54 @@
 /* eslint-disable prettier/prettier */
-import React, { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faHome,
-  faBriefcase,
-  faPaperPlane,
-  faQuestion,
-  faImage,
-  faCopy,
-  faCashRegister,
-  faHouseUser,
-  faChartPie,
-} from '@fortawesome/free-solid-svg-icons';
-import { NavItem, NavLink, Nav } from 'reactstrap';
+import React from 'react';
+import { faQuestion, faImage } from '@fortawesome/free-solid-svg-icons';
+import { Nav } from 'reactstrap';
 import classNames from 'classnames';
-import { Link } from 'react-router-dom';
 import './style.css';
-import { SubMenu } from '../index';
 import { SideBarItem } from '../../molecules';
-import logo from '../../../assets/images/slack.png';
+import logo from '../../../assets/images/angagu.png';
 
 const imgStyle = {
-  width: '65px',
+  margin: '10px',
+  width: '45px',
+};
+const titleStyle = {
+  color: 'white',
+  fontSize: 'xx-large',
+  margin: '0px',
+  fontFamily: 'Roboto',
+};
+const titleDivStyle = {
+  display: 'flex',
+  alignItems: 'center',
+};
+const sidebarHeaderStyle = {
+  display: 'flex',
 };
 type SideBarProps = {
   isOpen: boolean;
   toggle: VoidFunction;
+  menu: any;
 };
-const SideBar: React.FC<SideBarProps> = ({ isOpen, toggle }) => {
-  const [isAdmin, setIsAdmin] = useState(localStorage.getItem('isAdmin'));
+const SideBar: React.FC<SideBarProps> = ({ isOpen, toggle, menu }) => {
   return (
     <div className={classNames('sidebar', { 'is-open': isOpen })}>
-      <div className="sidebar-header">
+      <div className="sidebar-header" style={sidebarHeaderStyle}>
         <span color="info" onClick={toggle} style={{ color: '#fff' }}>
           &times;
         </span>
         <a href="/Main">
           <img src={logo} alt="안가구 로고" style={imgStyle} />
         </a>
+        <div style={titleDivStyle}>
+          <p style={titleStyle}>ANGAGU</p>
+        </div>
       </div>
       <div className="side-menu">
         <Nav vertical className="list-unstyled pb-3">
           <br />
-          {/* <SubMenu title="Home" icon={faHome} items={submenus[0]} />
-          <SideBarItem title={'About'} url={'/about'} icon={faBriefcase} />
-          <SubMenu title="Pages" icon={faCopy} items={submenus[1]} /> */}
-          {isAdmin === 'true' ? (
-            <SideBarItem title={'상품관리'} url={'/Main/ManageProduct'} icon={faHouseUser} />
-          ) : (
-            <SideBarItem title={'상품관리'} url={'/Main/Product'} icon={faHouseUser} />
-          )}
-          <SideBarItem title={'기업정보'} url={'/Main/Info'} icon={faChartPie} />
-          <SideBarItem title={'주문관리'} url={'/Main/ManageOrder'} icon={faCashRegister} />
-          <SideBarItem title={'상품상세'} url={'/Main/Product/:id'} icon={faPaperPlane} />
-          <SideBarItem title={'정산관리'} url={'/Main/Adjust'} icon={faBriefcase} />
+          {menu.map((item: any, idx: number) => (
+            <SideBarItem key={`sidebar items ${idx}`} title={item.title} url={item.url} icon={item.icon} />
+          ))}
           <SideBarItem title={'FAQ'} url={'/faq'} icon={faQuestion} />
           <SideBarItem title={'Contact'} url={'/contact'} icon={faImage} />
         </Nav>
@@ -61,36 +56,5 @@ const SideBar: React.FC<SideBarProps> = ({ isOpen, toggle }) => {
     </div>
   );
 };
-
-const submenus = [
-  [
-    {
-      title: 'Home 1',
-      target: 'Home-1',
-    },
-    {
-      title: 'Adjusts',
-      target: '/Main/Adjust',
-    },
-    {
-      itle: 'Home 3',
-      target: 'Home-3',
-    },
-  ],
-  [
-    {
-      title: '주문관리',
-      target: `/Main/ManageOrder`,
-    },
-    {
-      title: '상품관리',
-      target: `/Main/Product`,
-    },
-    {
-      title: '기업정보',
-      target: `/Main/Info`,
-    },
-  ],
-];
 
 export default SideBar;

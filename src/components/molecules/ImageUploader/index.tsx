@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import React from 'react';
 import { Input, Media, Label } from 'reactstrap';
 import './style.css';
 
@@ -8,11 +8,7 @@ type ImageUploaderProps = {
   imgUrl: string;
 };
 
-const ImageUploader: React.FC<ImageUploaderProps> = ({
-  label,
-  type,
-  imgUrl,
-}) => {
+const ImageUploader: React.FC<ImageUploaderProps> = ({ label, type, imgUrl }) => {
   return (
     <div className="row">
       <Media object src="previewSrc" alt={`업로드 된 ${label}`} />
