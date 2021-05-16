@@ -17,6 +17,7 @@ const getLogin = async (titleType, api, id, pw, history) => {
       } else {
         localStorage.setItem('isAdmin', false);
         console.log(result);
+        history.push('/Main');
       }
     } else {
       localStorage.setItem('isAdmin', true);
