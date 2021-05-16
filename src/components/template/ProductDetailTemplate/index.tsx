@@ -62,6 +62,20 @@ const ProductDetailTemplate: React.FC = () => {
     alert(`submit Data!${productValue.name}`);
   };
 
+  const submitImages = async () => {
+    const orderContent = JSON.stringify({ 'metal-s6.png': 1 });
+    api.setAxiosDefaultHeader(localStorage.getItem('token'));
+    const { status, data } = await api.upload('/company/products/1/image', {
+      product_image: descImg,
+      order: orderContent,
+    });
+    if (status === 'success') {
+      alert('OK!');
+    } else {
+      console.log('fail for send Image');
+    }
+  };
+
   const handleOnChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = evt.target as HTMLInputElement;
     setProductValue({ ...productValue, [name]: value });
@@ -206,6 +220,9 @@ const ProductDetailTemplate: React.FC = () => {
               <Input type="file" name="desc_image" id="productDescImg" onChange={handleDescImg} />
               <FormText color="muted">상품 상세 설명 이미지를 넣어주세요 :)</FormText>
             </FormGroup>
+            <Button type="button" onClick={submitImages}>
+              이미지
+            </Button>
           </Form>
         </Col>
       </Row>

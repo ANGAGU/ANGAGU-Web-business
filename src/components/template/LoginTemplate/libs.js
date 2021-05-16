@@ -29,6 +29,7 @@ const getLogin = async (titleType, api, id, pw, history) => {
         // eslint-disable-next-line no-alert
         alert('관리자 로그인 성공');
         localStorage.setItem('isAdmin', true);
+        history.push('/Main');
       } else {
         console.log(result);
       }

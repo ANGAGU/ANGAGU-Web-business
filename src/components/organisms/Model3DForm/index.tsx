@@ -7,9 +7,7 @@ import api from '../../../api';
 
 const Model3DForm: React.FC = () => {
   const [product3D, setProduct3D] = useState(null as FileList | null);
-  const inputRef = useRef(
-    null as HTMLInputElement | null,
-  ) as React.MutableRefObject<HTMLInputElement>;
+  const inputRef = useRef(null as HTMLInputElement | null) as React.MutableRefObject<HTMLInputElement>;
 
   const getProduct3DModel = async () => {
     // const result = await api.post('/company/model', {});
@@ -57,7 +55,7 @@ const Model3DForm: React.FC = () => {
     <Container>
       <Row>
         <Col>
-          <input type="file" onChange={handleOnChange} ref={inputRef} hidden />
+          <input alt="3d-model-input" type="file" onChange={handleOnChange} ref={inputRef} hidden />
         </Col>
       </Row>
       <Row>
