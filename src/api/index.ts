@@ -8,12 +8,12 @@ const server = 'http://54.180.62.210:3000';
 
 // get user token
 const setCommonParams = (params: any) => {
-  const key = localStorage.getItem('key');
-  if (params) {
-    params.key = key;
-  } else {
-    params = { key };
-  }
+  // const key = localStorage.getItem('key');
+  // if (params) {
+  //   params.key = key;
+  // } else {
+  //   params = { key };
+  // }
   return params;
 };
 
@@ -22,7 +22,7 @@ const api = {
     axios.defaults.headers.common.Verification = token;
   },
   setAxiosDefaultHeader(accessToken: any) {
-    axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+    axios.defaults.headers.common.Authorization = accessToken;
   },
 
   async get(endpoint: string, param: any) {
@@ -43,11 +43,7 @@ const api = {
     };
 
     try {
-      const response = await axios.post(
-        `${server}${endpoint}`,
-        querystring.stringify(params),
-        { headers },
-      );
+      const response = await axios.post(`${server}${endpoint}`, querystring.stringify(params), { headers });
       return response.data;
     } catch (error) {
       alert(`ERROR: ${error.response.data.message}`);
@@ -61,7 +57,12 @@ const api = {
     };
     const formData = new FormData();
     Object.keys(params).map(key => {
-      formData.append(key, params[key]);
+      if (Array.isArray(params[key])) {
+        params[key].map((item: any) => {
+          formData.append(key, item);
+          return '';
+        });
+      } else formData.append(key, params[key]);
       return '';
     });
     try {
