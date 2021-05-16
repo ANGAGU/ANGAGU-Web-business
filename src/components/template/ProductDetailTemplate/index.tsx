@@ -4,7 +4,6 @@ import './style.css';
 import api from '../../../api';
 // 임시
 import testImg from '../../../assets/product_test.jpeg';
-import { Model3DForm } from '../../organisms';
 
 type ProductInfo = {
   name: string;
@@ -34,7 +33,6 @@ const ProductDetailTemplate: React.FC = () => {
 
   // comp
   const productGroup = productsGroupList.map(group => <option key={group}>{group}</option>);
-
   // method
   const submitProductInfo = async (evt: React.FormEvent<EventTarget>) => {
     evt.preventDefault();
@@ -56,7 +54,6 @@ const ProductDetailTemplate: React.FC = () => {
     } else {
       console.log('fail for send product info');
     }
-
     alert(`submit Data!${productValue.name}`);
   };
 
@@ -142,7 +139,6 @@ const ProductDetailTemplate: React.FC = () => {
               <div className="content__main">{/* <img className="main-img" src={testImg} alt="" /> */}</div>
             </div>
           </div>
-          <Model3DForm />
         </Col>
         <Col xs="7">
           <Form id="productPrimary" onSubmit={submitProductInfo}>

@@ -12,6 +12,9 @@ import React, { useEffect, useState, useRef } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
+import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
+import { ColladaLoader } from 'three/examples/jsm/loaders/ColladaLoader';
+import mesh from '../../assets/lamp.mtl';
 
 function useResponsiveCanvas(initialSize) {
   const canvasRef = useRef();
@@ -128,21 +131,17 @@ function main(div, url, size) {
   }
 
   {
-    const objLoader = new OBJLoader();
-    // objLoader.load('http://d3u3zwu9bmcdht.cloudfront.net/testModel/modernchair11obj.obj', root => {
-    //   scene.add(root);
-    // });
-    objLoader.load(url, root => {
-      const geometry = root.content;
-      const material = new THREE.MeshPhongMaterial({
-        ambient: 0xff5533,
-        color: 0xff5533,
-        specular: 0x111111,
-        shininess: 200,
+    const mtlLoader = new MTLLoader();
+    mtlLoader.load(mesh, materials => {
+      materials.preload();
+      const objLoader = new OBJLoader();
+      objLoader.setMaterials(materials);
+      objLoader.load(url, object => {
+        console.log(object);
+        object.scale.set(0.006, 0.006, 0.006);
+        object.position.set(0.3, 0.3, 0.3);
+        scene.add(object);
       });
-      const mesh = new THREE.Mesh(geometry, material);
-      scene.add(mesh);
-      // URL.revokeObjectURL(url);
     });
   }
 
@@ -173,91 +172,8 @@ function main(div, url, size) {
 }
 
 function ThreeRender({ size: initialSize, modelURL }) {
-  // const { canvas, mountRef, size } = useResponsiveCanvas(initialSize);
   const [width, height] = initialSize;
   const mountRef = useRef();
-  // console.log(modelURL.substring(5));
-  // const fov = 45;
-  // const aspect = 2; // the canvas default
-  // const near = 0.1;
-  // const far = 100;
-  // const skyColor = 0xb1e1ff; // light blue
-  // const groundColor = 0xb97a20; // brownish orange
-  // const color = 0xffffff; // for directionalLight
-  // const intensity = 1;
-
-  // const rendererRef = useRef(new THREE.WebGLRenderer({ canvas }));
-  // const cameraRef = useRef(new THREE.PerspectiveCamera(fov, aspect, near, far));
-  // const sceneRef = useRef(new THREE.Scene());
-  // const hemisLightRef = useRef(new THREE.HemisphereLight(skyColor, groundColor, intensity));
-  // const directionalLightRef = useRef(new THREE.DirectionalLight(color, intensity));
-  // const objLoaderRef = useRef(new OBJLoader());
-  // // const controlsRef = useRef(new OrbitControls(cameraRef.current, canvas));
-
-  // // init globe
-  // useEffect(() => {
-  //   // get current instances
-  //   const mount = mountRef.current;
-  //   const renderer = rendererRef.current;
-  //   const camera = cameraRef.current;
-  //   const scene = sceneRef.current;
-  //   const hemisLight = hemisLightRef.current;
-  //   const directionalLight = directionalLightRef.current;
-  //   const objLoader = objLoaderRef.current;
-  //   // const controls = controlsRef.current;
-
-  //   // set camera
-  //   camera.position.set(0, 10, 20);
-
-  //   // set light
-  //   scene.add(hemisLight);
-  //   scene.add(directionalLight);
-
-  //   // get obj object file
-  //   objLoader.load('https://threejsfundamentals.org/threejs/resources/models/windmill/windmill.obj', root => {
-  //     scene.add(root);
-  //   });
-
-  //   // set controls
-  //   const controls = new OrbitControls(cameraRef.current, canvas);
-  //   controls.target.set(0, 5, 0);
-  //   controls.update();
-
-  //   function resizeRendererToDisplaySize(_renderer) {
-  //     const _canvas = _renderer.domElement;
-  //     const _width = _canvas.clientWidth;
-  //     const _height = _canvas.clientHeight;
-  //     const _needResize = _canvas.width !== _width || _canvas.height !== _height;
-  //     if (_needResize) {
-  //       _renderer.setSize(_width, _height, false);
-  //     }
-  //     return _needResize;
-  //   }
-  //   // set update function to transform the scene and view
-  //   function render() {
-  //     if (resizeRendererToDisplaySize(renderer)) {
-  //       const _canvas = renderer.domElement;
-  //       camera.aspect = _canvas.clientWidth / _canvas.clientHeight;
-  //       camera.updateProjectionMatrix();
-  //     }
-  //     renderer.render(scene, camera);
-  //     requestAnimationFrame(render);
-  //   }
-
-  //   // update scene
-  //   scene.add(camera);
-
-  //   // mount element and animate
-  //   mount.appendChild(renderer.domElement);
-  //   requestAnimationFrame(render);
-  // }, [mountRef]);
-
-  // // update size
-  // useEffect(() => {
-  //   const renderer = rendererRef.current;
-  //   renderer.setSize(width, height);
-  // }, [height, width]);
-
   useEffect(() => {
     // main(mountRef.current, modelURL.substring(5), initialSize);
     main(mountRef.current, modelURL, initialSize);

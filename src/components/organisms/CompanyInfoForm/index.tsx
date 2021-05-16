@@ -64,9 +64,9 @@ const CompanyInfoForm: React.FC = () => {
       const result = await api.post('/company/info', {
         name: data.name,
         password: data.password,
-        account_number: data.accountNumber,
-        account_holder: data.accountHolder,
-        account_bank: data.accountBank,
+        accountNumber: data.accountNumber,
+        accountHolder: data.accountHolder,
+        accountBank: data.accountBank,
       });
       if (result.status === 'success') {
         // eslint-disable-next-line no-alert
