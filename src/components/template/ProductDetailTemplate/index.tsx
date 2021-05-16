@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import { ModalMol } from '../../molecules';
+import api from '../../../api';
 import './style.css';
 
 // 임시
@@ -13,7 +14,6 @@ type ProductInfo = {
   stock: number;
   group: string;
   desc: string;
-  descImgUrl: string;
   delivery_charge: number;
 };
 
@@ -41,7 +41,23 @@ const ProductDetailTemplate: React.FC = () => {
   const submitProductInfo = async (evt: React.FormEvent<EventTarget>) => {
     evt.preventDefault();
 
-    // await post(url, formData, config)
+    api.setAxiosDefaultHeader(localStorage.getItem('token'));
+    const { status, data } = await api.upload('/company/products', {
+      product_image: detailImgs,
+      order: JSON.stringify(detailImgOrder),
+      desc_image: descImg,
+      thumb_image: thumbImg,
+      description: productValue.desc,
+      name: productValue.name,
+      price: productValue.price,
+      stock: productValue.stock,
+      delivery_charge: productValue.delivery_charge,
+    });
+    if (status === 'success') {
+      alert('OK!');
+    } else {
+      console.log('fail for send product info');
+    }
 
     alert(`submit Data!${productValue.name}`);
   };
@@ -146,7 +162,7 @@ const ProductDetailTemplate: React.FC = () => {
                 type="number"
                 name="delivery_charge"
                 id="deliveryCharge"
-                value={productValue.price}
+                value={productValue.delivery_charge}
                 onChange={handleOnChange}
                 placeholder="배송비를 적어주세요."
               />
