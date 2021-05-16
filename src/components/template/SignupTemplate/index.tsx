@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useRouteMatch, useHistory } from 'react-router-dom';
 import {
   Container,
   Row,
@@ -14,12 +14,13 @@ import {
   ModalFooter,
   ModalHeader,
 } from 'reactstrap';
+
 import api from '../../../api';
 import { isEmail, isPassword, isSame } from '../../../utils';
 import './style.css';
 
 // 추후 nested object로 만들기
-interface UserInfo {
+type UserInfo = {
   email: string;
   password: string;
   passwordConfirm: string;
@@ -28,7 +29,7 @@ interface UserInfo {
   account_bank: string;
   account_number: string;
   account_holder: string;
-}
+};
 const SignupTemplate: React.FC = () => {
   // state & variable
   const [submitValue, setSubmitValue] = useState({} as UserInfo);
@@ -37,31 +38,18 @@ const SignupTemplate: React.FC = () => {
   const [authToken, setAuthToken] = useState('' as string);
   const [viewModal, setViewModal] = useState(false as boolean);
 
+  const history = useHistory();
+
   const submitUserInfo = async (evt: React.FormEvent<EventTarget>) => {
     evt.preventDefault();
-
-    // 보내기 전 validation 필요
-    // const formData = new FormData();
-
-    // formData.append('data', JSON.stringify(submitValue));
-    // formData.append('name', JSON.stringify(submitValue.price));
-    // console.log(formData);
-    // const config = {
-    //   headers: {
-    //     'content-type': 'multipart/form-data',
-    //   },
-    // };
-    // send api
-    // await post(url, formData, config)
-    console.log(authToken);
-    console.log(submitValue);
     api.setHeaderVerification(authToken);
 
     const { status, data } = await api.post('/company/signup', submitValue);
     if (status === 'success') {
       alert('OK!');
+      history.push('/Login');
     } else {
-      console.log('fail for send sms');
+      console.log('fail to signup');
     }
     alert(`submit Data!${submitValue.email}`);
   };
@@ -138,7 +126,7 @@ const SignupTemplate: React.FC = () => {
                   type="text"
                   name="email"
                   id="userEmail"
-                  value={submitValue.email}
+                  defaultValue={submitValue.email}
                   onChange={evt => {
                     if (!isEmail(evt.target.value)) {
                       console.log('이메일 형식이 올바르지 않습니다.');
@@ -160,7 +148,7 @@ const SignupTemplate: React.FC = () => {
                 type="password"
                 name="password"
                 id="userPassword"
-                value={submitValue.password}
+                defaultValue={submitValue.password}
                 onChange={evt => {
                   if (!isPassword(evt.target.value)) {
                     console.log('비밀번호 형식이 올바르지 않습니다.');
@@ -178,7 +166,7 @@ const SignupTemplate: React.FC = () => {
                 type="password"
                 name="passwordConfirm"
                 id="userPasswordConfirm"
-                value={submitValue.passwordConfirm}
+                defaultValue={submitValue.passwordConfirm}
                 onChange={evt => {
                   if (!isSame(evt.target.value, submitValue.password)) {
                     console.log('비밀번호가 다릅니다.');
@@ -198,7 +186,7 @@ const SignupTemplate: React.FC = () => {
                   type="text"
                   name="phone_number"
                   id="userPhone"
-                  value={submitValue.phone_number}
+                  defaultValue={submitValue.phone_number}
                   onChange={handleOnChange}
                   placeholder="휴대폰 번호를 적어주세요."
                 />
@@ -211,7 +199,7 @@ const SignupTemplate: React.FC = () => {
                 <ModalBody>
                   <Input
                     type="text"
-                    value={verifyNumber}
+                    defaultValue={verifyNumber}
                     laceholder="인증번호를 입력해주세요."
                     onChange={handleVerifyNumber}
                   />
@@ -232,7 +220,7 @@ const SignupTemplate: React.FC = () => {
                 type="text"
                 name="name"
                 id="userCommpany"
-                value={submitValue.name}
+                defaultValue={submitValue.name}
                 onChange={handleOnChange}
                 placeholder="회사 이름을 적어주세요."
               />
@@ -244,7 +232,7 @@ const SignupTemplate: React.FC = () => {
                   <Input
                     type="text"
                     name="account_bank"
-                    value={submitValue.account_bank}
+                    defaultValue={submitValue.account_bank}
                     onChange={handleOnChange}
                     placeholder="은행명"
                   />
@@ -256,7 +244,7 @@ const SignupTemplate: React.FC = () => {
                   <Input
                     type="text"
                     name="account_number"
-                    value={submitValue.account_number}
+                    defaultValue={submitValue.account_number}
                     onChange={handleOnChange}
                     placeholder="계좌번호를 적어주세요."
                   />
@@ -268,7 +256,7 @@ const SignupTemplate: React.FC = () => {
                   <Input
                     type="text"
                     name="account_holder"
-                    value={submitValue.account_holder}
+                    defaultValue={submitValue.account_holder}
                     onChange={handleOnChange}
                     placeholder="계좌주명"
                   />
