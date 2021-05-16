@@ -6,6 +6,7 @@ import { ObjModelLoader } from 'components/atoms';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
 import { Canvas, useLoader } from '@react-three/fiber';
+import ThreeRender from '../../atoms/ThreeRender';
 import './style.css';
 
 const View3DModal = props => {
@@ -88,8 +89,8 @@ const View3DModal = props => {
             </Row>
             <Row>
               <Col className="model-view" style={visStyle}>
-                {/* {product3D && <ObjModelLoader model3D={product3D} />} */}
-                {product3D && <ObjModelLoader model={product3D} mtl={productMTL} />}
+                {product3D && <ThreeRender size={['1000', '700']} modeURL={product3D} />}
+                {/* {product3D && <ObjModelLoader model={product3D} mtl={productMTL} />} */}
               </Col>
             </Row>
           </Container>

@@ -22,22 +22,19 @@ const Scene = ({ model }) => {
     setModel(model);
   }, []);
   console.log('scene', model3D);
-  if (model3D) return null;
-  else {
-    const materials = useLoader(MTLLoader, mesh);
-    const obj = useLoader(OBJLoader, model3D, loader => {
-      materials.preload();
-      loader.setMaterials(materials);
-    });
-    return <primitive object={obj} scale={1} position={[0, -1, 0]} />;
-  }
+  const materials = useLoader(MTLLoader, mesh);
+  const obj = useLoader(OBJLoader, model3D, loader => {
+    materials.preload();
+    loader.setMaterials(materials);
+  });
+  return <primitive object={obj} scale={1} position={[0, -1, 0]} />;
 };
 
 const ObjModelLoader = ({ model, mtl }) => {
   const [model3D, setModel3D] = useState(null);
   useEffect(() => {
     setModel3D(model);
-    console.log('loader', model);
+    console.log('loader', model1);
   }, []);
   return (
     <div className="App" style={AppStyle}>

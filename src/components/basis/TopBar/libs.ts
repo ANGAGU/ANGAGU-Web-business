@@ -8,6 +8,7 @@ const TopBarLibs = {
       history.push(`/`);
     } else {
       // 관리자 아니면
+      localStorage.removeItem('isAdmin');
       localStorage.removeItem('token');
       history.push(`/`);
     }
