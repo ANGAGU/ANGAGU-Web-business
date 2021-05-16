@@ -1,3 +1,14 @@
+.product-detail__header {
+  margin-bottom: 20px;
+  border-bottom: 1px solid gainsboro;
+}
+.product-detail__ttl-blk {
+  margin-bottom: 20px;
+}
+.product-detail__btn-blk {
+  text-align: right;
+  margin-bottom: 20px;
+}
 .x_title h2 {
   margin: 5px 0 6px;
   float: left;
