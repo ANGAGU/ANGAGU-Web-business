@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useRouteMatch, useHistory } from 'react-router-dom';
 import {
   Container,
   Row,
@@ -14,12 +14,13 @@ import {
   ModalFooter,
   ModalHeader,
 } from 'reactstrap';
+
 import api from '../../../api';
 import { isEmail, isPassword, isSame } from '../../../utils';
 import './style.css';
 
 // 추후 nested object로 만들기
-interface UserInfo {
+type UserInfo = {
   email: string;
   password: string;
   passwordConfirm: string;
@@ -28,7 +29,7 @@ interface UserInfo {
   account_bank: string;
   account_number: string;
   account_holder: string;
-}
+};
 const SignupTemplate: React.FC = () => {
   // state & variable
   const [submitValue, setSubmitValue] = useState({} as UserInfo);
@@ -37,6 +38,8 @@ const SignupTemplate: React.FC = () => {
   const [authToken, setAuthToken] = useState('' as string);
   const [viewModal, setViewModal] = useState(false as boolean);
 
+  const history = useHistory();
+
   const submitUserInfo = async (evt: React.FormEvent<EventTarget>) => {
     evt.preventDefault();
     api.setHeaderVerification(authToken);
@@ -44,8 +47,9 @@ const SignupTemplate: React.FC = () => {
     const { status, data } = await api.post('/company/signup', submitValue);
     if (status === 'success') {
       alert('OK!');
+      history.push('/Login');
     } else {
-      console.log('fail for send sms');
+      console.log('fail to signup');
     }
     alert(`submit Data!${submitValue.email}`);
   };
