@@ -1,5 +1,6 @@
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
+import Model3DForm from './index';
 
 import Model3DForm from './index';
 
