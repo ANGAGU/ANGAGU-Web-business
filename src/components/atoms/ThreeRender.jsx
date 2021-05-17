@@ -14,7 +14,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
 import { ColladaLoader } from 'three/examples/jsm/loaders/ColladaLoader';
-import mesh from '../../assets/lamp.mtl';
+import mesh1 from '../../assets/IKE050020.mtl';
 
 function useResponsiveCanvas(initialSize) {
   const canvasRef = useRef();
@@ -68,7 +68,7 @@ function useResponsiveCanvas(initialSize) {
     size,
   };
 }
-function main(div, url, size) {
+function main(div, url, size, fileName) {
   const canvas = document.createElement('canvas');
   const [getWidth, getHeight] = size;
   canvas.width = getWidth;
@@ -122,6 +122,7 @@ function main(div, url, size) {
 
   {
     const color = 0xffffff;
+    // const color = 0xdddddd;
     const intensity = 1;
     const light = new THREE.DirectionalLight(color, intensity);
     light.position.set(0, 10, 0);
@@ -132,12 +133,11 @@ function main(div, url, size) {
 
   {
     const mtlLoader = new MTLLoader();
-    mtlLoader.load(mesh, materials => {
+    mtlLoader.load(mesh1, materials => {
       materials.preload();
       const objLoader = new OBJLoader();
       objLoader.setMaterials(materials);
       objLoader.load(url, object => {
-        console.log(object);
         object.scale.set(0.006, 0.006, 0.006);
         object.position.set(0.3, 0.3, 0.3);
         scene.add(object);
@@ -162,21 +162,16 @@ function main(div, url, size) {
       camera.aspect = canvas.clientWidth / canvas.clientHeight;
       camera.updateProjectionMatrix();
     }
-
     renderer.render(scene, camera);
-
     requestAnimationFrame(render);
   }
-
   requestAnimationFrame(render);
 }
-
-function ThreeRender({ size: initialSize, modelURL }) {
+function ThreeRender({ size: initialSize, modelURL, modelName }) {
   const [width, height] = initialSize;
   const mountRef = useRef();
   useEffect(() => {
-    // main(mountRef.current, modelURL.substring(5), initialSize);
-    main(mountRef.current, modelURL, initialSize);
+    main(mountRef.current, modelURL, initialSize, modelName);
   }, []);
   return <div style={{ height: '100%', width: '100%' }} ref={mountRef} />;
 }

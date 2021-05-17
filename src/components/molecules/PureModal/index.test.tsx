@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
-import ModalMol from './index';
+import PureModal from './index';
 
 let container: HTMLElement;
 
@@ -29,7 +29,7 @@ describe('SideBarItem Page', () => {
   it('renders', () => {
     act(() => {
       render(
-        <ModalMol
+        <PureModal
           buttonLabel={ModalItemProps.buttonLabel}
           className={ModalItemProps.className}
           name={ModalItemProps.name}

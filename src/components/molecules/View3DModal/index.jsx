@@ -7,15 +7,16 @@ import { OBJModel } from 'react-3d-viewer';
 import { ObjModelLoader } from 'components/atoms';
 import { Canvas, useLoader } from '@react-three/fiber';
 import ThreeRender from '../../atoms/ThreeRender';
+import mesh from '../../../assets/IKE050020.mtl';
 import api from '../../../api';
 import './style.css';
 
-const View3DModal = ({ pid }) => {
+const View3DModal = ({ pid, purl }) => {
   // set states
   const [modal, setModal] = useState(false);
   const [product3D, setProduct3D] = useState(null);
   const [productEl, setProductEl] = useState(null);
-  const [modelExten, setModelExten] = useState('');
+  const [modelName, setModelName] = useState('');
 
   const toggle = () => setModal(!modal);
   const inputRef = useRef(null);
@@ -29,7 +30,6 @@ const View3DModal = ({ pid }) => {
 
   const handleOnChange = async evt => {
     const formData = new FormData();
-
     formData.append('file', evt.target.files[0]);
     api.setAxiosDefaultHeader();
     const result = await api.upload(`/company/products/${pid}/ar`, {
@@ -38,6 +38,7 @@ const View3DModal = ({ pid }) => {
     if (result.status === 'success') {
       console.log(result.data);
       setProduct3D(`http://d3u3zwu9bmcdht.cloudfront.net/${result.data.url}`);
+      setModelName(evt.target.files[0].name);
       // setProduct3D(fileDownloadUrl);
     } else {
       console.log('ERROR: in customer products');
@@ -55,9 +56,9 @@ const View3DModal = ({ pid }) => {
   return (
     <div>
       <Button outline color="secondary" onClick={toggle}>
-        3D 모델 등록
+        {purl !== null ? '3D 모델 수정' : '3D 모델 등록'}
       </Button>
-      <Modal isOpen={modal} toggle={toggle} className={'product-3d-model__modal'}>
+      <Modal isOpen={modal} toggle={toggle} className={'product-3d-model__modal'} style={modalStyle}>
         <ModalHeader toggle={toggle}>{'3D모델 등록하기'}</ModalHeader>
         <ModalBody style={modalBodyStyle}>
           <Container>
@@ -68,8 +69,10 @@ const View3DModal = ({ pid }) => {
             </Row>
             <Row>
               <Col className="model-view" style={visStyle}>
-                {product3D && <ThreeRender size={['1200', '700']} modelURL={product3D} />}
-                {/* {product3D && <ObjModelLoader model={product3D} mtl={productMTL} />} */}
+                {product3D && (
+                  <ThreeRender size={['1200', '700']} modelURL={product3D} modelName={modelName} />
+                )}
+                {/* {product3D && <ObjModelLoader model={product3D} mtl={mesh} />} */}
               </Col>
             </Row>
           </Container>
@@ -89,7 +92,10 @@ const View3DModal = ({ pid }) => {
     </div>
   );
 };
-
+const modalStyle = {
+  maxWidth: '1500px',
+  height: '93%',
+};
 const modalBodyStyle = {
   width: '100%',
   height: '100%',

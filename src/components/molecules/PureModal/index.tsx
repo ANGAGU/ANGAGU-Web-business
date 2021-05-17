@@ -1,8 +1,9 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import './style.css';
 
-type ModalMolProps = {
+type PureModalProps = {
   buttonLabel: any;
   confirmButtonText: string;
   leftButtonText: string;
@@ -13,8 +14,8 @@ type ModalMolProps = {
   file: any;
 };
 
-const ModalMol: React.FC<ModalMolProps> & {
-  defaultProps: Partial<ModalMolProps>;
+const PureModal: React.FC<PureModalProps> & {
+  defaultProps: Partial<PureModalProps>;
 } = props => {
   const { buttonLabel, className, title, name } = props;
   const [modal, setModal] = useState(false);
@@ -47,7 +48,7 @@ const getContent = (id: string) => {
   return contents;
 };
 
-ModalMol.defaultProps = {
+PureModal.defaultProps = {
   buttonLabel: 'Modal',
   confirmButtonText: 'Do Something',
   leftButtonText: '',
@@ -56,4 +57,4 @@ ModalMol.defaultProps = {
   name: 'modal',
   content: <div />,
 };
-export default ModalMol;
+export default PureModal;

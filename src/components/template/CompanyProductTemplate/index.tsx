@@ -11,13 +11,9 @@ import {
   TableBody,
   Table,
 } from '@material-ui/core';
+import { Fade } from 'react-awesome-reveal';
 import api from '../../../api';
-import { Model3DForm } from '../../organisms';
-
-// import './style.css';
-
-// 임시
-import testImg from '../../../assets/product_test.jpeg';
+import { View3DModal } from '../../molecules';
 
 interface Product {
   id: number;
@@ -26,6 +22,7 @@ interface Product {
   price: string;
   stock: number;
   rate: number;
+  thumb_url: string;
   create_time: string;
   '3d_model_url': string;
 }
@@ -98,7 +95,7 @@ const CompanyProductTemplate: React.FC = () => {
     }
   };
   return (
-    <>
+    <Fade cascade damping={0.01}>
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="customized table">
           <TableHead>
@@ -109,39 +106,38 @@ const CompanyProductTemplate: React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {products.map((product, index) => (
-              <StyledTableRow
-                key={`product_body ${index}`}
-                className={index % 2 === 0 ? 'even pointer' : 'odd pointer'}
-              >
+            {products.map(product => (
+              <StyledTableRow key={product.id}>
                 <StyledTableCell className="a-center">
                   <input type="checkbox" className="flat" name="table_records" />
                 </StyledTableCell>
-                <StyledTableCell className=" ">{product.id}</StyledTableCell>
-                <StyledTableCell className=" ">
-                  <img className="product__img" alt="" src={testImg} />
+                <StyledTableCell>{product.id}</StyledTableCell>
+                <StyledTableCell>
+                  <img
+                    className="product__img"
+                    alt=""
+                    src={`http://d3u3zwu9bmcdht.cloudfront.net/${product.thumb_url}`}
+                  />
                 </StyledTableCell>
-                <StyledTableCell className=" ">
-                  {product.name} <i className="success fa fa-long-arrow-up" />
-                </StyledTableCell>
-                <StyledTableCell className=" ">{product.price}</StyledTableCell>
-                <StyledTableCell className=" ">{5.0}</StyledTableCell>
-                <StyledTableCell className=" ">{product.stock}</StyledTableCell>
+                <StyledTableCell>{product.name}</StyledTableCell>
+                <StyledTableCell>{product.price}</StyledTableCell>
+                <StyledTableCell>{5.0}</StyledTableCell>
+                <StyledTableCell>{product.stock}</StyledTableCell>
                 <StyledTableCell className="a-right a-right ">{product.create_time}</StyledTableCell>
                 <StyledTableCell className="last">
-                  <Link to="/Main/Product/1">
+                  <Link to={`/Main/Product/${product.id}`}>
                     <Button color="secondary">수정하기</Button>
                   </Link>
                 </StyledTableCell>
                 <StyledTableCell>
-                  <Model3DForm pid={product.id} />
+                  <View3DModal pid={product.id} purl={product['3d_model_url']} />
                 </StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-    </>
+    </Fade>
   );
 };
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { withStyles, Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -44,23 +44,23 @@ const useStyles = makeStyles({
 const CompanyOrderTable = () => {
   const [orders, setOrders] = useState(Dummy.makeOrder(10));
   const classes = useStyles();
-  // const getOrder = async () => {
-  //   try {
-  //     api.setAxiosDefaultHeader();
-  //     const result = await api.get('/company/orders', {});
-  //     if (result.status === 'success') {
-  //       setOrders(result.data);
-  //     } else {
-  //       console.error('주문 조회 실패');
-  //     }
-  //   } catch {
-  //     console.error('주문 조회 실패');
-  //   }
-  // };
+  const getOrder = async () => {
+    try {
+      api.setAxiosDefaultHeader();
+      const result = await api.get('/company/orders', {});
+      if (result.status === 'success') {
+        setOrders(result.data);
+      } else {
+        console.error('주문 조회 실패');
+      }
+    } catch {
+      console.error('주문 조회 실패');
+    }
+  };
 
-  // useEffect(() => {
-  //   getOrder();
-  // }, []);
+  useEffect(() => {
+    getOrder();
+  }, []);
 
   return (
     <TableContainer component={Paper}>

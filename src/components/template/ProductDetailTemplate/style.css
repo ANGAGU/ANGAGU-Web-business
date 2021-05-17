@@ -1,3 +1,25 @@
+.product-detail__header {
+  margin-bottom: 20px;
+  border-bottom: 1px solid gainsboro;
+}
+
+.product-detail__ttl-blk {
+  margin-bottom: 20px;
+}
+
+.product-detail__btn-blk {
+  text-align: right;
+  margin-bottom: 20px;
+}
+
+.product__title {
+  font-size: 14px;
+  width: 106px;
+  margin: 0px;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  text-align: center;
+}
+
 .x_title h2 {
   margin: 5px 0 6px;
   float: left;
@@ -10,6 +32,21 @@
 .product-img {
   height: 50vh;
 }
+
 .product-img .main-img {
   width: 90%;
+}
+
+.image_label {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.description_label {
+  font-size: 12px;
+}
+
+.form_group {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #A7A7A7;
 }

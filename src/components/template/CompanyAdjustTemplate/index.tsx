@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { Table, Container, Input, Button } from 'reactstrap';
 import { Dummy } from 'utils';
+import { Fade } from 'react-awesome-reveal';
 import { CompanyFilter } from '../../molecules';
-import {
-  adjustTitleList,
-  projuctProfitTitleList,
-  monthList,
-} from '../../../commons/constants/string';
+import { adjustTitleList, projuctProfitTitleList, monthList } from '../../../commons/constants/string';
+
 import './style.css';
 
 type AdjustPageProps = {
@@ -32,9 +30,7 @@ type ProductProfit = {
 };
 const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
   const [adjustsDummy] = useState(Dummy.makeAdjusts(1) as Array<Adjust>);
-  const [productProfitsDummy] = useState(
-    Dummy.makeProductProfits(10) as Array<ProductProfit>,
-  );
+  const [productProfitsDummy] = useState(Dummy.makeProductProfits(10) as Array<ProductProfit>);
   const [company, setCompany] = useState('' as string);
   const [toggle, setToggle] = useState(false as boolean);
   const [searchMonth, setSearchMonth] = useState('' as string);
@@ -43,12 +39,8 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
     // const result = api.post('send adjust api', {});
   };
 
-  const adjustHeader = adjustTitleList.map(ttl => (
-    <th className="column-title">{ttl}</th>
-  ));
-  const productProfitHeader = projuctProfitTitleList.map(ttl => (
-    <th className="column-title">{ttl}</th>
-  ));
+  const adjustHeader = adjustTitleList.map(ttl => <th className="column-title">{ttl}</th>);
+  const productProfitHeader = projuctProfitTitleList.map(ttl => <th className="column-title">{ttl}</th>);
 
   // index key 추후 id로 대체
   const productProfits = productProfitsDummy.map((product, index) => (
@@ -75,9 +67,7 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
     </tr>
   ));
 
-  const monthOptions = monthList.map((month, index) => (
-    <option key={index}>{month}</option>
-  ));
+  const monthOptions = monthList.map((month, index) => <option key={index}>{month}</option>);
 
   const handleOnChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = evt.target as HTMLInputElement;
@@ -85,7 +75,7 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
   };
 
   return (
-    <>
+    <Fade>
       <Container className="adjust-page">
         <div className="adjust-filter">
           <h5> 검색 </h5>
@@ -94,12 +84,7 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
               {true ? <CompanyFilter selectCompanyFunc={setCompany} /> : <></>}
               <span className="content__ttl">정산 일자</span>
               <span>
-                <Input
-                  type="select"
-                  name="month"
-                  id="filter-month"
-                  onChange={handleOnChange}
-                >
+                <Input type="select" name="month" id="filter-month" onChange={handleOnChange}>
                   {monthOptions}
                 </Input>
               </span>
@@ -139,7 +124,7 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
           ) : null}
         </div>
       </Container>
-    </>
+    </Fade>
   );
 };
 

@@ -9,10 +9,7 @@ import { DDSLoader } from 'three-stdlib';
 import { Suspense, useState, useEffect } from 'react';
 
 import model1 from '../../../assets/modernobj.obj';
-import model2 from '../../../assets/Koltuk.obj';
-import model3 from '../../../assets/DesignChair1.obj';
-import mesh from '../../../assets/modernobj.mtl';
-import mesh1 from '../../../assets/DesignChair1.mtl';
+import mesh from '../../../assets/IKE050020.mtl';
 
 THREE.DefaultLoadingManager.addHandler(/\.dds$/i, new DDSLoader());
 
@@ -43,8 +40,8 @@ const ObjModelLoader = ({ model, mtl }) => {
           {model3D && <Scene model={model3D} />}
           <OrbitControls />
           <ambientLight />
-          <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-          <pointLight position={[10, 10, 10]} />
+          {/* <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} /> */}
+          {/* <pointLight position={[10, 10, 10]} /> */}
           <Environment preset="apartment" background />
         </Suspense>
       </Canvas>

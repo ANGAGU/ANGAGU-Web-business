@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
+import { useRouteMatch, useHistory } from 'react-router-dom';
 import { Container, Row, Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Fade } from 'react-awesome-reveal';
 import './style.css';
 import api from '../../../api';
-// 임시
-import testImg from '../../../assets/product_test.jpeg';
 
 type ProductInfo = {
   name: string;
@@ -28,6 +28,7 @@ const ProductDetailTemplate: React.FC = () => {
   const [detailImgOrder, setDetailImgOrder] = useState({});
   const [previewURL, setPreviewURL] = useState({} as PreviewURL);
 
+  const history = useHistory();
   const imgFormData = new FormData();
   const productsGroupList: Array<string> = ['폭신폭신 의자', '안폭신폭신 의자', '물침대', '돌침대'];
 
@@ -51,23 +52,10 @@ const ProductDetailTemplate: React.FC = () => {
     });
     if (status === 'success') {
       alert('OK!');
+      alert(`submit Data!${productValue.name}`);
+      history.push('/Main/Product');
     } else {
       console.log('fail for send product info');
-    }
-    alert(`submit Data!${productValue.name}`);
-  };
-
-  const submitImages = async () => {
-    const orderContent = JSON.stringify({ 'metal-s6.png': 1 });
-    api.setAxiosDefaultHeader();
-    const { status, data } = await api.upload('/company/products/1/image', {
-      product_image: descImg,
-      order: orderContent,
-    });
-    if (status === 'success') {
-      alert('OK!');
-    } else {
-      console.log('fail for send Image');
     }
   };
 
@@ -107,127 +95,180 @@ const ProductDetailTemplate: React.FC = () => {
     // imgFormData.append(name, files[0]);
   };
 
-  const test = () => {
-    console.log(detailImgOrder);
-  };
-
   return (
-    <Container>
-      <Row>
-        <Button type="submit" form="productPrimary">
-          Submit
-        </Button>
-      </Row>
-      <Row>
-        <Col xs="5">
-          <div className="product-img">
-            <h4 className="produnct-img__title">상품 이미지</h4>
-            <div className="product-img__content">
-              <Form>
-                <FormGroup>
-                  <Input type="file" name="1" onChange={handleDetailImg} />
-                  {/* {previewURL.productImg1 && <img src={previewURL.productImg1} alt="" />} */}
-                  <Input type="file" name="2" onChange={handleDetailImg} />
-                  <Input type="file" name="3" onChange={handleDetailImg} />
-                  <Input type="file" name="4" onChange={handleDetailImg} />
-                  <Input type="file" name="5" onChange={handleDetailImg} />
-                </FormGroup>
-                <Button type="button" onClick={test}>
-                  이미지 저장
-                </Button>
-              </Form>
-              <div className="content__main">{/* <img className="main-img" src={testImg} alt="" /> */}</div>
-            </div>
-          </div>
-        </Col>
-        <Col xs="7">
-          <Form id="productPrimary" onSubmit={submitProductInfo}>
-            <FormGroup>
-              <Label for="productName">상품명</Label>
-              <Input
-                type="text"
-                name="name"
-                id="productName"
-                value={productValue.name}
-                onChange={handleOnChange}
-                placeholder="상품 이름을 적어주세요."
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for="productPrice">상품 가격</Label>
-              <Input
-                type="number"
-                name="price"
-                id="productPrice"
-                value={productValue.price}
-                onChange={handleOnChange}
-                placeholder="판매 가격을 적어주세요."
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for="deliveryCharge">배송비</Label>
-              <Input
-                type="number"
-                name="delivery_charge"
-                id="deliveryCharge"
-                value={productValue.delivery_charge}
-                onChange={handleOnChange}
-                placeholder="배송비를 적어주세요."
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for="productStock">재고</Label>
-              <Input
-                type="number"
-                name="stock"
-                id="productStock"
-                value={productValue.stock}
-                onChange={handleOnChange}
-                placeholder="판매 수량을 적어주세요."
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for="productGroup">그룹</Label>
-              <Input
-                type="select"
-                name="group"
-                id="productGroup"
-                value={productValue.group}
-                onChange={handleOnChange}
-              >
-                {productGroup}
-              </Input>
-            </FormGroup>
-            <FormGroup>
-              <Label for="productDesc">상품 상세 설명</Label>
-              <Input
-                type="textarea"
-                name="desc"
-                id="productDesc"
-                value={productValue.desc}
-                onChange={handleOnChange}
-                maxLength={500}
-                placeholder="상품에 대한 간단한 설명을 적어주세요 :)"
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for="productDescImg">상품 썸네일</Label>
-              <Input type="file" name="thumb_image" id="productDescImg" onChange={handleThumbImg} />
-              <FormText color="muted">상품 썸네일 이미지를 넣어주세요 :)</FormText>
-            </FormGroup>
-            <FormGroup>
-              <Label for="productDescImg">상품 상세 이미지</Label>
-              <Input type="file" name="desc_image" id="productDescImg" onChange={handleDescImg} />
-              <FormText color="muted">상품 상세 설명 이미지를 넣어주세요 :)</FormText>
-            </FormGroup>
-            <Button type="button" onClick={submitImages}>
-              이미지
+    <Fade cascade damping={0.01}>
+      <Container style={containerStyle}>
+        <Row className="product-detail__header" style={titleStyle}>
+          <Col className="product-detail__ttl-blk" style={marginStyle}>
+            <h4 className="product__title">상품정보</h4>
+          </Col>
+          <Col className="product-detail__btn-blk" style={marginStyle}>
+            <Button type="submit" form="productPrimary">
+              Submit
             </Button>
-          </Form>
-        </Col>
-      </Row>
-    </Container>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs="5" style={colStyle}>
+            <div className="product-img">
+              <div className="product-img__content">
+                <Form>
+                  <FormGroup className={'form_group'}>
+                    <Label for="productThumbImg" className={'image_label'}>
+                      상품 썸네일 이미지
+                    </Label>
+                    <Input type="file" name="thumb_image" id="productThumbImg" onChange={handleThumbImg} />
+                    <FormText color="muted" className={'description_label'}>
+                      상품 썸네일 이미지를 넣어주세요 :)
+                    </FormText>
+                  </FormGroup>
+
+                  <FormGroup className={'form_group'}>
+                    <Label for="productDetailImg" className={'image_label'}>
+                      상품 상세 이미지
+                    </Label>
+                    <Input type="file" name="1" onChange={handleDetailImg} />
+                    {/* {previewURL.productImg1 && <img src={previewURL.productImg1} alt="" />} */}
+                    <Input type="file" name="2" onChange={handleDetailImg} />
+                    <Input type="file" name="3" onChange={handleDetailImg} />
+                    <Input type="file" name="4" onChange={handleDetailImg} />
+                    <Input type="file" name="5" onChange={handleDetailImg} />
+                    <FormText color="muted" className={'description_label'}>
+                      상품 상세 이미지를 넣어주세요 :)
+                    </FormText>
+                  </FormGroup>
+
+                  <FormGroup className={'form_group'}>
+                    <Label for="productDescImg" className={'image_label'}>
+                      상품 설명 이미지
+                    </Label>
+                    <Input type="file" name="desc_image" id="productDescImg" onChange={handleDescImg} />
+                    <FormText color="muted" className={'description_label'}>
+                      상품 설명 이미지를 넣어주세요 :)
+                    </FormText>
+                  </FormGroup>
+                </Form>
+                <div className="content__main">{/* <img className="main-img" src={testImg} alt="" /> */}</div>
+              </div>
+            </div>
+          </Col>
+          <Col xs="7" style={colStyle}>
+            <Form id="productPrimary" onSubmit={submitProductInfo}>
+              <FormGroup>
+                <Label for="productName" className={'image_label'}>
+                  상품명
+                </Label>
+                <Input
+                  type="text"
+                  name="name"
+                  id="productName"
+                  defaultValue={productValue.name}
+                  onChange={handleOnChange}
+                  placeholder="상품 이름을 적어주세요."
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label for="productPrice" className={'image_label'}>
+                  상품 가격
+                </Label>
+                <Input
+                  type="number"
+                  name="price"
+                  id="productPrice"
+                  defaultValue={productValue.price}
+                  onChange={handleOnChange}
+                  placeholder="판매 가격을 적어주세요."
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label for="deliveryCharge" className={'image_label'}>
+                  배송비
+                </Label>
+                <Input
+                  type="number"
+                  name="delivery_charge"
+                  id="deliveryCharge"
+                  defaultValue={productValue.delivery_charge}
+                  onChange={handleOnChange}
+                  placeholder="배송비를 적어주세요."
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label for="productStock" className={'image_label'}>
+                  재고
+                </Label>
+                <Input
+                  type="number"
+                  name="stock"
+                  id="productStock"
+                  defaultValue={productValue.stock}
+                  onChange={handleOnChange}
+                  placeholder="판매 수량을 적어주세요."
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label for="productGroup" className={'image_label'}>
+                  그룹
+                </Label>
+                <Input
+                  type="select"
+                  name="group"
+                  id="productGroup"
+                  defaultValue={productValue.group}
+                  onChange={handleOnChange}
+                >
+                  {productGroup}
+                </Input>
+              </FormGroup>
+              <FormGroup>
+                <Label for="productDesc" className={'image_label'}>
+                  상품 상세 설명
+                </Label>
+                <Input
+                  type="textarea"
+                  name="desc"
+                  id="productDesc"
+                  defaultValue={productValue.desc}
+                  onChange={handleOnChange}
+                  maxLength={500}
+                  placeholder="상품에 대한 간단한 설명을 적어주세요 :)"
+                />
+              </FormGroup>
+            </Form>
+          </Col>
+        </Row>
+      </Container>
+    </Fade>
   );
 };
+
+const titleStyle = {
+  backgroundColor: 'black',
+  color: 'white',
+  alignItems: 'center',
+  height: 56,
+  borderRadius: '5px 5px 0px 0px',
+};
+const marginStyle = {
+  margin: '10px',
+};
+const containerStyle = {
+  maxWidth: '100%',
+};
+const colStyle = {
+  borderRight: 'solid 1px',
+  paddingLeft: '25px',
+  paddingRight: '25px',
+};
+const horizonLine = (
+  <hr
+    style={{
+      color: '#000000',
+      backgroundColor: '#000000',
+      height: 0.5,
+      borderColor: '#000000',
+    }}
+  />
+);
 
 export default ProductDetailTemplate;
