@@ -27,7 +27,7 @@ const ImageUploader = ({ label, setImg }) => {
       </div>
 
       <Button className="img-btn" color="secondary" onClick={handleclickInput}>
-        이미지 업로드
+        이미지 선택
       </Button>
     </div>
   );
