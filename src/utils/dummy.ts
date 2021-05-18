@@ -1,5 +1,5 @@
 import Chance from 'chance';
-import testImg from '../assets/product_test.jpeg';
+// import testImg from '../assets/product_test.jpeg';
 
 const Dummy = {
   makeProducts: (num: number) => {
@@ -9,7 +9,7 @@ const Dummy = {
     for (let i = 0; i < num; i += 1) {
       tempArr.push({
         id: chance.integer({ min: 0, max: 100 }),
-        img: testImg,
+        img: {},
         name: chance.word(),
         price: chance.dollar(),
         stock: chance.integer({ min: 0, max: 100 }),
@@ -64,7 +64,7 @@ const Dummy = {
         id: chance.integer({ min: 0, max: 100 }),
         name: chance.name(),
         customerId: chance.word(),
-        img: testImg,
+        img: {},
         count: chance.integer({ min: 0, max: 100 }),
         price: chance.dollar(),
         deliveryStatus: chance.character({ pool: 'TF' }),
@@ -83,7 +83,7 @@ const Dummy = {
         id: chance.integer({ min: 0, max: 100 }),
         company: chance.name(),
         name: chance.name(),
-        img: testImg,
+        img: {},
         url_3d: chance.ip(),
         count: chance.integer({ min: 0, max: 100 }),
         price: chance.dollar(),

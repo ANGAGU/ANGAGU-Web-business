@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useRouteMatch, useHistory } from 'react-router-dom';
 import './style.css';
+import mainPNG from '../../../assets/angagu.png';
 import { getLogin } from './libs';
 import api from '../../../api';
 
@@ -25,10 +26,10 @@ const useStyles = makeStyles(theme => ({
     left: '15%',
   },
   image: {
-    backgroundImage: 'url(https://source.unsplash.com/random)', // 여기에 이미지
+    // backgroundImage: `url(${mainPNG})`, // 여기에 이미지
     backgroundRepeat: 'no-repeat',
     backgroundColor: theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
-    backgroundSize: 'cover',
+    backgroundSize: '100% auto',
     backgroundPosition: 'center',
     borderRadius: '20px 0px 0px 20px',
   },
@@ -65,6 +66,24 @@ const LoginTemplate: React.FC = () => {
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          fontSize: '40px',
+          color: '#D7D7D7',
+          position: 'absolute',
+          width: '58.333333%',
+          height: '100%',
+          letterSpacing: '30px',
+          background: '#000000AF',
+          borderRadius: '20px 0px 0px 20px',
+          zIndex: 999,
+        }}
+      >
+        ANGAGU
+      </div>
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} className={classes.main} elevation={6} square>
         <div className={classes.paper}>

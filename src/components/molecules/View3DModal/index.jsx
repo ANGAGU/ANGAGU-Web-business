@@ -7,7 +7,7 @@ import { OBJModel } from 'react-3d-viewer';
 import { ObjModelLoader } from 'components/atoms';
 import { Canvas, useLoader } from '@react-three/fiber';
 import ThreeRender from '../../atoms/ThreeRender';
-import mesh from '../../../assets/IKE050020.mtl';
+// import mesh from '../../../assets/IKE050020.mtl';
 import api from '../../../api';
 import './style.css';
 
