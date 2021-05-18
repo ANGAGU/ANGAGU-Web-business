@@ -3,6 +3,9 @@ import { useRouteMatch, useHistory } from 'react-router-dom';
 import { Container, Row, Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import { Fade } from 'react-awesome-reveal';
 import './style.css';
+
+import { ImageUploader } from 'components/molecules';
+
 import api from '../../../api';
 
 type ProductInfo = {
@@ -72,6 +75,10 @@ const ProductDetailTemplate: React.FC = () => {
   const handleThumbImg = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const files = evt.target.files as FileList;
     setThumbImg(files[0]);
+
+    // 상세 이미지 test 처리
+    setDetailImgs([files[0]]);
+    setDetailImgOrder({ [files[0].name]: 1 });
     handleOnChange(evt);
   };
   const handleDetailImg = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -117,18 +124,16 @@ const ProductDetailTemplate: React.FC = () => {
                     <Label for="productThumbImg" className={'image_label'}>
                       상품 썸네일 이미지
                     </Label>
-                    <Input type="file" name="thumb_image" id="productThumbImg" onChange={handleThumbImg} />
-                    <FormText color="muted" className={'description_label'}>
-                      상품 썸네일 이미지를 넣어주세요 :)
-                    </FormText>
+                    <ImageUploader label="test" setImg={setThumbImg} />
+                    {/* <Input type="file" name="thumb_image" id="productThumbImg" onChange={handleThumbImg} /> */}
                   </FormGroup>
 
-                  <FormGroup className={'form_group'}>
+                  {/* <FormGroup className={'form_group'}>
                     <Label for="productDetailImg" className={'image_label'}>
                       상품 상세 이미지
                     </Label>
                     <Input type="file" name="1" onChange={handleDetailImg} />
-                    {/* {previewURL.productImg1 && <img src={previewURL.productImg1} alt="" />} */}
+                 
                     <Input type="file" name="2" onChange={handleDetailImg} />
                     <Input type="file" name="3" onChange={handleDetailImg} />
                     <Input type="file" name="4" onChange={handleDetailImg} />
@@ -136,16 +141,14 @@ const ProductDetailTemplate: React.FC = () => {
                     <FormText color="muted" className={'description_label'}>
                       상품 상세 이미지를 넣어주세요 :)
                     </FormText>
-                  </FormGroup>
+                  </FormGroup> */}
 
-                  <FormGroup className={'form_group'}>
+                  <FormGroup className={'form_group form_group--last'}>
                     <Label for="productDescImg" className={'image_label'}>
                       상품 설명 이미지
                     </Label>
-                    <Input type="file" name="desc_image" id="productDescImg" onChange={handleDescImg} />
-                    <FormText color="muted" className={'description_label'}>
-                      상품 설명 이미지를 넣어주세요 :)
-                    </FormText>
+                    <ImageUploader label="test" setImg={setDescImg} />
+                    {/* <Input type="file" name="desc_image" id="productDescImg" onChange={handleDescImg} /> */}
                   </FormGroup>
                 </Form>
                 <div className="content__main">{/* <img className="main-img" src={testImg} alt="" /> */}</div>
@@ -256,7 +259,7 @@ const containerStyle = {
   maxWidth: '100%',
 };
 const colStyle = {
-  borderRight: 'solid 1px',
+  // borderRight: 'solid 1px',
   paddingLeft: '25px',
   paddingRight: '25px',
 };

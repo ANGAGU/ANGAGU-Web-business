@@ -1,0 +1,23 @@
+.img-blk {
+  width: 100%;
+  padding: 5px 0 15px 0;
+}
+.empty-img {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  width: 100%;
+  height: 200px;
+  color: #6c757d;
+  font-size: 12px;
+  border: 1px solid gainsboro;
+  border-radius: 10px;
+}
+.preview-img {
+  width: 100%;
+}
+.img-btn {
+  display: block;
+  float: right;
+}
