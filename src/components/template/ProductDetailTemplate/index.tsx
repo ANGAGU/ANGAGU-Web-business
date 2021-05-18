@@ -41,10 +41,13 @@ const ProductDetailTemplate: React.FC = () => {
   const submitProductInfo = async (evt: React.FormEvent<EventTarget>) => {
     evt.preventDefault();
 
+    // for 상세 이미지 test 처리
+    const detailImg = thumbImg as File;
+
     api.setAxiosDefaultHeader();
     const { status, data } = await api.upload('/company/products', {
-      product_image: detailImgs,
-      order: JSON.stringify(detailImgOrder),
+      product_image: [detailImg],
+      order: JSON.stringify({ [detailImg.name]: 1 }),
       desc_image: descImg,
       thumb_image: thumbImg,
       description: productValue.desc,
@@ -75,10 +78,6 @@ const ProductDetailTemplate: React.FC = () => {
   const handleThumbImg = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const files = evt.target.files as FileList;
     setThumbImg(files[0]);
-
-    // 상세 이미지 test 처리
-    setDetailImgs([files[0]]);
-    setDetailImgOrder({ [files[0].name]: 1 });
     handleOnChange(evt);
   };
   const handleDetailImg = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -116,7 +115,7 @@ const ProductDetailTemplate: React.FC = () => {
           </Col>
         </Row>
         <Row>
-          <Col xs="5" style={colStyle}>
+          <Col className="product-col__img" xs="5" style={colStyle}>
             <div className="product-img">
               <div className="product-img__content">
                 <Form>
@@ -209,7 +208,7 @@ const ProductDetailTemplate: React.FC = () => {
                   placeholder="판매 수량을 적어주세요."
                 />
               </FormGroup>
-              <FormGroup>
+              {/* <FormGroup>
                 <Label for="productGroup" className={'image_label'}>
                   그룹
                 </Label>
@@ -222,7 +221,7 @@ const ProductDetailTemplate: React.FC = () => {
                 >
                   {productGroup}
                 </Input>
-              </FormGroup>
+              </FormGroup> */}
               <FormGroup>
                 <Label for="productDesc" className={'image_label'}>
                   상품 상세 설명
@@ -258,10 +257,14 @@ const marginStyle = {
 const containerStyle = {
   maxWidth: '100%',
 };
+// const contentStyle = {
+//   height: '100vh',
+// };
 const colStyle = {
   // borderRight: 'solid 1px',
   paddingLeft: '25px',
   paddingRight: '25px',
+  overflow: 'scroll',
 };
 const horizonLine = (
   <hr
