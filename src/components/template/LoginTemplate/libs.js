@@ -1,3 +1,4 @@
+import { notify } from '../../../App';
 /* eslint-disable no-alert */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const getLogin = async (titleType, api, id, pw, history) => {
@@ -11,7 +12,7 @@ const getLogin = async (titleType, api, id, pw, history) => {
       });
       if (result.status === 'success') {
         // eslint-disable-next-line no-alert
-        alert('기업 로그인 성공');
+        notify('기업페이지 로그인 성공!', 'success');
         localStorage.setItem('token', result.data.token);
         localStorage.setItem('isAdmin', '');
         history.push('/Main');
