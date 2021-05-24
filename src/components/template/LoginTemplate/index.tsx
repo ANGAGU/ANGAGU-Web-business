@@ -138,7 +138,7 @@ const LoginTemplate: React.FC = () => {
             <Grid container>
               <Grid item xs>
                 <Link href={`/`} variant="body2">
-                  {}
+                  {'아이디/비밀번호 찾기'}
                 </Link>
               </Grid>
               <Grid item>
