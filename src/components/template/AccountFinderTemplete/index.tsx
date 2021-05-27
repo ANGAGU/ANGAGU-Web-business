@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Button, ButtonGroup, Grid, Paper } from '@material-ui/core';
+import 'date-fns';
+import DateFnsUtils from '@date-io/date-fns';
+import { Button, ButtonGroup, Grid, Paper, TextField } from '@material-ui/core';
+import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker } from '@material-ui/pickers';
 import { makeStyles } from '@material-ui/core/styles';
 import './style.css';
 
@@ -12,16 +15,24 @@ const useStyles = makeStyles(theme => ({
     left: '25%',
     backgroundColor: '#fff',
     borderRadius: '20px',
-    padding: '20px',
+    padding: '40px',
   },
   form: {
-    paddingTop: '20px',
+    paddingTop: '40px',
+  },
+  input: {
+    display: 'block',
   },
 }));
 
 const AccountFinderTemplate: React.FC = () => {
   const [isPW, setIsPW] = useState(false);
+  const [selectedDate, setSelectedDate] = React.useState<Date | null>(new Date('2000-01-01T21:11:54'));
   const classes = useStyles();
+
+  const handleDateChange = (date: Date | null) => {
+    setSelectedDate(date);
+  };
 
   return (
     <>
@@ -39,10 +50,30 @@ const AccountFinderTemplate: React.FC = () => {
             <Button>비밀번호 찾기</Button>
           </ButtonGroup>
         </Grid>
-        <Grid item className={classes.form}>
-          <Grid item xs={2} alignItems="center" justify="center" spacing={2}>
-            <Paper variant="outlined" />
-          </Grid>
+        <Grid item alignItems="center" justify="center" className={classes.form}>
+          <TextField label="아이디" size="small" variant="outlined" className={classes.input} />
+
+          <TextField label="이름" size="small" variant="outlined" className={classes.input} />
+
+          <TextField label="생년월일" size="small" variant="outlined" className={classes.input} />
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDatePicker
+              margin="normal"
+              label="Date picker dialog"
+              format="MM/dd/yyyy"
+              value={selectedDate}
+              onChange={handleDateChange}
+              KeyboardButtonProps={{
+                'aria-label': 'change date',
+              }}
+            />
+          </MuiPickersUtilsProvider>
+
+          {/* <Grid alignItems="center" justify="center" item xs={6} spacing={2}>
+            <TextField id="outlined-basic" label="아이디" />
+            <TextField id="outlined-basic" label="이름" />
+            <TextField id="outlined-basic" label="생년월일" />
+          </Grid> */}
         </Grid>
       </Grid>
     </>
