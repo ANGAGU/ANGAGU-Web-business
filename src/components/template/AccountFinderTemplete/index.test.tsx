@@ -3,7 +3,7 @@ import { act } from 'react-dom/test-utils';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
-import AccontFinderTemplate from './index';
+import AccountFinderTemplate from './index';
 
 let container: HTMLElement;
 beforeEach(() => {
@@ -18,10 +18,10 @@ afterEach(() => {
   container.remove();
 });
 
-describe('AdminProductTemplate Component', () => {
+describe('AccountFinderTemplate Component', () => {
   it('renders component', () => {
     act(() => {
-      render(<AccontFinderTemplate />, container);
+      render(<AccountFinderTemplate />, container);
     });
   });
 });
