@@ -24,26 +24,28 @@ const AccountFinderTemplate: React.FC = () => {
   const classes = useStyles();
 
   return (
-    <Grid
-      container
-      component="main"
-      direction="column"
-      alignItems="center"
-      justify="flex-start"
-      className={classes.frame}
-    >
-      <Grid direction="row" alignItems="center" justify="flex-end">
-        <ButtonGroup color="primary" aria-label="outlined primary button group">
-          <Button>아이디 찾기</Button>
-          <Button>비밀번호 찾기</Button>
-        </ButtonGroup>
-      </Grid>
-      <Grid item className={classes.form}>
-        <Grid item xs={2} alignItems="center" justify="center" spacing={2}>
-          <Paper variant="outlined" />
+    <>
+      <Grid
+        container
+        component="main"
+        direction="column"
+        alignItems="center"
+        justify="flex-start"
+        className={classes.frame}
+      >
+        <Grid direction="row" alignItems="center" justify="flex-end">
+          <ButtonGroup color="primary" aria-label="outlined primary button group">
+            <Button>아이디 찾기</Button>
+            <Button>비밀번호 찾기</Button>
+          </ButtonGroup>
+        </Grid>
+        <Grid item className={classes.form}>
+          <Grid item xs={2} alignItems="center" justify="center" spacing={2}>
+            <Paper variant="outlined" />
+          </Grid>
         </Grid>
       </Grid>
-    </Grid>
+    </>
   );
 };
 
