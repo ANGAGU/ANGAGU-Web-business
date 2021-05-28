@@ -10,10 +10,7 @@ type MonthSelectorProps = {
   selectDateFunc: React.Dispatch<React.SetStateAction<Date>>;
 };
 
-const MonthSelector: React.FC<MonthSelectorProps> = ({
-  selectDateFunc,
-  title,
-}) => {
+const MonthSelector: React.FC<MonthSelectorProps> = ({ selectDateFunc, title }) => {
   // const [date, setDate] = useState(new Date());
   const [date, setDate] = useState('' as string);
   const [maxDate, setMaxDate] = useState('' as string);
@@ -43,7 +40,6 @@ const MonthSelector: React.FC<MonthSelectorProps> = ({
   const handleOnChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = evt.target as HTMLInputElement;
     setDate(value);
-
     selectDateFunc(string2Date(value));
   };
 

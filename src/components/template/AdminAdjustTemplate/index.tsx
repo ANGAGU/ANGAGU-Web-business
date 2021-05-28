@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Table, Container, Input, Button } from 'reactstrap';
 import { Dummy } from 'utils';
 import { Fade } from 'react-awesome-reveal';
-import { CompanyFilter, MonthSelector, LineChart } from '../../molecules';
+import { CompanyFilter, MonthSelector, LineChart, DoughnutChart } from '../../molecules';
 import { adjustTitleList, projuctProfitTitleList, monthList } from '../../../commons/constants/string';
 
 import './style.css';
@@ -79,12 +79,12 @@ const AdminAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
       <Container className="adjust-page">
         <h3>정산 관리</h3>
         <hr />
-        <div>
+        <div style={{ display: 'flex' }}>
           <div style={{ flex: 2 }}>
             <LineChart data={Dummy.chartData} options={Dummy.chartOptions} />
           </div>
           <div style={{ flex: 1 }}>
-            <span>test</span>
+            <DoughnutChart data={Dummy.doughnutChartData} />
           </div>
         </div>
         <div className="admin-adjust">
