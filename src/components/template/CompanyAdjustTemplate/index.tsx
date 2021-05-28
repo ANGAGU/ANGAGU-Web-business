@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Table, Container, Input, Button } from 'reactstrap';
 import { Dummy } from 'utils';
 import { Fade } from 'react-awesome-reveal';
-import { CompanyFilter, MonthSelector } from '../../molecules';
+import { CompanyFilter, MonthSelector, LineChart } from '../../molecules';
 import { adjustTitleList, projuctProfitTitleList, monthList } from '../../../commons/constants/string';
 
 import './style.css';
@@ -109,6 +109,14 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
       <Container className="adjust-page">
         <h3>정산 관리</h3>
         <hr />
+        <div>
+          <div style={{ flex: 2 }}>
+            <LineChart />
+          </div>
+          <div style={{ flex: 1 }}>
+            <span>test</span>
+          </div>
+        </div>
         <div className="admin-adjust">
           <div className="adjust-filter">
             <h5>Scanit 정산 검색</h5>
