@@ -92,6 +92,31 @@ const Dummy = {
     }
     return tempArr;
   },
+  chartData: {
+    labels: ['1', '2', '3', '4', '5', '6'],
+    datasets: [
+      {
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        fill: false,
+        // #619c9f
+        backgroundColor: 'rgb(97, 157, 160)',
+        borderColor: 'rgba(97, 157, 160, 0.5)',
+      },
+    ],
+  },
+
+  chartOptions: {
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+          },
+        },
+      ],
+    },
+  },
 };
 
 export default Dummy;

@@ -111,7 +111,7 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
         <hr />
         <div>
           <div style={{ flex: 2 }}>
-            <LineChart />
+            <LineChart data={Dummy.chartData} options={Dummy.chartOptions} />
           </div>
           <div style={{ flex: 1 }}>
             <span>test</span>

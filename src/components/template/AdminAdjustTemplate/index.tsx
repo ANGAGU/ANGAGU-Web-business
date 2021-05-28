@@ -69,29 +69,11 @@ const AdminAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
     }
   };
 
-  const productProfitHeader = projuctProfitTitleList.map(ttl => <th className="column-title">{ttl}</th>);
-
-  // index key 추후 id로 대체
-  const productProfits = productProfitsDummy.map((product, index) => (
-    <tr key={index}>
-      <td>{product.id}</td>
-      <td>{product.name}</td>
-      <td>{product.price}</td>
-      <td>{product.sellCount}</td>
-      <td>{product.profit}</td>
-    </tr>
-  ));
-
-  const monthOptions = monthList.map((month, index) => <option key={index}>{month}</option>);
-
   const handleOnChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = evt.target as HTMLInputElement;
     setSearchMonth(value);
   };
 
-  const test = () => {
-    console.log('date: ', adminDate);
-  };
   return (
     <Fade>
       <Container className="adjust-page">
@@ -99,7 +81,7 @@ const AdminAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
         <hr />
         <div>
           <div style={{ flex: 2 }}>
-            <LineChart />
+            <LineChart data={Dummy.chartData} options={Dummy.chartOptions} />
           </div>
           <div style={{ flex: 1 }}>
             <span>test</span>
