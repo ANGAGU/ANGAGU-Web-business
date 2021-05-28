@@ -30,8 +30,6 @@ const getLogin = async (titleType, api, id, pw, history) => {
       });
       if (result.status === 'success') {
         // eslint-disable-next-line no-alert
-        localStorage.setItem('isAdmin', true);
-        history.push('/Main');
         alert('관리자 로그인 성공');
         localStorage.setItem('token', result.data.token);
         localStorage.setItem('isAdmin', true);
