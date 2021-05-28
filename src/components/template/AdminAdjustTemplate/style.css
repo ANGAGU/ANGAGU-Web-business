@@ -27,13 +27,17 @@
   width: 100px;
 }
 .adjust-block {
+  justify-content: center;
+  align-items: center;
   border: solid 2px #dee2e6;
   border-radius: 20px;
   padding: 30px;
 }
 
 .adjust-content {
-  margin: 0 20px 30px 20px;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
 }
 .content__profit {
   font-size: 25px;
