@@ -47,7 +47,6 @@ const AdminAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
   const [toggle, setToggle] = useState(false as boolean);
   const [searchMonth, setSearchMonth] = useState('1월' as string);
   const [adminDate, setAdminDate] = useState(new Date());
-  const [companyDate, setCompanyDate] = useState(new Date());
 
   // methods
 

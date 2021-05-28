@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Table, Container, Input, Button } from 'reactstrap';
 import { Dummy } from 'utils';
 import { Fade } from 'react-awesome-reveal';
-import { CompanyFilter, MonthSelector, LineChart } from '../../molecules';
-import { adjustTitleList, projuctProfitTitleList, monthList } from '../../../commons/constants/string';
+import { CompanyFilter, MonthSelector, LineChart, DoughnutChart } from '../../molecules';
+import { projuctProfitTitleList } from '../../../commons/constants/string';
 
 import './style.css';
 import api from '../../../api';
@@ -45,8 +45,6 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
   const [productProfitsDummy] = useState(Dummy.makeProductProfits(10) as Array<ProductProfit>);
   const [company, setCompany] = useState('회사' as string);
   const [toggle, setToggle] = useState(false as boolean);
-  const [searchMonth, setSearchMonth] = useState('1월' as string);
-  const [adminDate, setAdminDate] = useState(new Date());
   const [companyDate, setCompanyDate] = useState(new Date());
 
   // methods
@@ -57,7 +55,7 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
   const requestAdjust = async () => {
     // header 설정 여기서 각각 말고 한번에 하기
     api.setAxiosDefaultHeader();
-    const { status, data } = await api.get('/company/sale', {});
+    const { status, data } = await api.get('/company/sale', { date: companyDate });
     if (status === 'success') {
       // setAdjustList(result.data);
 
@@ -66,7 +64,6 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
     }
   };
 
-  const adjustHeader = adjustTitleList.map(ttl => <th className="column-title">{ttl}</th>);
   const productProfitHeader = projuctProfitTitleList.map(ttl => <th className="column-title">{ttl}</th>);
 
   // index key 추후 id로 대체
@@ -79,68 +76,18 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
       <td>{product.profit}</td>
     </tr>
   ));
-  // 추후 기간 검색 결과로 한줄만 띄울 예정
-  // 아래 상세 목록 토글 추가? => 여유될 경우
-  const adjusts = adjustList.map((ad, index) => (
-    <tr key={index}>
-      <td>{`${ad.id}`}</td>
-      <td>{`${ad.company_id}`}</td>
-      <td>{`${ad.create_time}`}</td>
-      <td>
-        {ad.price} <i />
-      </td>
-      <td>{ad.fee}</td>
-      <td>{ad.price - ad.fee}</td>
-    </tr>
-  ));
 
-  const monthOptions = monthList.map((month, index) => <option key={index}>{month}</option>);
-
-  const handleOnChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = evt.target as HTMLInputElement;
-    setSearchMonth(value);
-  };
-
-  const test = () => {
-    console.log('date: ', adminDate);
-  };
   return (
     <Fade>
       <Container className="adjust-page">
         <h3>정산 관리</h3>
         <hr />
-        <div>
+        <div style={{ display: 'flex' }}>
           <div style={{ flex: 2 }}>
             <LineChart data={Dummy.chartData} options={Dummy.chartOptions} />
           </div>
           <div style={{ flex: 1 }}>
-            <span>test</span>
-          </div>
-        </div>
-        <div className="admin-adjust">
-          <div className="adjust-filter">
-            <h5>Scanit 정산 검색</h5>
-            <div className="filter-form">
-              <MonthSelector title="정산일자" selectDateFunc={setAdminDate} />
-
-              <Button>검색</Button>
-            </div>
-          </div>
-          <div className="adjust-block">
-            <div className="adjust-content">
-              <div className="content__profit">
-                <span className="company-name content-highlight">Scanit</span>의
-                <span className="adjust-month content-highlight">
-                  {`${adminDate.getFullYear()}년 ${adminDate.getMonth() + 1}월`}
-                </span>
-                수익 수수료는
-                <span className="adjust-profit content-highlight">200000원</span>
-                입니다.
-              </div>
-              <div className="content__profit-detail">
-                총 매출 {`250000원`} - 수수료 {`50000원`}
-              </div>
-            </div>
+            <DoughnutChart data={Dummy.doughnutChartData} />
           </div>
         </div>
         <hr />
@@ -149,7 +96,6 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
             <h5>기업 정산 검색</h5>
             <div className="filter-form">
               <div className="filter-form__content">
-                {true && <CompanyFilter selectCompanyFunc={setCompany} />}
                 <MonthSelector title="정산일자" selectDateFunc={setCompanyDate} />
               </div>
               <Button>검색</Button>
@@ -171,11 +117,12 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
               </div>
             </div>
             <Button
+              className="content__toggle-btn"
               onClick={() => {
                 setToggle(!toggle);
               }}
             >
-              토글
+              상세 상품 내역
             </Button>
 
             {toggle && (
