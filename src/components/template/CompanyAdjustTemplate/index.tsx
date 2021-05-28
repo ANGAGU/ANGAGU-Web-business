@@ -57,10 +57,12 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
   const requestAdjust = async () => {
     // header 설정 여기서 각각 말고 한번에 하기
     api.setAxiosDefaultHeader();
-    const result = await api.get('/company/sale', {});
-    if (result.status === 'success') {
+    const { status, data } = await api.get('/company/sale', {});
+    if (status === 'success') {
       // setAdjustList(result.data);
-      setAdjust(result.data[0]);
+
+      // eslint-disable-next-line eqeqeq
+      if (data == []) setAdjust(data[0]);
     }
   };
 
@@ -109,7 +111,7 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
         <hr />
         <div className="admin-adjust">
           <div className="adjust-filter">
-            <h5> </h5>
+            <h5>Scanit 정산 검색</h5>
             <div className="filter-form">
               <MonthSelector title="정산일자" selectDateFunc={setAdminDate} />
 
@@ -136,7 +138,7 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
         <hr />
         <div className="company-adjust">
           <div className="adjust-filter">
-            <h5> 검색 </h5>
+            <h5>기업 정산 검색</h5>
             <div className="filter-form">
               <div className="filter-form__content">
                 {true && <CompanyFilter selectCompanyFunc={setCompany} />}
