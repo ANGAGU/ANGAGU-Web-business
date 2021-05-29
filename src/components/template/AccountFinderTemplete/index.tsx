@@ -4,6 +4,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { Button, ButtonGroup, Grid, Paper, TextField } from '@material-ui/core';
 import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker } from '@material-ui/pickers';
 import { makeStyles } from '@material-ui/core/styles';
+import { AccountFinderForm } from '../../organisms';
 import './style.css';
 
 const useStyles = makeStyles(theme => ({
@@ -16,12 +17,6 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#fff',
     borderRadius: '20px',
     padding: '40px',
-  },
-  form: {
-    paddingTop: '40px',
-  },
-  input: {
-    display: 'block',
   },
 }));
 
@@ -46,35 +41,15 @@ const AccountFinderTemplate: React.FC = () => {
       >
         <Grid direction="row" alignItems="center" justify="flex-end">
           <ButtonGroup color="primary" aria-label="outlined primary button group">
-            <Button>아이디 찾기</Button>
-            <Button>비밀번호 찾기</Button>
+            <Button variant={!isPW ? 'contained' : 'text'} onClick={() => setIsPW(false)}>
+              아이디 찾기
+            </Button>
+            <Button variant={isPW ? 'contained' : 'text'} onClick={() => setIsPW(true)}>
+              비밀번호 찾기
+            </Button>
           </ButtonGroup>
         </Grid>
-        <Grid item alignItems="center" justify="center" className={classes.form}>
-          <TextField label="아이디" size="small" variant="outlined" className={classes.input} />
-
-          <TextField label="이름" size="small" variant="outlined" className={classes.input} />
-
-          <TextField label="생년월일" size="small" variant="outlined" className={classes.input} />
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <KeyboardDatePicker
-              margin="normal"
-              label="Date picker dialog"
-              format="MM/dd/yyyy"
-              value={selectedDate}
-              onChange={handleDateChange}
-              KeyboardButtonProps={{
-                'aria-label': 'change date',
-              }}
-            />
-          </MuiPickersUtilsProvider>
-
-          {/* <Grid alignItems="center" justify="center" item xs={6} spacing={2}>
-            <TextField id="outlined-basic" label="아이디" />
-            <TextField id="outlined-basic" label="이름" />
-            <TextField id="outlined-basic" label="생년월일" />
-          </Grid> */}
-        </Grid>
+        <AccountFinderForm isPW={isPW} />
       </Grid>
     </>
   );
