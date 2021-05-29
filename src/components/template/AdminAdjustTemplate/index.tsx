@@ -21,15 +21,6 @@ type Adjust = {
   update_time: string;
 };
 
-type ProductProfit = {
-  id: number;
-  name: string;
-  price: string;
-  commission: string;
-  revenue: string;
-  profit: string; // revenue - commission
-  sellCount: number;
-};
 const AdminAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
   // const [adjustsDummy] = useState(Dummy.makeAdjusts(1) as Array<Adjust>);
   const [adjustList, setAdjustList] = useState([] as Array<Adjust>);
@@ -42,7 +33,7 @@ const AdminAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
     price: 0,
     update_time: '',
   });
-  const [productProfitsDummy] = useState(Dummy.makeProductProfits(10) as Array<ProductProfit>);
+
   const [company, setCompany] = useState('회사' as string);
   const [toggle, setToggle] = useState(false as boolean);
   const [searchMonth, setSearchMonth] = useState('1월' as string);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Container, Input, Button } from 'reactstrap';
-import { Dummy, date2String } from 'utils';
+import { Dummy, date2String, calculateFee } from 'utils';
 import { Fade } from 'react-awesome-reveal';
 import { CompanyFilter, MonthSelector, LineChart, DoughnutChart } from '../../molecules';
 import { projuctProfitTitleList } from '../../../commons/constants/string';
@@ -22,14 +22,15 @@ type Adjust = {
 };
 
 type ProductProfit = {
+  product_id: number;
   name: string;
-  price: string;
   total_price: string; // revenue - commission
   total_count: number;
 };
 const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
   // const [adjustsDummy] = useState(Dummy.makeAdjusts(1) as Array<Adjust>);
   const [adjustList, setAdjustList] = useState([] as Array<Adjust>);
+  const [productProfitList, setProductProfitList] = useState([] as Array<ProductProfit>);
   const [adjust, setAdjust] = useState({
     company_id: 0,
     create_time: '',
@@ -40,24 +41,27 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
     update_time: '',
   });
 
-  const [productProfitsDummy] = useState(Dummy.makeProductProfits(10) as Array<ProductProfit>);
+  // const [productProfitsDummy] = useState(Dummy.makeProductProfits(10) as Array<ProductProfit>);
   const [company, setCompany] = useState('회사' as string);
   const [toggle, setToggle] = useState(false as boolean);
   const [companyDate, setCompanyDate] = useState(new Date());
-
+  const [totalProfit, setTotalProfit] = useState(0);
+  const [totalFee, setTotalFee] = useState(0);
   // methods
 
   useEffect(() => {
     getAdjust();
     getAdjustProducts();
   }, []);
+
+  useEffect(() => {
+    calculateProfit();
+  }, [productProfitList]);
   const getAdjust = async () => {
     // header 설정 여기서 각각 말고 한번에 하기
     api.setAxiosDefaultHeader();
     const { status, data } = await api.get('/company/sale', {});
     if (status === 'success') {
-      setAdjustList(data);
-
       // eslint-disable-next-line eqeqeq
       if (data == []) setAdjust(data[0]);
     }
@@ -69,22 +73,30 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
       month: `${date2String(companyDate)}-01`,
     });
     if (status === 'success') {
-      // setAdjustList(result.data);
-
-      // eslint-disable-next-line eqeqeq
-      if (data == []) setAdjust(data[0]);
+      setProductProfitList(data);
+      calculateProfit();
     }
+  };
+
+  const calculateProfit = () => {
+    let total = 0;
+    productProfitList.map(product => {
+      total += Number(product.total_price);
+      return 0;
+    });
+    setTotalProfit(total);
+    setTotalFee(calculateFee(total));
   };
 
   const productProfitHeader = projuctProfitTitleList.map(ttl => <th className="column-title">{ttl}</th>);
 
-  // index key 추후 id로 대체
-  const productProfits = productProfitsDummy.map((product, index) => (
-    <tr key={index}>
+  const productProfits = productProfitList.map(product => (
+    <tr key={product.product_id}>
+      <td>{product.product_id}</td>
       <td>{product.name}</td>
-      <td>{product.price}</td>
+      <td>{Number(product.total_price) / product.total_count}원</td>
       <td>{product.total_count}</td>
-      <td>{product.total_price}</td>
+      <td>{Number(product.total_price) - calculateFee(Number(product.total_price))}원</td>
     </tr>
   ));
 
@@ -109,7 +121,7 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
               <div className="filter-form__content">
                 <MonthSelector title="정산일자" selectDateFunc={setCompanyDate} />
               </div>
-              <Button>검색</Button>
+              <Button onClick={getAdjustProducts}>검색</Button>
             </div>
           </div>
           <div className="adjust-block">
@@ -120,11 +132,11 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
                   {`${companyDate.getFullYear()}년 ${companyDate.getMonth() + 1}월`}
                 </span>
                 입금 금액은
-                <span className="adjust-profit content-highlight">{adjust.price - adjust.fee}원</span>
+                <span className="adjust-profit content-highlight">{totalProfit - totalFee}원</span>
                 입니다.
               </div>
               <div className="content__profit-detail">
-                총 매출 {adjust.price}원 - 수수료 {adjust.fee}원
+                총 매출 {totalProfit}원 - 수수료 {totalFee}원
               </div>
             </div>
             <Button
