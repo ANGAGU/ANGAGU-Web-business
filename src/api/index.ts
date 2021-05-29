@@ -2,7 +2,6 @@
 import axios from 'axios';
 import * as querystring from 'querystring';
 
-// axios.defaults.baseURL = 'http://angagu.github.io/ANGAGU_WEB_business/';
 axios.defaults.baseURL = 'http://localhost:3000/';
 
 const server = 'http://54.180.62.210:3000';

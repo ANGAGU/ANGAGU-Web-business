@@ -48,24 +48,18 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
   const [companyDate, setCompanyDate] = useState(new Date());
   const [totalProfit, setTotalProfit] = useState(0);
   const [totalFee, setTotalFee] = useState(0);
-  const [adjustGraph, setAdjustGraph] = useState({
-    labels: ['1', '2', '3', '4', '5', '6'],
-    datasets: [
-      {
-        label: '월별 수익',
-        data: [12, 19, 3, 5, 2, 3],
-        fill: false,
-        backgroundColor: 'rgb(97, 157, 160)',
-        borderColor: 'rgba(97, 157, 160, 0.5)',
-      },
-    ],
-  });
+  const [lineGraph, setLineGraph] = useState(Dummy.chartData);
+  const [doughnutGraph, setDoughnutGraph] = useState(Dummy.doughnutChartData);
   // methods
 
   useEffect(() => {
     getAdjust();
     getAdjustProducts();
-  }, []);
+  }, [companyDate]);
+
+  // useEffect(() => {
+  //   getAdjustProducts();
+  // }, [companyDate]);
 
   useEffect(() => {
     calculateProfit();
@@ -73,23 +67,20 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
 
   useEffect(() => {
     setTotalFee(calculateFee(totalProfit));
+    drawDoughnutGraph();
   }, [totalProfit]);
 
   useEffect(() => {
-    drawAdjustGraph();
+    drawLineGraph();
   }, [adjustList]);
-  const getAdjust = async () => {
-    // header 설정 여기서 각각 말고 한번에 하기
 
+  const getAdjust = async () => {
     const { status, data } = await api.get('/company/sale', {});
     if (status === 'success') {
-      // eslint-disable-next-line eqeqeq
       setAdjustList(data);
     }
   };
   const getAdjustProducts = async () => {
-    // header 설정 여기서 각각 말고 한번에 하기
-
     const { status, data } = await api.get('/company/sale/product', {
       month: `${date2String(companyDate)}-01`,
     });
@@ -107,7 +98,7 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
     setTotalProfit(total);
   };
 
-  const drawAdjustGraph = () => {
+  const drawLineGraph = () => {
     const lineLabels = ['', '', '', '', '', ''];
     const lineData = [0, 0, 0, 0, 0, 0];
     let monthAgo = new Date();
@@ -117,11 +108,13 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
       monthAgo = new Date(monthAgo.getFullYear(), monthAgo.getMonth() - 1, 1);
       lineLabels[6 - i] = date2String(monthAgo);
     }
-    for (let i = 0; i < adjustList.length; i += 1) {
-      const date = adjustList[i].date.substr(0, 7);
+
+    adjustList.map(ad => {
+      const date = ad.date.substr(0, 7);
       const idx = lineLabels.findIndex(el => date === el);
-      if (idx !== -1) lineData[idx] = adjustList[i].price;
-    }
+      if (idx !== -1) lineData[idx] = ad.price;
+      return 0;
+    });
     const graphData = {
       labels: lineLabels,
       datasets: [
@@ -134,7 +127,61 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
         },
       ],
     };
-    setAdjustGraph(graphData);
+    setLineGraph(graphData);
+  };
+
+  const drawDoughnutGraph = () => {
+    const doughnutLabels = [] as Array<string>;
+    const doughnutData = [] as Array<number>;
+
+    if (productProfitList.length === 0) {
+      doughnutLabels.push('판매된 상품이 없습니다');
+      doughnutData.push(100);
+    }
+    const isMany = productProfitList.length > 6;
+    let total = 0;
+    const tempList = productProfitList.sort((a, b) => Number(b.total_price) - Number(a.total_price));
+    tempList.some((pro, idx) => {
+      if (idx === 6) return true;
+      if (idx === 5 && isMany) {
+        doughnutData.push(100 - total);
+        doughnutLabels.push('기타');
+      }
+      let price = 0;
+      if (totalProfit !== 0) price = (Number(pro.total_price) / totalProfit) * 100;
+      total += price;
+      doughnutData.push(price);
+      doughnutLabels.push(pro.name);
+
+      return false;
+    });
+    const graphData = {
+      labels: doughnutLabels,
+      datasets: [
+        {
+          label: '상품 판매량',
+          data: doughnutData,
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)',
+          ],
+          borderWidth: 1,
+        },
+      ],
+    };
+    setDoughnutGraph(graphData);
   };
 
   const productProfitHeader = projuctProfitTitleList.map(ttl => <th className="column-title">{ttl}</th>);
@@ -156,10 +203,10 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
         <hr />
         <div style={{ display: 'flex' }}>
           <div style={{ flex: 2 }}>
-            <LineChart data={adjustGraph} options={Dummy.chartOptions} />
+            <LineChart data={lineGraph} options={Dummy.chartOptions} />
           </div>
           <div style={{ flex: 1 }}>
-            <DoughnutChart data={Dummy.doughnutChartData} />
+            <DoughnutChart data={doughnutGraph} />
           </div>
         </div>
         <hr />
