@@ -1,5 +1,6 @@
 .nav-link {
   color: white;
+  background: #222929;
 }
 .nav-link:link {
   color: white;
@@ -8,7 +9,8 @@
   color: white;
 }
 .nav-link:hover {
-  color: #7386d5;
+  color: #ffffff;
+  background: #3c3b3b;
 }
 .nav-link:active {
   color: white;
@@ -16,7 +18,7 @@
 .sidebar {
   min-width: 250px;
   max-width: 250px;
-  background: #7386d5;
+  background: #232929;
   color: #fff;
   margin-left: -250px;
   transition: all 0.5s;
@@ -28,7 +30,8 @@
 }
 
 .sidebar-header {
-  background: #6d7fcc;
+  background: #000000;
+  height: 65px;
 }
 
 .sidebar-header h3 {
@@ -52,7 +55,7 @@
 
 .items-menu {
   color: #fff;
-  background: #6d7fcc;
+  background: #424444;
 }
 
 li a.dropdown-toggle::after {

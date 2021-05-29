@@ -28,10 +28,7 @@
     }
   },
   "rules": {
-    "react/jsx-filename-extension": [
-      "warn",
-      { "extensions": [".js", ".jsx", ".tsx"] }
-    ],
+    "react/jsx-filename-extension": ["warn", { "extensions": [".js", ".jsx", ".tsx"] }],
 
     "prettier/prettier": [
       "warn",
@@ -58,6 +55,8 @@
     "react/jsx-curly-brace-presence": "off",
     "@typescript-eslint/no-var-requires": "off",
     "camelcase": "off",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
+    "prefer-destructuring": "off"
   }
 }

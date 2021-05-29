@@ -1,93 +1,68 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faHome,
-  faBriefcase,
-  faPaperPlane,
-  faQuestion,
-  faImage,
-  faCopy,
-} from '@fortawesome/free-solid-svg-icons';
-import { NavItem, NavLink, Nav } from 'reactstrap';
+import { faQuestion, faImage } from '@fortawesome/free-solid-svg-icons';
+import { Nav } from 'reactstrap';
 import classNames from 'classnames';
-import { Link, useRouteMatch } from 'react-router-dom';
 import './style.css';
-import { SubMenu } from 'components';
+import { Fade } from 'react-awesome-reveal';
+import { SideBarItem } from '../../molecules';
+import logo from '../../../assets/images/angagu.png';
 
 type SideBarProps = {
   isOpen: boolean;
   toggle: VoidFunction;
+  menu: any;
 };
-const SideBar: React.FC<SideBarProps> = ({ isOpen, toggle }) => {
-
+const SideBar: React.FC<SideBarProps> = ({ isOpen, toggle, menu }) => {
+  console.log(window.location.pathname);
   return (
     <div className={classNames('sidebar', { 'is-open': isOpen })}>
-      <div className="sidebar-header">
-        <span color="info" onClick={toggle} style={{ color: '#fff' }}>
-          &times;
-        </span>
-        <a href="/Main">안가구</a>
-      </div>
+      <Fade direction="right">
+        <div className="sidebar-header" style={sidebarHeaderStyle}>
+          <span color="info" onClick={toggle} style={{ color: '#fff' }}>
+            &times;
+          </span>
+          <a href="/Main">
+            <img src={logo} alt="안가구 로고" style={imgStyle} />
+          </a>
+          <div style={titleDivStyle}>
+            <p style={titleStyle}>ANGAGU</p>
+          </div>
+        </div>
+      </Fade>
       <div className="side-menu">
         <Nav vertical className="list-unstyled pb-3">
-          <p>Dummy Heading</p>
-          <SubMenu title="Home" icon={faHome} items={submenus[0]} />
-          <NavItem>
-            <NavLink tag={Link} to={'/about'}>
-              <FontAwesomeIcon icon={faBriefcase} className="mr-2" />
-              About
-            </NavLink>
-          </NavItem>
-          <SubMenu title="Pages" icon={faCopy} items={submenus[1]} />
-          <NavItem>
-            <NavLink tag={Link} to={'/pages'}>
-              <FontAwesomeIcon icon={faImage} className="mr-2" />
-              Portfolio
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink tag={Link} to={'/faq'}>
-              <FontAwesomeIcon icon={faQuestion} className="mr-2" />
-              FAQ
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink tag={Link} to={'/contact'}>
-              <FontAwesomeIcon icon={faPaperPlane} className="mr-2" />
-              Contact
-            </NavLink>
-          </NavItem>
+          <Fade cascade damping={0.1}>
+            <br />
+            {menu.map((item: any, idx: number) => (
+              <SideBarItem key={`sidebar items ${idx}`} title={item.title} url={item.url} icon={item.icon} />
+            ))}
+            <SideBarItem title={'FAQ'} url={'/faq'} icon={faQuestion} />
+            <SideBarItem title={'Contact'} url={'/contact'} icon={faImage} />
+          </Fade>
         </Nav>
       </div>
     </div>
   );
 };
+const imgStyle = {
+  margin: '10px',
+  width: '45px',
+  backgroundColor: '#5f9d9f',
+};
 
-const submenus = [
-  [
-    {
-      title: 'Home 1',
-      target: 'Home-1',
-    },
-    {
-      title: 'Home 2',
-      target: 'Home-2',
-    },
-    {
-      itle: 'Home 3',
-      target: 'Home-3',
-    },
-  ],
-  [
-    {
-      title: 'ManageOrder',
-      target: `/Main/ManageOrder`,
-    },
-    {
-      title: 'Product',
-      target: `/Main/Product`,
-    },
-  ],
-];
+const titleStyle = {
+  color: 'white',
+  fontSize: 'xx-large',
+  margin: '0px',
+  fontFamily: 'Roboto',
+};
+const titleDivStyle = {
+  display: 'flex',
+  alignItems: 'center',
+};
+const sidebarHeaderStyle = {
+  display: 'flex',
+};
 
 export default SideBar;

@@ -1,13 +1,16 @@
-import React from 'react';
 import classNames from 'classnames';
 import { Container } from 'reactstrap';
-import { Switch, Route, useRouteMatch, useLocation } from 'react-router-dom';
+import { Switch, Route, useRouteMatch } from 'react-router-dom';
+import { Fade } from 'react-awesome-reveal';
 import './style.css';
-import Topbar from '../TopBar';
 import {
-  ProductPage,
-  RegisterCompany,
-  ManageOrderTemplate,
+  CompanyProductTemplate,
+  CompanyRegisterTemplate,
+  CompanyOrderTemplate,
+  CompanyInfoTemplate,
+  CompanyAdjustTemplate,
+  ProductDetailTemplate,
+  AdminProductTemplate,
 } from '../../template';
 
 type ContentProps = {
@@ -15,24 +18,22 @@ type ContentProps = {
   toggleSidebar: VoidFunction;
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const Content = ({ sidebarIsOpen, toggleSidebar }: ContentProps) => {
   const { path } = useRouteMatch(); // 요청시의 path?
   console.log('path : ', path);
   return (
-    <Container
-      fluid
-      className={classNames('content', { 'is-open': sidebarIsOpen })}
-    >
-      <Topbar toggleSidebar={toggleSidebar} />
+    <Container fluid className={classNames('content', { 'is-open': sidebarIsOpen })}>
       <div id="content_container">
         <Switch>
-          <Route exact path={`${path}/Register`} component={RegisterCompany} />
-          <Route
-            exact
-            path={`${path}/ManageOrder`}
-            component={ManageOrderTemplate}
-          />
-          <Route exact path={`${path}/Product`} component={ProductPage} />
+          <Route exact path={`${path}/Register`} component={CompanyRegisterTemplate} />
+          <Route exact path={`${path}/Product`} component={CompanyProductTemplate} />
+          <Route exact path={`${path}`} component={CompanyProductTemplate} />
+          <Route exact path={`${path}/Product/:id`} component={ProductDetailTemplate} />
+          <Route exact path={`${path}/ManageOrder`} component={CompanyOrderTemplate} />
+          <Route exact path={`${path}/Info`} component={CompanyInfoTemplate} />
+          <Route exact path={`${path}/Adjust`} component={CompanyAdjustTemplate} />
+          <Route exact path={`${path}/ManageProduct`} component={AdminProductTemplate} />
         </Switch>
       </div>
     </Container>

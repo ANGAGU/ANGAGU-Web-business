@@ -1,0 +1,8 @@
+.modal-btn--left {
+  position: absolute;
+  left: 10px;
+}
+
+.modal-content {
+  height: 100%;
+}

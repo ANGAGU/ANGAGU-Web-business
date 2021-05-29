@@ -1,0 +1,29 @@
+.product-table {
+  width: 100%;
+  margin-bottom: 8px;
+  text-align: center;
+}
+.product-table th {
+  line-height: 60px;
+}
+.product-table td {
+  line-height: 70px;
+}
+.product-table td,
+.product-table th {
+  padding: 0 16px;
+  border-top: none;
+  border-bottom: 1px solid gainsboro;
+}
+
+.product-page {
+  margin: 50px 20px;
+  overflow-x: scroll;
+}
+.product__img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+}
