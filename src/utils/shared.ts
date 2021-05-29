@@ -27,3 +27,10 @@ export const date2String = (value: Date) => {
 
   return result;
 };
+
+const companyFee = 3;
+export const calculateFee = (value: number) => {
+  return value * (companyFee / 100);
+};
+
+
