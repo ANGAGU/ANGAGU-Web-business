@@ -29,20 +29,8 @@ type ProductProfit = {
   total_count: number;
 };
 const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
-  // const [adjustsDummy] = useState(Dummy.makeAdjusts(1) as Array<Adjust>);
   const [adjustList, setAdjustList] = useState([] as Array<Adjust>);
   const [productProfitList, setProductProfitList] = useState([] as Array<ProductProfit>);
-  const [adjust, setAdjust] = useState({
-    company_id: 0,
-    create_time: '',
-    fee: 0,
-    id: 0,
-    order_id: 0,
-    price: 0,
-    update_time: '',
-  });
-
-  // const [productProfitsDummy] = useState(Dummy.makeProductProfits(10) as Array<ProductProfit>);
   const [company, setCompany] = useState('회사' as string);
   const [toggle, setToggle] = useState(false as boolean);
   const [companyDate, setCompanyDate] = useState(new Date());
@@ -217,7 +205,6 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
               <div className="filter-form__content">
                 <MonthSelector title="정산일자" selectDateFunc={setCompanyDate} />
               </div>
-              <Button onClick={getAdjustProducts}>검색</Button>
             </div>
           </div>
           <div className="adjust-block">
