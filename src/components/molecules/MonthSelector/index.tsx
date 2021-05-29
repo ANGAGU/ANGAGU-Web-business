@@ -29,7 +29,6 @@ const MonthSelector: React.FC<MonthSelectorProps> = ({ selectDateFunc, title }) 
   const handleOnChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = evt.target as HTMLInputElement;
     setDate(value);
-    alert(value);
     selectDateFunc(string2Date(value));
   };
 

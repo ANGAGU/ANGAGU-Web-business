@@ -14,6 +14,7 @@ type AdjustPageProps = {
 type Adjust = {
   company_id: number;
   create_time: string;
+  date: string;
   fee: number;
   id: number;
   order_id: number;
@@ -47,6 +48,18 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
   const [companyDate, setCompanyDate] = useState(new Date());
   const [totalProfit, setTotalProfit] = useState(0);
   const [totalFee, setTotalFee] = useState(0);
+  const [adjustGraph, setAdjustGraph] = useState({
+    labels: ['1', '2', '3', '4', '5', '6'],
+    datasets: [
+      {
+        label: '월별 수익',
+        data: [12, 19, 3, 5, 2, 3],
+        fill: false,
+        backgroundColor: 'rgb(97, 157, 160)',
+        borderColor: 'rgba(97, 157, 160, 0.5)',
+      },
+    ],
+  });
   // methods
 
   useEffect(() => {
@@ -57,24 +70,31 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
   useEffect(() => {
     calculateProfit();
   }, [productProfitList]);
+
+  useEffect(() => {
+    setTotalFee(calculateFee(totalProfit));
+  }, [totalProfit]);
+
+  useEffect(() => {
+    drawAdjustGraph();
+  }, [adjustList]);
   const getAdjust = async () => {
     // header 설정 여기서 각각 말고 한번에 하기
-    api.setAxiosDefaultHeader();
+
     const { status, data } = await api.get('/company/sale', {});
     if (status === 'success') {
       // eslint-disable-next-line eqeqeq
-      if (data == []) setAdjust(data[0]);
+      setAdjustList(data);
     }
   };
   const getAdjustProducts = async () => {
     // header 설정 여기서 각각 말고 한번에 하기
-    api.setAxiosDefaultHeader();
+
     const { status, data } = await api.get('/company/sale/product', {
       month: `${date2String(companyDate)}-01`,
     });
     if (status === 'success') {
       setProductProfitList(data);
-      calculateProfit();
     }
   };
 
@@ -85,7 +105,36 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
       return 0;
     });
     setTotalProfit(total);
-    setTotalFee(calculateFee(total));
+  };
+
+  const drawAdjustGraph = () => {
+    const lineLabels = ['', '', '', '', '', ''];
+    const lineData = [0, 0, 0, 0, 0, 0];
+    let monthAgo = new Date();
+    monthAgo = new Date(monthAgo.getFullYear(), monthAgo.getMonth(), 1);
+
+    for (let i = 1; i <= 6; i += 1) {
+      monthAgo = new Date(monthAgo.getFullYear(), monthAgo.getMonth() - 1, 1);
+      lineLabels[6 - i] = date2String(monthAgo);
+    }
+    for (let i = 0; i < adjustList.length; i += 1) {
+      const date = adjustList[i].date.substr(0, 7);
+      const idx = lineLabels.findIndex(el => date === el);
+      if (idx !== -1) lineData[idx] = adjustList[i].price;
+    }
+    const graphData = {
+      labels: lineLabels,
+      datasets: [
+        {
+          label: '월별 수익',
+          data: lineData,
+          fill: false,
+          backgroundColor: 'rgb(97, 157, 160)',
+          borderColor: 'rgba(97, 157, 160, 0.5)',
+        },
+      ],
+    };
+    setAdjustGraph(graphData);
   };
 
   const productProfitHeader = projuctProfitTitleList.map(ttl => <th className="column-title">{ttl}</th>);
@@ -107,7 +156,7 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
         <hr />
         <div style={{ display: 'flex' }}>
           <div style={{ flex: 2 }}>
-            <LineChart data={Dummy.chartData} options={Dummy.chartOptions} />
+            <LineChart data={adjustGraph} options={Dummy.chartOptions} />
           </div>
           <div style={{ flex: 1 }}>
             <DoughnutChart data={Dummy.doughnutChartData} />
