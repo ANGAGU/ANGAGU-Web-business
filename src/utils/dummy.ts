@@ -43,13 +43,10 @@ const Dummy = {
     const tempArr = [];
     for (let i = 0; i < num; i += 1) {
       tempArr.push({
-        id: chance.integer({ min: 0, max: 100 }),
         name: chance.word(),
         price: chance.dollar(),
-        sellCount: chance.integer({ min: 0, max: 100 }),
-        profit: chance.dollar(),
-        revenue: chance.dollar(),
-        commission: chance.dollar(),
+        total_count: chance.integer({ min: 0, max: 100 }),
+        total_price: chance.dollar(),
       });
     }
 

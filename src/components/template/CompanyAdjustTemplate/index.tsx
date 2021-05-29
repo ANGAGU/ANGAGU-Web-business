@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Container, Input, Button } from 'reactstrap';
-import { Dummy } from 'utils';
+import { Dummy, date2String } from 'utils';
 import { Fade } from 'react-awesome-reveal';
 import { CompanyFilter, MonthSelector, LineChart, DoughnutChart } from '../../molecules';
 import { projuctProfitTitleList } from '../../../commons/constants/string';
+import api from '../../../api';
 
 import './style.css';
-import api from '../../../api';
 
 type AdjustPageProps = {
   isAdmin: boolean;
@@ -22,13 +22,10 @@ type Adjust = {
 };
 
 type ProductProfit = {
-  id: number;
   name: string;
   price: string;
-  commission: string;
-  revenue: string;
-  profit: string; // revenue - commission
-  sellCount: number;
+  total_price: string; // revenue - commission
+  total_count: number;
 };
 const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
   // const [adjustsDummy] = useState(Dummy.makeAdjusts(1) as Array<Adjust>);
@@ -42,6 +39,7 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
     price: 0,
     update_time: '',
   });
+
   const [productProfitsDummy] = useState(Dummy.makeProductProfits(10) as Array<ProductProfit>);
   const [company, setCompany] = useState('회사' as string);
   const [toggle, setToggle] = useState(false as boolean);
@@ -50,12 +48,26 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
   // methods
 
   useEffect(() => {
-    requestAdjust();
+    getAdjust();
+    getAdjustProducts();
   }, []);
-  const requestAdjust = async () => {
+  const getAdjust = async () => {
     // header 설정 여기서 각각 말고 한번에 하기
     api.setAxiosDefaultHeader();
-    const { status, data } = await api.get('/company/sale', { date: companyDate });
+    const { status, data } = await api.get('/company/sale', {});
+    if (status === 'success') {
+      setAdjustList(data);
+
+      // eslint-disable-next-line eqeqeq
+      if (data == []) setAdjust(data[0]);
+    }
+  };
+  const getAdjustProducts = async () => {
+    // header 설정 여기서 각각 말고 한번에 하기
+    api.setAxiosDefaultHeader();
+    const { status, data } = await api.get('/company/sale/product', {
+      month: `${date2String(companyDate)}-01`,
+    });
     if (status === 'success') {
       // setAdjustList(result.data);
 
@@ -69,11 +81,10 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
   // index key 추후 id로 대체
   const productProfits = productProfitsDummy.map((product, index) => (
     <tr key={index}>
-      <td>{product.id}</td>
       <td>{product.name}</td>
       <td>{product.price}</td>
-      <td>{product.sellCount}</td>
-      <td>{product.profit}</td>
+      <td>{product.total_count}</td>
+      <td>{product.total_price}</td>
     </tr>
   ));
 

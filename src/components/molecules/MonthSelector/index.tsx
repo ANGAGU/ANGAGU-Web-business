@@ -1,7 +1,7 @@
 import api from 'api';
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Container, Row, Col, Input } from 'reactstrap';
-import { Dummy } from 'utils';
+import { Dummy, string2Date, date2String } from 'utils';
 import { adjustTitleList, monthList } from '../../../commons/constants/string';
 import './style.css';
 
@@ -11,7 +11,6 @@ type MonthSelectorProps = {
 };
 
 const MonthSelector: React.FC<MonthSelectorProps> = ({ selectDateFunc, title }) => {
-  // const [date, setDate] = useState(new Date());
   const [date, setDate] = useState('' as string);
   const [maxDate, setMaxDate] = useState('' as string);
   // methods
@@ -21,25 +20,16 @@ const MonthSelector: React.FC<MonthSelectorProps> = ({ selectDateFunc, title }) 
   }, []);
   const getCurrentDate = () => {
     const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth() + 1;
-    let tempDate = '';
-    if (month < 10) tempDate = `${year}-0${month}`;
-    else tempDate = `${year}-${month}`;
-
-    setDate(tempDate);
-    setMaxDate(tempDate);
+    const curDate = date2String(today);
+    setDate(curDate);
+    setMaxDate(curDate);
     console.log('max:', date);
   };
 
-  const string2Date = (value: string) => {
-    const year = parseInt(value.substr(0, 4), 10);
-    const month = parseInt(value.substr(5, 2), 10);
-    return new Date(year, month - 1);
-  };
   const handleOnChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = evt.target as HTMLInputElement;
     setDate(value);
+    alert(value);
     selectDateFunc(string2Date(value));
   };
 
