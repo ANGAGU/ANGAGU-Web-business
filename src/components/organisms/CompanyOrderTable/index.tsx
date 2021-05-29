@@ -1,13 +1,19 @@
-import { useState, useEffect } from 'react';
+/* eslint-disable @typescript-eslint/ban-types */
+import { useState, useEffect, useRef } from 'react';
 import { withStyles, Theme, createStyles, makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import {
+  TextField,
+  TableRow,
+  TableHead,
+  TableContainer,
+  TableCell,
+  TableBody,
+  Table,
+  Paper,
+  Button,
+} from '@material-ui/core';
 import { Dummy } from '../../../utils';
+import './style.css';
 import api from '../../../api';
 
 const StyledTableCell = withStyles((theme: Theme) =>
@@ -27,6 +33,10 @@ const StyledTableRow = withStyles((theme: Theme) =>
     root: {
       '&:nth-of-type(odd)': {
         backgroundColor: theme.palette.action.hover,
+        height: '64px',
+      },
+      '&:nth-of-type(even)': {
+        height: '64px',
       },
     },
   }),
@@ -42,13 +52,31 @@ const useStyles = makeStyles({
 });
 
 const CompanyOrderTable = () => {
-  const [orders, setOrders] = useState(Dummy.makeOrder(10));
+  const [orders, setOrders] = useState([
+    {
+      id: 0,
+      product_id: 0,
+      company_id: 0,
+      customer_id: 0,
+      import_1: '',
+      import_2: '',
+      count: 0,
+      price: 0,
+      address_id: 0,
+      delivery_number: null,
+      review_id: null,
+      create_time: '',
+      update_time: '',
+    },
+  ]);
+  const [deliverNum, setDeliverNum] = useState('');
   const classes = useStyles();
   const getOrder = async () => {
     try {
       api.setAxiosDefaultHeader();
-      const result = await api.get('/company/orders', {});
+      const result = await api.get('/company/order', {});
       if (result.status === 'success') {
+        console.log(result.data);
         setOrders(result.data);
       } else {
         console.error('주문 조회 실패');
@@ -57,7 +85,23 @@ const CompanyOrderTable = () => {
       console.error('주문 조회 실패');
     }
   };
-
+  const updateOrder = async (id: number, number: any) => {
+    try {
+      api.setAxiosDefaultHeader();
+      const result = await api.put('/company/order', {
+        deliveryNumber: number,
+        orderId: id,
+      });
+      if (result.status === 'success') {
+        console.log('주문 수정 성공');
+        getOrder();
+      } else {
+        console.error('주문 수정 실패');
+      }
+    } catch {
+      console.error('주문 수정 실패');
+    }
+  };
   useEffect(() => {
     getOrder();
   }, []);
@@ -70,7 +114,6 @@ const CompanyOrderTable = () => {
             <StyledTableCell>주문 ID</StyledTableCell>
             <StyledTableCell>주문고객</StyledTableCell>
             <StyledTableCell>상품명</StyledTableCell>
-            <StyledTableCell>상품이미지</StyledTableCell>
             <StyledTableCell>개수&nbsp;(개)</StyledTableCell>
             <StyledTableCell>가격&nbsp;(원)</StyledTableCell>
             <StyledTableCell>배송상태</StyledTableCell>
@@ -82,16 +125,45 @@ const CompanyOrderTable = () => {
           {orders.map((row: any) => (
             <StyledTableRow key={row.id}>
               <StyledTableCell>{row.id}</StyledTableCell>
-              <StyledTableCell>{row.customerId}</StyledTableCell>
-              <StyledTableCell>{row.name}</StyledTableCell>
-              <StyledTableCell>
-                <img className={classes.img} alt="" src={row.img} />
-              </StyledTableCell>
+              <StyledTableCell>{row.customer_name}</StyledTableCell>
+              <StyledTableCell>{row.product_name}</StyledTableCell>
               <StyledTableCell>{row.count}</StyledTableCell>
               <StyledTableCell>{row.price}</StyledTableCell>
-              <StyledTableCell>{row.deliveryStatus}</StyledTableCell>
-              <StyledTableCell>{row.deliveryNumber}</StyledTableCell>
-              <StyledTableCell>{row.confirmTime}</StyledTableCell>
+              <StyledTableCell>{row.delivery_number === null ? '배송 전' : '배송 중'}</StyledTableCell>
+              <StyledTableCell>
+                {row.delivery_number ? (
+                  <a
+                    href={`https://www.ilogen.com/web/personal/trace/${row.delivery_number}123451`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {row.delivery_number}
+                  </a>
+                ) : (
+                  <>
+                    <TextField
+                      style={{ height: 32 }}
+                      inputProps={{ style: { height: 32, padding: '0 14px' } }}
+                      InputLabelProps={{ style: { height: 32 } }}
+                      id="outlined-basic"
+                      variant="outlined"
+                      onChange={(event: any) => {
+                        setDeliverNum(event.target.value);
+                      }}
+                    />
+                    <Button
+                      style={{ height: 32 }}
+                      variant="outlined"
+                      onClick={e => {
+                        updateOrder(row.id, deliverNum);
+                      }}
+                    >
+                      등록
+                    </Button>
+                  </>
+                )}
+              </StyledTableCell>
+              <StyledTableCell>{row.update_time}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

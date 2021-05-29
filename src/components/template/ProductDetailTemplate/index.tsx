@@ -58,7 +58,6 @@ const ProductDetailTemplate: React.FC = () => {
     });
     if (status === 'success') {
       alert('OK!');
-      alert(`submit Data!${productValue.name}`);
       history.push('/Main/Product');
     } else {
       console.log('fail for send product info');
@@ -163,6 +162,7 @@ const ProductDetailTemplate: React.FC = () => {
                 <Input
                   type="text"
                   name="name"
+                  autoComplete={'off'}
                   id="productName"
                   defaultValue={productValue.name}
                   onChange={handleOnChange}
@@ -177,6 +177,7 @@ const ProductDetailTemplate: React.FC = () => {
                   type="number"
                   name="price"
                   id="productPrice"
+                  autoComplete={'off'}
                   defaultValue={productValue.price}
                   onChange={handleOnChange}
                   placeholder="판매 가격을 적어주세요."
@@ -190,6 +191,7 @@ const ProductDetailTemplate: React.FC = () => {
                   type="number"
                   name="delivery_charge"
                   id="deliveryCharge"
+                  autoComplete={'off'}
                   defaultValue={productValue.delivery_charge}
                   onChange={handleOnChange}
                   placeholder="배송비를 적어주세요."
@@ -203,6 +205,7 @@ const ProductDetailTemplate: React.FC = () => {
                   type="number"
                   name="stock"
                   id="productStock"
+                  autoComplete={'off'}
                   defaultValue={productValue.stock}
                   onChange={handleOnChange}
                   placeholder="판매 수량을 적어주세요."
@@ -230,6 +233,7 @@ const ProductDetailTemplate: React.FC = () => {
                   type="textarea"
                   name="desc"
                   id="productDesc"
+                  autoComplete={'off'}
                   defaultValue={productValue.desc}
                   onChange={handleOnChange}
                   maxLength={500}

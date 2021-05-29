@@ -68,7 +68,7 @@ const Dummy = {
         count: chance.integer({ min: 0, max: 100 }),
         price: chance.dollar(),
         deliveryStatus: chance.character({ pool: 'TF' }),
-        deliveryNumber: chance.ssn(),
+        deliveryNumber: '',
         confirmTime: chance.date().toDateString(),
       });
     }
