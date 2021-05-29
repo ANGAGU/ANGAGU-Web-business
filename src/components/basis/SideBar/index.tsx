@@ -48,6 +48,7 @@ const SideBar: React.FC<SideBarProps> = ({ isOpen, toggle, menu }) => {
 const imgStyle = {
   margin: '10px',
   width: '45px',
+  backgroundColor: '#5f9d9f',
 };
 
 const titleStyle = {
