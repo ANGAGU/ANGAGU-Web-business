@@ -102,7 +102,7 @@ const LoginTemplate: React.FC = () => {
               id="email"
               label="Email Address"
               name="email"
-              autoComplete="email"
+              autoComplete="off"
               autoFocus
               onChange={e => {
                 setId(`${e.target.value}`);
@@ -117,7 +117,7 @@ const LoginTemplate: React.FC = () => {
               label="Password"
               type="password"
               id="password"
-              autoComplete="current-password"
+              autoComplete="off"
               onChange={e => {
                 setPw(`${e.target.value}`);
               }}
