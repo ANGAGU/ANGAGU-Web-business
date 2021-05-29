@@ -41,10 +41,10 @@ const AccountFinderTemplate: React.FC = () => {
       >
         <Grid direction="row" alignItems="center" justify="flex-end">
           <ButtonGroup color="primary" aria-label="outlined primary button group">
-            <Button variant={!isPW ? 'contained' : 'text'} onClick={() => setIsPW(false)}>
+            <Button variant={!isPW ? 'contained' : 'outlined'} onClick={() => setIsPW(false)}>
               아이디 찾기
             </Button>
-            <Button variant={isPW ? 'contained' : 'text'} onClick={() => setIsPW(true)}>
+            <Button variant={isPW ? 'contained' : 'outlined'} onClick={() => setIsPW(true)}>
               비밀번호 찾기
             </Button>
           </ButtonGroup>
