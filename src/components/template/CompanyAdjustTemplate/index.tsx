@@ -228,15 +228,13 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
                 setToggle(!toggle);
               }}
             >
-              상세 상품 내역
+              상세 상품 수익내역
             </Button>
-
             {toggle && (
-              <Table size="sm" className="product-profit-table">
+              <Table size="sm" className="profit-table">
                 <thead>
                   <tr>{productProfitHeader}</tr>
                 </thead>
-
                 <tbody>{productProfits}</tbody>
               </Table>
             )}

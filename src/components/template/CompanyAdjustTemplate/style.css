@@ -3,7 +3,7 @@
 }
 
 .admin-adjust {
-  padding: 45px 25px;
+  padding: 45px 25px 80px;
 }
 
 .company-adjust {
@@ -57,7 +57,7 @@
   float: right;
 }
 
-.product-profit-table {
+.profit-table {
   width: 100%;
   margin-bottom: 8px;
   text-align: center;
