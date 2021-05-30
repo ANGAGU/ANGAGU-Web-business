@@ -3,10 +3,10 @@ import { Table, Container, Input, Button } from 'reactstrap';
 import { Dummy, date2String, calculateFee } from 'utils';
 import { Fade } from 'react-awesome-reveal';
 import { CompanyFilter, MonthSelector, LineChart, DoughnutChart } from '../../molecules';
-import { projuctProfitTitleList } from '../../../commons/constants/string';
-import api from '../../../api';
+import { adjustTitleList, projuctProfitTitleList, monthList } from '../../../commons/constants/string';
 
 import './style.css';
+import api from '../../../api';
 
 type AdjustPageProps = {
   isAdmin: boolean;
@@ -21,71 +21,73 @@ type Adjust = {
   price: number;
   update_time: string;
 };
-
-type ProductProfit = {
+type CompanyProfit = {
   product_id: number;
   name: string;
   total_price: string; // revenue - commission
   total_count: number;
 };
-const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
+
+const AdminAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
+  // const [adjustsDummy] = useState(Dummy.makeAdjusts(1) as Array<Adjust>);
   const [adjustList, setAdjustList] = useState([] as Array<Adjust>);
-  const [productProfitList, setProductProfitList] = useState([] as Array<ProductProfit>);
+
+  const [companyProfitList, setCompanyProfitList] = useState([] as Array<CompanyProfit>);
+  const [adjust, setAdjust] = useState({
+    company_id: 0,
+    create_time: '',
+    fee: 0,
+    id: 0,
+    order_id: 0,
+    price: 0,
+    update_time: '',
+  });
+
   const [company, setCompany] = useState('회사' as string);
   const [toggle, setToggle] = useState(false as boolean);
-  const [companyDate, setCompanyDate] = useState(new Date());
+  const [searchMonth, setSearchMonth] = useState('1월' as string);
+  const [adminDate, setAdminDate] = useState(new Date());
   const [totalProfit, setTotalProfit] = useState(0);
   const [totalFee, setTotalFee] = useState(0);
   const [lineGraph, setLineGraph] = useState(Dummy.chartData);
   const [doughnutGraph, setDoughnutGraph] = useState(Dummy.doughnutChartData);
+
   // methods
 
   useEffect(() => {
     getAdjust();
-    getAdjustProducts();
-  }, [companyDate]);
+  }, []);
+  // const requestAdjust = async () => {
+  //   // header 설정 여기서 각각 말고 한번에 하기
+  //   api.setAxiosDefaultHeader();
+  //   const { status, data } = await api.get('/admin/sale', {
+  //     from: new Date('2021-04-17T03:24:00'),
+  //     to: new Date(),
+  //   });
+  //   if (status === 'success') {
+  //     // setAdjustList(result.data);
 
-  // useEffect(() => {
-  //   getAdjustProducts();
-  // }, [companyDate]);
-
-  useEffect(() => {
-    calculateProfit();
-  }, [productProfitList]);
-
-  useEffect(() => {
-    setTotalFee(calculateFee(totalProfit));
-    drawDoughnutGraph();
-  }, [totalProfit]);
-
-  useEffect(() => {
-    drawLineGraph();
-  }, [adjustList]);
-
+  //     // eslint-disable-next-line eqeqeq
+  //     if (data == []) setAdjust(data[0]);
+  //   }
+  // };
   const getAdjust = async () => {
-    const { status, data } = await api.get('/company/sale', {});
+    const { status, data } = await api.get('/admin/sale', {});
     if (status === 'success') {
       setAdjustList(data);
     }
   };
-  const getAdjustProducts = async () => {
-    const { status, data } = await api.get('/company/sale/product', {
-      month: `${date2String(companyDate)}-01`,
+
+  const getAdjustCompanies = async () => {
+    const { status, data } = await api.get('/admin/sale/company', {
+      month: `${date2String(adminDate)}-01`,
     });
     if (status === 'success') {
-      setProductProfitList(data);
+      setCompanyProfitList(data);
     }
   };
 
-  const calculateProfit = () => {
-    let total = 0;
-    productProfitList.map(product => {
-      total += Number(product.total_price);
-      return 0;
-    });
-    setTotalProfit(total);
-  };
-
+  // api 확인 후 shared로 옮기기
   const drawLineGraph = () => {
     const lineLabels = ['', '', '', '', '', ''];
     const lineData = [0, 0, 0, 0, 0, 0];
@@ -122,13 +124,13 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
     const doughnutLabels = [] as Array<string>;
     const doughnutData = [] as Array<number>;
 
-    if (productProfitList.length === 0) {
+    if (companyProfitList.length === 0) {
       doughnutLabels.push('판매된 상품이 없습니다');
       doughnutData.push(100);
     }
-    const isMany = productProfitList.length > 6;
+    const isMany = companyProfitList.length > 6;
     let total = 0;
-    const tempList = productProfitList.sort((a, b) => Number(b.total_price) - Number(a.total_price));
+    const tempList = companyProfitList.sort((a, b) => Number(b.total_price) - Number(a.total_price));
     tempList.some((pro, idx) => {
       if (idx === 6) return true;
       if (idx === 5 && isMany) {
@@ -172,18 +174,6 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
     setDoughnutGraph(graphData);
   };
 
-  const productProfitHeader = projuctProfitTitleList.map(ttl => <th className="column-title">{ttl}</th>);
-
-  const productProfits = productProfitList.map(product => (
-    <tr key={product.product_id}>
-      <td>{product.product_id}</td>
-      <td>{product.name}</td>
-      <td>{Number(product.total_price) / product.total_count}원</td>
-      <td>{product.total_count}</td>
-      <td>{Number(product.total_price) - calculateFee(Number(product.total_price))}원</td>
-    </tr>
-  ));
-
   return (
     <Fade>
       <Container className="adjust-page">
@@ -191,55 +181,35 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
         <hr />
         <div style={{ display: 'flex' }}>
           <div style={{ flex: 2 }}>
-            <LineChart data={lineGraph} options={Dummy.chartOptions} />
+            <LineChart data={Dummy.chartData} options={Dummy.chartOptions} />
           </div>
           <div style={{ flex: 1 }}>
-            <DoughnutChart data={doughnutGraph} />
+            <DoughnutChart data={Dummy.doughnutChartData} />
           </div>
         </div>
-        <hr />
-        <div className="company-adjust">
+        <div className="admin-adjust">
           <div className="adjust-filter">
-            <h5>기업 정산 검색</h5>
+            <h5>Scanit 정산 검색</h5>
             <div className="filter-form">
-              <div className="filter-form__content">
-                <MonthSelector title="정산일자" selectDateFunc={setCompanyDate} />
-              </div>
+              <MonthSelector title="정산일자" selectDateFunc={setAdminDate} />
+              <Button>검색</Button>
             </div>
           </div>
           <div className="adjust-block">
             <div className="adjust-content">
               <div className="content__profit">
-                <span className="company-name content-highlight">{company}</span>의
+                <span className="company-name content-highlight">Scanit</span>의
                 <span className="adjust-month content-highlight">
-                  {`${companyDate.getFullYear()}년 ${companyDate.getMonth() + 1}월`}
+                  {`${adminDate.getFullYear()}년 ${adminDate.getMonth() + 1}월`}
                 </span>
-                입금 금액은
-                <span className="adjust-profit content-highlight">{totalProfit - totalFee}원</span>
+                수익 수수료는
+                <span className="adjust-profit content-highlight">200000원</span>
                 입니다.
               </div>
               <div className="content__profit-detail">
-                총 매출 {totalProfit}원 - 수수료 {totalFee}원
+                총 매출 {`250000원`} - 수수료 {`50000원`}
               </div>
             </div>
-            <Button
-              className="content__toggle-btn"
-              onClick={() => {
-                setToggle(!toggle);
-              }}
-            >
-              상세 상품 내역
-            </Button>
-
-            {toggle && (
-              <Table size="sm" className="product-profit-table">
-                <thead>
-                  <tr>{productProfitHeader}</tr>
-                </thead>
-
-                <tbody>{productProfits}</tbody>
-              </Table>
-            )}
           </div>
         </div>
       </Container>
@@ -247,4 +217,4 @@ const CompanyAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
   );
 };
 
-export default CompanyAdjustTemplate;
+export default AdminAdjustTemplate;
