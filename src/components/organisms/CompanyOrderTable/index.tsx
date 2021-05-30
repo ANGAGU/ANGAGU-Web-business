@@ -65,6 +65,8 @@ const CompanyOrderTable = () => {
       address_id: 0,
       delivery_number: null,
       review_id: null,
+      customer_name: '',
+      product_name: '',
       create_time: '',
       update_time: '',
     },
@@ -126,7 +128,9 @@ const CompanyOrderTable = () => {
             <StyledTableRow key={row.id}>
               <StyledTableCell>{row.id}</StyledTableCell>
               <StyledTableCell>{row.customer_name}</StyledTableCell>
-              <StyledTableCell>{row.product_name}</StyledTableCell>
+              <StyledTableCell>
+                <a href={`http://localhost:3000/Main/Product/${row.product_id}`}>{row.product_name}</a>
+              </StyledTableCell>
               <StyledTableCell>{row.count}</StyledTableCell>
               <StyledTableCell>{row.price}</StyledTableCell>
               <StyledTableCell>{row.delivery_number === null ? '배송 전' : '배송 중'}</StyledTableCell>
