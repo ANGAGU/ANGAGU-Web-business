@@ -226,8 +226,8 @@ const MainTemplate: React.FC = () => {
   return (
     <Fade>
       <Container className="main-page">
-        <h3>Main</h3>
-        <hr />
+        {/* <h3>환영합니다</h3> */}
+        {/* <hr /> */}
         <div style={{ display: 'flex', padding: '30px 10px' }}>
           <div style={{ flex: 1 }}>
             <Card className={classes.root}>

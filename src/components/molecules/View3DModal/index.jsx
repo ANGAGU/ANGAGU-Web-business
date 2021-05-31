@@ -6,6 +6,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Col, Container, Row
 import { OBJModel } from 'react-3d-viewer';
 import { ObjModelLoader } from 'components/atoms';
 import { Canvas, useLoader } from '@react-three/fiber';
+import { notify } from 'App';
 import ThreeRender from '../../atoms/ThreeRender';
 // import mesh from '../../../assets/IKE050020.mtl';
 import api from '../../../api';
@@ -36,7 +37,7 @@ const View3DModal = ({ pid, purl }) => {
       product_ar: evt.target.files[0],
     });
     if (result.status === 'success') {
-      console.log(result.data);
+      notify('상품 3D 모델 업로드 완료!');
       setProduct3D(`http://d3u3zwu9bmcdht.cloudfront.net/${result.data.url}`);
       setModelName(evt.target.files[0].name);
       // setProduct3D(fileDownloadUrl);
