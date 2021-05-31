@@ -46,25 +46,6 @@ const MainTemplate: React.FC = () => {
   const [totalFee, setTotalFee] = useState(0);
   const [lineGraph, setLineGraph] = useState(Dummy.chartData);
   const [doughnutGraph, setDoughnutGraph] = useState(Dummy.doughnutChartData);
-  const [orders, setOrders] = useState([
-    {
-      id: 0,
-      product_id: 0,
-      company_id: 0,
-      customer_id: 0,
-      import_1: '',
-      import_2: '',
-      count: 0,
-      price: 0,
-      address_id: 0,
-      delivery_number: null,
-      review_id: null,
-      customer_name: '',
-      product_name: '',
-      create_time: '',
-      update_time: '',
-    },
-  ]);
 
   const [countOrders, setCountOrders] = useState(0);
 
@@ -241,7 +222,6 @@ const MainTemplate: React.FC = () => {
   });
 
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
 
   return (
     <Fade>
@@ -266,13 +246,19 @@ const MainTemplate: React.FC = () => {
                   {companyEmail}
                 </Typography>
                 <Typography variant="body2" component="p">
-                  well meaning and kindly.
-                  <br />
-                  {'"a benevolent smile"'}
+                  등록된 상품 수: 3개
+                  <br />총 주문건수: 38개
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button size="small">회원 정보 수정</Button>
+                <Button
+                  size="small"
+                  onClick={() => {
+                    history.push('/Main/Info');
+                  }}
+                >
+                  회원 정보 수정
+                </Button>
               </CardActions>
             </Card>
           </div>
@@ -300,8 +286,8 @@ const MainTemplate: React.FC = () => {
             <div className="main-block">
               <div className="main-content">
                 <div className="content__profit">
-                  <span className="company-name content-highlight">{company}</span>의 현재 대기 중인 주문 건
-                  수는
+                  <span className="company-name content-highlight">{company}</span>의 현재 대기 중인
+                  주문건수는
                   <span className="adjust-profit content-highlight">{countOrders} 개</span>
                   입니다.
                 </div>
