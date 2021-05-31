@@ -1,0 +1,37 @@
+.main-page {
+  padding: 20px 0;
+}
+
+.main-block {
+  border: solid 2px #dee2e6;
+  border-radius: 20px;
+  padding: 30px;
+  margin-bottom: 20px;
+}
+
+.main-content {
+  justify-content: center;
+  align-items: center;
+  margin: 16px;
+}
+.main-content .content__profit {
+  font-size: 25px;
+}
+.main-content .content-highlight {
+  font-size: 30px;
+  font-weight: 600;
+  margin: 0 15px;
+  color: cadetblue;
+}
+
+.main-content .content-detail {
+  margin: 0 15px;
+  color: darkgrey;
+}
+
+.content-btn {
+  position: relative;
+  top: -25px;
+  left: -20px;
+  float: right;
+}
