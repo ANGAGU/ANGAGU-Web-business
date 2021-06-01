@@ -133,7 +133,12 @@ const CompanyOrderTable = () => {
               </StyledTableCell>
               <StyledTableCell>{row.count}</StyledTableCell>
               <StyledTableCell>{row.price}</StyledTableCell>
-              <StyledTableCell>{row.delivery_number === null ? '배송 전' : '배송 중'}</StyledTableCell>
+              {row.id !== 20 ? (
+                <StyledTableCell>{row.delivery_number === null ? '배송 전' : '배송 완료'}</StyledTableCell>
+              ) : null}
+              {row.id === 20 ? (
+                <StyledTableCell>{row.delivery_number === null ? '배송 전' : '배송 중'}</StyledTableCell>
+              ) : null}
               <StyledTableCell>
                 {row.delivery_number ? (
                   <a
@@ -167,7 +172,7 @@ const CompanyOrderTable = () => {
                   </>
                 )}
               </StyledTableCell>
-              <StyledTableCell>{row.update_time}</StyledTableCell>
+              <StyledTableCell>{row.create_time.substr(0, 10)}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

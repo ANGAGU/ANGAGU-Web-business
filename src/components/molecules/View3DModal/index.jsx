@@ -37,7 +37,6 @@ const View3DModal = ({ pid, purl }) => {
       product_ar: evt.target.files[0],
     });
     if (result.status === 'success') {
-      notify('상품 3D 모델 업로드 완료!');
       setProduct3D(`http://d3u3zwu9bmcdht.cloudfront.net/${result.data.url}`);
       setModelName(evt.target.files[0].name);
       // setProduct3D(fileDownloadUrl);
@@ -47,6 +46,7 @@ const View3DModal = ({ pid, purl }) => {
   };
 
   const confirmModel = () => {
+    notify('상품 3D 모델 업로드 완료!');
     toggle();
   };
   const rejectModel = () => {
@@ -71,7 +71,7 @@ const View3DModal = ({ pid, purl }) => {
             <Row>
               <Col className="model-view" style={visStyle}>
                 {product3D && (
-                  <ThreeRender size={['1200', '700']} modelURL={product3D} modelName={modelName} />
+                  <ThreeRender size={['1200', '600']} modelURL={product3D} modelName={modelName} />
                 )}
                 {/* {product3D && <ObjModelLoader model={product3D} mtl={mesh} />} */}
               </Col>
