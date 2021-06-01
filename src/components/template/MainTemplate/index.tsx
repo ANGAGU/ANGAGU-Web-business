@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Table, Container, Input, Button } from 'reactstrap';
-import { Dummy, date2String, calculateFee } from 'utils';
+import { Dummy, date2String, calculateFee, makeMoneyStr } from 'utils';
 import { Fade } from 'react-awesome-reveal';
 import { DoughnutChart, LineChart } from 'components/molecules';
 import { CompanyAdjustForm } from 'components/organisms';
@@ -41,7 +41,7 @@ const MainTemplate: React.FC = () => {
   const [productProfitList, setProductProfitList] = useState([] as Array<ProductProfit>);
   const [company, setCompany] = useState('회사' as string);
   const [companyEmail, setCompanyEmail] = useState('' as string);
-  const [companyDate, setCompanyDate] = useState(new Date());
+  const [companyDate, setCompanyDate] = useState(new Date('1995-12-17T03:24:00'));
   const [totalProfit, setTotalProfit] = useState(0);
   const [totalFee, setTotalFee] = useState(0);
   const [lineGraph, setLineGraph] = useState(Dummy.chartData);
@@ -228,7 +228,7 @@ const MainTemplate: React.FC = () => {
       <Container className="main-page">
         {/* <h3>환영합니다</h3> */}
         {/* <hr /> */}
-        <div style={{ display: 'flex', padding: '30px 10px' }}>
+        <div style={{ display: 'flex', padding: '10px 10px' }}>
           <div style={{ flex: 1 }}>
             <Card className={classes.root}>
               <CardContent>
@@ -246,8 +246,8 @@ const MainTemplate: React.FC = () => {
                   {companyEmail}
                 </Typography>
                 <Typography variant="body2" component="p">
-                  등록된 상품 수: 3개
-                  <br />총 주문건수: 38개
+                  등록된 상품 수: 4개
+                  <br />총 주문건수: 39개
                 </Typography>
               </CardContent>
               <CardActions>
@@ -267,9 +267,12 @@ const MainTemplate: React.FC = () => {
               <div className="main-content">
                 <div className="content__profit">
                   <span className="company-name content-highlight">{company}</span>의
-                  <span className="adjust-month content-highlight">이번 달</span>
+                  <span className="adjust-month content-highlight"> 이번 달 </span>
                   입금 예정 금액은
-                  <span className="adjust-profit content-highlight">{totalProfit - totalFee}원</span>
+                  <span className="adjust-profit content-highlight">
+                    {' '}
+                    {makeMoneyStr((totalProfit - totalFee).toString())}원
+                  </span>
                   입니다.
                 </div>
                 <div className="content-detail">정산관리 페이지에서 더 자세히 알아보세요!</div>
@@ -286,9 +289,9 @@ const MainTemplate: React.FC = () => {
             <div className="main-block">
               <div className="main-content">
                 <div className="content__profit">
-                  <span className="company-name content-highlight">{company}</span>의 현재 대기 중인
-                  주문건수는
-                  <span className="adjust-profit content-highlight">{countOrders} 개</span>
+                  <span className="company-name content-highlight">{company}</span>의
+                  <span>&nbsp;&nbsp;&nbsp;현재 대기 중인 주문건수는</span>
+                  <span className="adjust-profit content-highlight"> {countOrders}개</span>
                   입니다.
                 </div>
                 <div className="content-detail">상품 배송 후 송장번호를 입력해 주세요!</div>
@@ -304,11 +307,34 @@ const MainTemplate: React.FC = () => {
             </div>
           </div>
         </div>
-        <div style={{ display: 'flex', padding: '45px 10px 80px ' }}>
+        <hr />
+        <div style={{ display: 'flex', padding: '30px 10px 80px ' }}>
           <div style={{ flex: 2 }}>
+            <h4
+              style={{
+                color: 'gray',
+                borderLeft: 'solid 4px cadetblue',
+                paddingLeft: '10px',
+                marginBottom: '50px',
+              }}
+            >
+              월별 수익 차트
+            </h4>
+            {/* <div style={{ width: '80px',  }} /> */}
             <LineChart data={lineGraph} options={Dummy.chartOptions} />
           </div>
           <div style={{ flex: 1 }}>
+            <h4
+              style={{
+                color: 'gray',
+                borderLeft: 'solid 4px cadetblue',
+                paddingLeft: '10px',
+                marginBottom: '50px',
+              }}
+            >
+              상품별 수익 차트
+            </h4>
+
             <DoughnutChart data={doughnutGraph} />
           </div>
         </div>

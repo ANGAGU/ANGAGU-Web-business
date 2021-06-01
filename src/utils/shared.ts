@@ -33,4 +33,6 @@ export const calculateFee = (value: number) => {
   return value * (companyFee / 100);
 };
 
-
+export const makeMoneyStr = (value: string) => {
+  return value.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+};
