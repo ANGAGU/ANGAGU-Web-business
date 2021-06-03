@@ -9,6 +9,7 @@ import {
   CompanyOrderTemplate,
   CompanyInfoTemplate,
   CompanyAdjustTemplate,
+  CompanyQnATemplate,
   MainTemplate,
   ProductDetailTemplate,
   AdminProductTemplate,
@@ -34,6 +35,7 @@ const Content = ({ sidebarIsOpen, toggleSidebar }: ContentProps) => {
           <Route exact path={`${path}/ManageOrder`} component={CompanyOrderTemplate} />
           <Route exact path={`${path}/Info`} component={CompanyInfoTemplate} />
           <Route exact path={`${path}/Adjust`} component={CompanyAdjustTemplate} />
+          <Route exact path={`${path}/QnA`} component={CompanyQnATemplate} />
           <Route exact path={`${path}/ManageProduct`} component={AdminProductTemplate} />
           <Route exact path={`${path}/ManageAdjust`} component={AdminAdjustTemplate} />
           <Route exact path={`${path}`} component={MainTemplate} />
