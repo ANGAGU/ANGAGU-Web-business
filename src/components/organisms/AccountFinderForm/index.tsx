@@ -12,6 +12,7 @@ import api from '../../../api';
 const useStyles = makeStyles(theme => ({
   form: {
     paddingTop: '40px',
+    width: '223px',
   },
   innerForm: {
     minWidth: '250px',
@@ -21,10 +22,12 @@ const useStyles = makeStyles(theme => ({
   },
   input: {
     display: 'block',
+    margin: 0,
+    paddingBottom: '20px',
   },
   submit: {
     position: 'relative',
-    top: '100px',
+    top: '70px',
     display: 'block',
     // marginTop: '70px',
   },
@@ -61,20 +64,35 @@ const AccountFinderForm: React.FC<AccountFinderProps> = ({ isPW }) => {
   };
   const Finder = () => (
     <Grid item alignItems="center" justify="center" className={classes.form}>
-      {isPW ? <TextField label="아이디" fullWidth className={classes.input} /> : null}
       <TextField label="이름" fullWidth className={classes.input} />
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <KeyboardDatePicker
-          margin="normal"
-          label="생년월일"
-          format="MM/dd/yyyy"
-          value={selectedDate}
-          onChange={handleDateChange}
-          KeyboardButtonProps={{
-            'aria-label': 'change date',
-          }}
+      {isPW ? (
+        <TextField label="아이디" fullWidth className={classes.input} />
+      ) : (
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <KeyboardDatePicker
+            margin="normal"
+            label="생년월일"
+            format="MM/dd/yyyy"
+            value={selectedDate}
+            onChange={handleDateChange}
+            KeyboardButtonProps={{
+              'aria-label': 'change date',
+            }}
+            className={classes.input}
+          />
+        </MuiPickersUtilsProvider>
+      )}
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <TextField
+          style={{ flex: '4', float: 'left' }}
+          label="휴대폰 번호"
+          fullWidth
+          className={classes.input}
         />
-      </MuiPickersUtilsProvider>
+        <Button style={{ flex: '1', float: 'right', height: '36px', marginLeft: '10px' }} variant="outlined">
+          전송
+        </Button>
+      </div>
 
       {isPW ? (
         <Button
