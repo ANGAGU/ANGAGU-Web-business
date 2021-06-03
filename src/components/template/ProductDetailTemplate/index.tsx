@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { useRouteMatch, useHistory } from 'react-router-dom';
 import { Container, Row, Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import { Fade } from 'react-awesome-reveal';
-import './style.css';
-
 import { ImageUploader } from 'components/molecules';
+import { notify } from 'App';
+
+import './style.css';
 
 import api from '../../../api';
 
@@ -57,8 +58,8 @@ const ProductDetailTemplate: React.FC = () => {
       delivery_charge: productValue.delivery_charge,
     });
     if (status === 'success') {
-      alert('OK!');
       history.push('/Main/Product');
+      notify('상품 등록 완료!');
     } else {
       console.log('fail for send product info');
     }
