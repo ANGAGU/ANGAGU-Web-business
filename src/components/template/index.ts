@@ -6,5 +6,7 @@ export { default as CompanyOrderTemplate } from './CompanyOrderTemplate';
 export { default as AdminProductTemplate } from './AdminProductTemplate';
 export { default as CompanyInfoTemplate } from './CompanyInfoTemplate';
 export { default as CompanyAdjustTemplate } from './CompanyAdjustTemplate';
+export { default as AdminAdjustTemplate } from './AdminAdjustTemplate';
 export { default as ProductDetailTemplate } from './ProductDetailTemplate';
 export { default as AccountFinderTemplete } from './AccountFinderTemplete';
+export { default as MainTemplate } from './MainTemplate';

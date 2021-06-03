@@ -2,7 +2,6 @@
 import axios from 'axios';
 import * as querystring from 'querystring';
 
-// axios.defaults.baseURL = 'http://angagu.github.io/ANGAGU_WEB_business/';
 axios.defaults.baseURL = 'http://localhost:3000/';
 
 const server = 'http://54.180.62.210:3000';
@@ -30,7 +29,8 @@ const api = {
     return axios.defaults.baseURL;
   },
   async get(endpoint: string, param: any) {
-    const params = setCommonParams(param);
+    api.setAxiosDefaultHeader();
+    const params = param;
     try {
       const response = await axios.get(`${server}${endpoint}`, { params });
       return response.data;
@@ -41,6 +41,7 @@ const api = {
   },
 
   async post(endpoint: string, param: any) {
+    api.setAxiosDefaultHeader();
     const params = setCommonParams(param);
     const headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -54,6 +55,7 @@ const api = {
     }
   },
   async upload(endpoint: string, param: any) {
+    api.setAxiosDefaultHeader();
     const params = setCommonParams(param);
     const headers = {
       'Content-Type': 'multipart/form-data',
@@ -80,6 +82,7 @@ const api = {
   },
 
   async put(endpoint: string, param: any) {
+    api.setAxiosDefaultHeader();
     const params = setCommonParams(param);
     try {
       const response = await axios.put(`${server}${endpoint}`, params);
@@ -92,6 +95,7 @@ const api = {
   },
 
   async delete(endpoint: string, param: any) {
+    api.setAxiosDefaultHeader();
     const params = setCommonParams(param);
     try {
       const response = await axios.delete(`${server}${endpoint}`, {

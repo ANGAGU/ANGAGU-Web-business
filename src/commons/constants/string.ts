@@ -1,18 +1,6 @@
-export const adjustTitleList = [
-  '정산번호',
-  '회사',
-  '기간',
-  '총매출',
-  '수수료',
-  '최종정산금액',
-];
-export const projuctProfitTitleList = [
-  '상품 아이디',
-  '상품명',
-  '가격',
-  '주문량',
-  '최종정산금액',
-];
+export const adjustTitleList = ['정산번호', '회사', '기간', '총매출', '수수료', '총 정산금액'];
+export const projuctProfitTitleList = ['상품 아이디', '상품명', '가격', '주문량', '총 정산금액'];
+export const companyProfitTitleList = ['회사 아이디', '회사명', '총 수익', '총 수수료'];
 export const monthList = [
   '1월',
   '2월',

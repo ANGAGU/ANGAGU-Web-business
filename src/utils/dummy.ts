@@ -43,13 +43,10 @@ const Dummy = {
     const tempArr = [];
     for (let i = 0; i < num; i += 1) {
       tempArr.push({
-        id: chance.integer({ min: 0, max: 100 }),
         name: chance.word(),
         price: chance.dollar(),
-        sellCount: chance.integer({ min: 0, max: 100 }),
-        profit: chance.dollar(),
-        revenue: chance.dollar(),
-        commission: chance.dollar(),
+        total_count: chance.integer({ min: 0, max: 100 }),
+        total_price: chance.dollar(),
       });
     }
 
@@ -91,6 +88,57 @@ const Dummy = {
       });
     }
     return tempArr;
+  },
+  chartData: {
+    labels: ['1', '2', '3', '4', '5', '6'],
+    datasets: [
+      {
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        fill: false,
+        // #619c9f
+        backgroundColor: 'rgb(97, 157, 160)',
+        borderColor: 'rgba(97, 157, 160, 0.5)',
+      },
+    ],
+  },
+
+  chartOptions: {
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+          },
+        },
+      ],
+    },
+  },
+  doughnutChartData: {
+    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    datasets: [
+      {
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3].sort((a, b) => b - a),
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+        ],
+        borderWidth: 1,
+      },
+    ],
   },
 };
 
