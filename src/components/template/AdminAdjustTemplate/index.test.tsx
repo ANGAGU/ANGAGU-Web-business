@@ -1,19 +1,19 @@
 import { render } from '@testing-library/react';
-import CompanyAdjustTemplate from './index';
+import AdminAdjustTemplate from './index';
 
 describe('Product Page', () => {
   it('renders Product page', () => {
-    render(<CompanyAdjustTemplate isAdmin={false} />);
-    render(<CompanyAdjustTemplate isAdmin />);
+    render(<AdminAdjustTemplate isAdmin={false} />);
+    render(<AdminAdjustTemplate isAdmin />);
   });
   it('check table header to make sure page is well rendered as admin', () => {
-    const { getByText } = render(<CompanyAdjustTemplate isAdmin />);
+    const { getByText } = render(<AdminAdjustTemplate isAdmin />);
     // 승인하기 테이블 존재여부 check
     const tableHeader = getByText('Scanit') as HTMLInputElement;
     expect(tableHeader).toBeInTheDocument();
   });
   it('check table header to make sure page is well rendered as business', () => {
-    const { getByText } = render(<CompanyAdjustTemplate isAdmin={false} />);
+    const { getByText } = render(<AdminAdjustTemplate isAdmin={false} />);
     // 승인하기 테이블 존재여부 check
     const tableHeader = getByText('Scanit') as HTMLInputElement;
     expect(tableHeader).toBeInTheDocument();
