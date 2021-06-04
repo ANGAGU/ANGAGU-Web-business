@@ -10,3 +10,4 @@ export { default as AdminAdjustTemplate } from './AdminAdjustTemplate';
 export { default as ProductDetailTemplate } from './ProductDetailTemplate';
 export { default as MainTemplate } from './MainTemplate';
 export { default as CompanyQnATemplate } from './CompanyQnATemplate';
+export { default as QnADetailTemplate } from './QnADetailTemplate';

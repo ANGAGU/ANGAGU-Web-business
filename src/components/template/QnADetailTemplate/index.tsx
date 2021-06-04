@@ -5,11 +5,11 @@ import { CompanyAdjustForm } from 'components/organisms';
 
 import './style.css';
 
-const CompanyAnswerTemplate: React.FC = () => {
+const QnADetailTemplate: React.FC = () => {
   return (
     <Fade>
-      <Container className="adjust-page">
-        <h3>정산 관리</h3>
+      <Container className="answer-page">
+        <h3>상품문의 상세</h3>
         <hr />
         <CompanyAdjustForm />
       </Container>
@@ -17,4 +17,4 @@ const CompanyAnswerTemplate: React.FC = () => {
   );
 };
 
-export default CompanyAnswerTemplate;
+export default QnADetailTemplate;
