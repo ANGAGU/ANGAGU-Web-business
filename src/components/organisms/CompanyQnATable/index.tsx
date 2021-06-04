@@ -111,10 +111,9 @@ const CompanyQnATable = () => {
             <StyledTableCell>문의 ID</StyledTableCell>
             <StyledTableCell>문의고객</StyledTableCell>
             <StyledTableCell>상품명</StyledTableCell>
-
+            <StyledTableCell>제목</StyledTableCell>
             <StyledTableCell>문의상태</StyledTableCell>
-
-            <StyledTableCell>문의 시각</StyledTableCell>
+            <StyledTableCell>문의시각</StyledTableCell>
             <StyledTableCell />
           </TableRow>
         </TableHead>
@@ -124,8 +123,9 @@ const CompanyQnATable = () => {
               <StyledTableCell>{row.id}</StyledTableCell>
               <StyledTableCell>{row.customer_name}</StyledTableCell>
               <StyledTableCell>
-                <a href={`http://localhost:3000/Main/Product/${row.product_id}`}>{row.product_name}</a>
+                <Link to={`/Main/Product/${row.product_id}`}>{row.product_name}</Link>
               </StyledTableCell>
+              <StyledTableCell>문의 제목이 들어갈거에여</StyledTableCell>
               <StyledTableCell>{row.delivery_number === null ? '답변 전' : '답변 완료'}</StyledTableCell>
               <StyledTableCell>{row.create_time.substr(0, 10)}</StyledTableCell>
               <StyledTableCell>
