@@ -1,2 +1,12 @@
 export { default as Dummy } from './dummy';
-export { isEmail, isPassword, isSame, string2Date, date2String, calculateFee } from './shared';
+export {
+  isEmail,
+  isPassword,
+  isSame,
+  string2Date,
+  date2String,
+  calculateFee,
+  makeMoneyStr,
+  drawLineGraph,
+  drawDoughnutGraph,
+} from './shared';
