@@ -18,7 +18,7 @@ const companyComponent = [
   { title: '상품문의', url: '/Main/QnA', icon: faQuestion },
   { title: '상품상세', url: '/Main/Product/:id', icon: faPaperPlane },
   { title: '정산관리', url: '/Main/Adjust', icon: faBriefcase },
-  { title: '주문관리', url: '', icon: faChartPie },
+  { title: '주문관리', url: '/Main/ManageOrder', icon: faChartPie },
 ];
 const adminComponent = [
   { title: 'ADMIN 상품관리', url: '/Main/ManageProduct', icon: faHouseUser },
