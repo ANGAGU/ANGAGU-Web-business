@@ -7,15 +7,16 @@ import './style.css';
 type ConfirmModalProps = {
   viewModal: boolean;
   phoneNumber: string;
+  type: string;
   setAuthToken: React.Dispatch<React.SetStateAction<string>>;
   toggleModal: VoidFunction;
+  setCode: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const ConfirmModal: React.FC<ConfirmModalProps> & {
   defaultProps: Partial<ConfirmModalProps>;
-} = ({ viewModal, phoneNumber, setAuthToken, toggleModal }) => {
+} = ({ viewModal, phoneNumber, type, setAuthToken, toggleModal, setCode }) => {
   // const { viewModal, phoneNumber, setAuthToken } = props;
-  const [modal, setModal] = useState(viewModal);
   const [verifyNumber, setVerifyNumber] = useState('' as string);
 
   const handleVerifyNumber = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,15 +26,20 @@ const ConfirmModal: React.FC<ConfirmModalProps> & {
   };
 
   const checkAuthNumber = async () => {
-    const { status, data } = await api.post('/company/signup/sms/verification', {
-      phone_number: phoneNumber,
-      code: verifyNumber,
-    });
-    if (status === 'success') {
-      alert('OK!');
-      setAuthToken(data.token);
-    } else {
-      console.log('fail for verify sms');
+    setCode(verifyNumber);
+    let endpoint = '/company/signup/sms/verification';
+    if (type === 'pw') endpoint = '/company/find/verification';
+    if (type !== 'id') {
+      const { status, data } = await api.post(endpoint, {
+        phone_number: phoneNumber,
+        code: verifyNumber,
+      });
+      if (status === 'success') {
+        alert('OK!');
+        setAuthToken(data.token);
+      } else {
+        console.log('fail for verify sms');
+      }
     }
     toggleModal();
   };
