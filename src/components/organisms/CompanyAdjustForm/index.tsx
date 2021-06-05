@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button } from 'reactstrap';
-import { Dummy, date2String, calculateFee } from 'utils';
+import { Dummy, date2String, calculateFee, drawLineGraph } from 'utils';
 import { CompanyFilter, MonthSelector, LineChart, DoughnutChart } from '../../molecules';
 import { projuctProfitTitleList } from '../../../commons/constants/string';
 import api from '../../../api';
@@ -55,7 +55,7 @@ const CompanyAdjustForm: React.FC = () => {
   }, [totalProfit]);
 
   useEffect(() => {
-    drawLineGraph();
+    setLineGraph(drawLineGraph(adjustList));
   }, [adjustList]);
 
   const getAdjust = async () => {
@@ -80,38 +80,6 @@ const CompanyAdjustForm: React.FC = () => {
       return 0;
     });
     setTotalProfit(total);
-  };
-
-  const drawLineGraph = () => {
-    const lineLabels = ['', '', '', '', '', ''];
-    const lineData = [0, 0, 0, 0, 0, 0];
-    let monthAgo = new Date();
-    monthAgo = new Date(monthAgo.getFullYear(), monthAgo.getMonth(), 1);
-
-    for (let i = 1; i <= 6; i += 1) {
-      monthAgo = new Date(monthAgo.getFullYear(), monthAgo.getMonth() - 1, 1);
-      lineLabels[6 - i] = date2String(monthAgo);
-    }
-
-    adjustList.map(ad => {
-      const date = ad.date.substr(0, 7);
-      const idx = lineLabels.findIndex(el => date === el);
-      if (idx !== -1) lineData[idx] = ad.price;
-      return 0;
-    });
-    const graphData = {
-      labels: lineLabels,
-      datasets: [
-        {
-          label: '월별 수익',
-          data: lineData,
-          fill: false,
-          backgroundColor: 'rgb(97, 157, 160)',
-          borderColor: 'rgba(97, 157, 160, 0.5)',
-        },
-      ],
-    };
-    setLineGraph(graphData);
   };
 
   const drawDoughnutGraph = () => {

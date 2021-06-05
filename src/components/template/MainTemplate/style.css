@@ -5,7 +5,7 @@
 .main-block {
   border: solid 2px #dee2e6;
   border-radius: 20px;
-  padding: 30px;
+  padding: 30px 20px;
   margin-bottom: 20px;
 }
 
@@ -20,12 +20,12 @@
 .main-content .content-highlight {
   font-size: 30px;
   font-weight: 600;
-  margin: 0 15px;
+  margin: 0 10px;
   color: cadetblue;
 }
 
 .main-content .content-detail {
-  margin: 0 15px;
+  margin: 0 10px;
   color: darkgrey;
 }
 

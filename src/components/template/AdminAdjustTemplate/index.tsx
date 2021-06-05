@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Container, Input, Button } from 'reactstrap';
-import { Dummy, date2String, calculateFee } from 'utils';
+import { Dummy, date2String, calculateFee, drawLineGraph, drawDoughnutGraph } from 'utils';
 import { Fade } from 'react-awesome-reveal';
 import { CompanyFilter, MonthSelector, LineChart, DoughnutChart } from '../../molecules';
 import { companyProfitTitleList } from '../../../commons/constants/string';
@@ -40,7 +40,7 @@ const AdminAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
   }, [adminDate]);
 
   useEffect(() => {
-    drawLineGraph();
+    setLineGraph(drawLineGraph(adjustList, true));
   }, [adjustList]);
 
   useEffect(() => {
@@ -49,7 +49,7 @@ const AdminAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
 
   useEffect(() => {
     setTotalFee(calculateFee(totalProfit));
-    drawDoughnutGraph();
+    setDoughnutGraph(drawDoughnutGraph(companyProfitList, totalProfit, true));
   }, [totalProfit]);
 
   const calculateProfit = () => {
@@ -78,94 +78,6 @@ const AdminAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
     if (data.status === 'success') {
       setCompanyProfitList(data.data);
     }
-  };
-
-  // api 확인 후 shared로 옮기기
-  const drawLineGraph = () => {
-    const lineLabels = ['', '', '', '', '', ''];
-    const lineData = [0, 0, 0, 0, 0, 0];
-    let monthAgo = new Date();
-    monthAgo = new Date(monthAgo.getFullYear(), monthAgo.getMonth(), 1);
-
-    for (let i = 1; i <= 6; i += 1) {
-      monthAgo = new Date(monthAgo.getFullYear(), monthAgo.getMonth() - 1, 1);
-      lineLabels[6 - i] = date2String(monthAgo);
-    }
-
-    adjustList.map(ad => {
-      const date = ad.date.substr(0, 7);
-
-      const idx = lineLabels.findIndex(el => date === el);
-      if (idx !== -1) lineData[idx] = Number(ad.total_price);
-      return 0;
-    });
-    const graphData = {
-      labels: lineLabels,
-      datasets: [
-        {
-          label: '월별 수익',
-          data: lineData,
-          fill: false,
-          backgroundColor: 'rgb(97, 157, 160)',
-          borderColor: 'rgba(97, 157, 160, 0.5)',
-        },
-      ],
-    };
-    setLineGraph(graphData);
-  };
-
-  const drawDoughnutGraph = () => {
-    const doughnutLabels = [] as Array<string>;
-    const doughnutData = [] as Array<number>;
-
-    if (companyProfitList.length === 0) {
-      doughnutLabels.push('조회된 기업이 없습니다');
-      doughnutData.push(100);
-    }
-    const isMany = companyProfitList.length > 6;
-    let total = 0;
-    const tempList = companyProfitList.sort((a, b) => Number(b.total_price) - Number(a.total_price));
-    tempList.some((co, idx) => {
-      if (idx === 6) return true;
-      if (idx === 5 && isMany) {
-        doughnutData.push(100 - total);
-        doughnutLabels.push('기타');
-      }
-      let price = 0;
-      if (totalProfit !== 0) price = (Number(co.total_price) / totalProfit) * 100;
-      total += price;
-      doughnutData.push(price);
-      doughnutLabels.push(co.name);
-
-      return false;
-    });
-    const graphData = {
-      labels: doughnutLabels,
-      datasets: [
-        {
-          label: '기업 수익량',
-          data: doughnutData,
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)',
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)',
-          ],
-          borderWidth: 1,
-        },
-      ],
-    };
-    setDoughnutGraph(graphData);
   };
 
   const companyProfitHeader = companyProfitTitleList.map(ttl => <th className="column-title">{ttl}</th>);

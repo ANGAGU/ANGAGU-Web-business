@@ -6,9 +6,10 @@ import api from '../../api';
 import './style.css';
 
 const companyComponent = [
-  { title: '상품관리', url: '/Main/Product', icon: faHouseUser },
+  { title: '홈', url: '/Main', icon: faHouseUser },
+  { title: '상품관리', url: '/Main/Product', icon: faPaperPlane },
   { title: '기업정보', url: '/Main/Info', icon: faChartPie },
-  { title: '상품상세', url: '/Main/Product/:id', icon: faPaperPlane },
+  { title: '상품등록', url: '/Main/Product/:id', icon: faPaperPlane },
   { title: '정산관리', url: '/Main/Adjust', icon: faBriefcase },
   { title: '주문관리', url: '/Main/ManageOrder', icon: faChartPie },
 ];
