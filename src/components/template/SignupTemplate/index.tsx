@@ -21,8 +21,6 @@ type UserInfo = {
 const SignupTemplate: React.FC = () => {
   // state & variable
   const [submitValue, setSubmitValue] = useState({} as UserInfo);
-  const [isValid, setIsValid] = useState(false as boolean);
-  const [verifyNumber, setVerifyNumber] = useState('' as string);
   const [authToken, setAuthToken] = useState('' as string);
   const [viewModal, setViewModal] = useState(false as boolean);
 
@@ -45,12 +43,6 @@ const SignupTemplate: React.FC = () => {
     const { name, value } = evt.target as HTMLInputElement;
     console.log(name, value);
     setSubmitValue({ ...submitValue, [name]: value });
-  };
-
-  const handleVerifyNumber = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = evt.target as HTMLInputElement;
-    console.log(value);
-    setVerifyNumber(value);
   };
 
   const checkDuplicatedEmail = async () => {
