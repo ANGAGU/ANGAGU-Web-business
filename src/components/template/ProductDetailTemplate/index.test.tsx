@@ -1,5 +1,4 @@
 import { render, fireEvent, waitForElement } from '@testing-library/react';
-import { Model3DForm } from 'components/organisms';
 import ProductDetailTemplate from './index';
 
 describe('Product Page', () => {
