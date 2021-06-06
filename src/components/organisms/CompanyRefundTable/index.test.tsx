@@ -1,7 +1,7 @@
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 
-import CompanyOrderTable from './index';
+import CompanyRefundTable from './index';
 
 let container: HTMLElement;
 beforeEach(() => {
@@ -19,7 +19,7 @@ afterEach(() => {
 describe('CompanyOrderTable Component', () => {
   it('renders component', () => {
     act(() => {
-      render(<CompanyOrderTable />, container);
+      render(<CompanyRefundTable />, container);
     });
   });
 });

@@ -64,6 +64,8 @@ const CompanyRefundTable = () => {
       price: 0,
       address_id: 0,
       delivery_number: null,
+      refund_state: 0, // 0: 일반, 1: 요청, 2: 승인완료
+      refund_text: '',
       review_id: null,
       customer_name: '',
       product_name: '',
@@ -73,10 +75,10 @@ const CompanyRefundTable = () => {
   ]);
   const [deliverNum, setDeliverNum] = useState('');
   const classes = useStyles();
-  const getOrder = async () => {
+  const getRefund = async () => {
     try {
       api.setAxiosDefaultHeader();
-      const result = await api.get('/company/refunds', {});
+      const result = await api.get('/company/order', {});
       if (result.status === 'success') {
         console.log(result.data);
         setOrders(result.data);
@@ -87,69 +89,74 @@ const CompanyRefundTable = () => {
       console.error('환불 조회 실패');
     }
   };
-  const updateOrder = async (id: number, number: any) => {
+  const updateRefund = async (id: number, number: any) => {
     try {
       api.setAxiosDefaultHeader();
-      const result = await api.put('/company/refunds', {
-        deliveryNumber: number,
-        orderId: id,
-      });
+      const result = await api.get(`/company/refund/${id}`, {});
       if (result.status === 'success') {
-        console.log('환불 처리 성공');
-        getOrder();
+        console.log('환불 승인 성공');
+        getRefund();
       } else {
-        console.error('환불 처리 실패');
+        console.error('환불 승인 실패');
       }
     } catch {
-      console.error('환불 처리 실패');
+      console.error('환불 승인 실패');
     }
   };
   useEffect(() => {
-    getOrder();
+    getRefund();
   }, []);
 
+  const tableHeader = (
+    <TableHead>
+      <TableRow>
+        <StyledTableCell>주문 ID</StyledTableCell>
+        <StyledTableCell>환불요청 고객</StyledTableCell>
+        <StyledTableCell>상품명</StyledTableCell>
+        <StyledTableCell>개수&nbsp;(개)</StyledTableCell>
+        <StyledTableCell>가격&nbsp;(원)</StyledTableCell>
+        <StyledTableCell>배송상태</StyledTableCell>
+        <StyledTableCell>배송장번호</StyledTableCell>
+        <StyledTableCell>환불사유</StyledTableCell>
+        <StyledTableCell> </StyledTableCell>
+      </TableRow>
+    </TableHead>
+  );
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>환불 ID</StyledTableCell>
-            <StyledTableCell>환불요청 고객</StyledTableCell>
-            <StyledTableCell>상품명</StyledTableCell>
-            <StyledTableCell>개수&nbsp;(개)</StyledTableCell>
-            <StyledTableCell>가격&nbsp;(원)</StyledTableCell>
-            <StyledTableCell>배송상태</StyledTableCell>
-            <StyledTableCell>배송장번호</StyledTableCell>
-            <StyledTableCell>환불요청 시각</StyledTableCell>
-            <StyledTableCell> </StyledTableCell>
-          </TableRow>
-        </TableHead>
+        {tableHeader}
         <TableBody>
-          {orders.map((row: any) => (
-            <StyledTableRow key={row.id}>
-              <StyledTableCell>{row.id}</StyledTableCell>
-              <StyledTableCell>{row.customer_name}</StyledTableCell>
-              <StyledTableCell>
-                <a href={`http://localhost:3000/Main/Product/${row.product_id}`}>{row.product_name}</a>
-              </StyledTableCell>
-              <StyledTableCell>{row.count}</StyledTableCell>
-              <StyledTableCell>{row.price}</StyledTableCell>
-              <StyledTableCell>{row.delivery_number === null ? '배송 전' : '배송 중'}</StyledTableCell>
-              <StyledTableCell>{row.update_time}</StyledTableCell>
-              <StyledTableCell>{row.update_time}</StyledTableCell>
-              <StyledTableCell>
-                <Button
-                  style={{ height: 32 }}
-                  variant="outlined"
-                  onClick={e => {
-                    updateOrder(row.id, deliverNum);
-                  }}
-                >
-                  승인
-                </Button>
-              </StyledTableCell>
-            </StyledTableRow>
-          ))}
+          {orders.map((row: any) => {
+            if (row.refund_state === 0) return null;
+            return (
+              <StyledTableRow key={row.id}>
+                <StyledTableCell>{row.id}</StyledTableCell>
+                <StyledTableCell>{row.customer_name}</StyledTableCell>
+                <StyledTableCell>
+                  <a href={`http://localhost:3000/Main/Product/${row.product_id}`}>{row.product_name}</a>
+                </StyledTableCell>
+                <StyledTableCell>{row.count}</StyledTableCell>
+                <StyledTableCell>{row.price}</StyledTableCell>
+                <StyledTableCell>{row.delivery_number === null ? '배송 전' : '배송 중'}</StyledTableCell>
+                <StyledTableCell>{row.delivery_number}</StyledTableCell>
+                <StyledTableCell>{row.refund_text}</StyledTableCell>
+                <StyledTableCell>
+                  {row.refund_state === 1 ? (
+                    <Button
+                      style={{ height: 32 }}
+                      variant="outlined"
+                      onClick={e => {
+                        updateRefund(row.id, deliverNum);
+                      }}
+                    >
+                      환불 승인
+                    </Button>
+                  ) : null}
+                </StyledTableCell>
+              </StyledTableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </TableContainer>
