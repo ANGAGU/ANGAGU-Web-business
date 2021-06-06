@@ -8,8 +8,8 @@ import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
 import { DDSLoader } from 'three-stdlib';
 import { Suspense, useState, useEffect } from 'react';
 
-import model1 from '../../../assets/modernobj.obj';
-import mesh from '../../../assets/IKE050020.mtl';
+import model1 from '../../../assets/stool/IKEA-Frosta_Stool-3D.obj';
+import mesh from '../../../assets/stool/IKEA-Frosta_Stool-3D.mtl';
 
 THREE.DefaultLoadingManager.addHandler(/\.dds$/i, new DDSLoader());
 

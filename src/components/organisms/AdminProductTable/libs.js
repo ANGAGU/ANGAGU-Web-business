@@ -4,8 +4,9 @@ import api from '../../../api';
 
 const ManageRegister = {
   registerProduct: async id => {
-    const key = localStorage.getItem('token');
+   
     try {
+       api.setAxiosDefaultHeader();
       const result = await api.put(`/admin/products/${id}`);
       if (result.status === 'success') {
         // eslint-disable-next-line no-alert
@@ -19,8 +20,9 @@ const ManageRegister = {
     }
   },
   getRegisterProduct: async () => {
-    const key = localStorage.getItem('token');
+
     try {
+      api.setAxiosDefaultHeader();
       const result = await api.get(`/admin/products`);
       if (result.status === 'success') {
         // eslint-disable-next-line no-alert

@@ -1,21 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useRouteMatch, useHistory } from 'react-router-dom';
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Modal,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
-} from 'reactstrap';
+import { Container, Row, Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
-import api from '../../../api';
+import api from 'api';
+import { ConfirmModal } from '../../molecules';
 import { isEmail, isPassword, isSame } from '../../../utils';
 import './style.css';
 
@@ -33,8 +21,6 @@ type UserInfo = {
 const SignupTemplate: React.FC = () => {
   // state & variable
   const [submitValue, setSubmitValue] = useState({} as UserInfo);
-  const [isValid, setIsValid] = useState(false as boolean);
-  const [verifyNumber, setVerifyNumber] = useState('' as string);
   const [authToken, setAuthToken] = useState('' as string);
   const [viewModal, setViewModal] = useState(false as boolean);
 
@@ -51,19 +37,12 @@ const SignupTemplate: React.FC = () => {
     } else {
       console.log('fail to signup');
     }
-    alert(`submit Data!${submitValue.email}`);
   };
 
   const handleOnChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = evt.target as HTMLInputElement;
     console.log(name, value);
     setSubmitValue({ ...submitValue, [name]: value });
-  };
-
-  const handleVerifyNumber = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = evt.target as HTMLInputElement;
-    console.log(value);
-    setVerifyNumber(value);
   };
 
   const checkDuplicatedEmail = async () => {
@@ -90,20 +69,6 @@ const SignupTemplate: React.FC = () => {
     toggleModal();
   };
 
-  const checkAuthNumber = async () => {
-    const { status, data } = await api.post('/company/signup/sms/verification', {
-      phone_number: submitValue.phone_number,
-      code: verifyNumber,
-    });
-    if (status === 'success') {
-      alert('OK!');
-      setAuthToken(data.token);
-    } else {
-      console.log('fail for verify sms');
-    }
-    toggleModal();
-  };
-
   const toggleModal = () => {
     setViewModal(!viewModal);
   };
@@ -126,6 +91,7 @@ const SignupTemplate: React.FC = () => {
                   type="text"
                   name="email"
                   id="userEmail"
+                  autoComplete={'off'}
                   defaultValue={submitValue.email}
                   onChange={evt => {
                     if (!isEmail(evt.target.value)) {
@@ -137,7 +103,7 @@ const SignupTemplate: React.FC = () => {
                   }}
                   placeholder="이메일을 적어주세요."
                 />
-                <Button type="button" size="sm" onClick={checkDuplicatedEmail}>
+                <Button type="button" size="sm" onClick={checkDuplicatedEmail} style={ButtonStyle}>
                   중복확인
                 </Button>
               </div>
@@ -148,6 +114,7 @@ const SignupTemplate: React.FC = () => {
                 type="password"
                 name="password"
                 id="userPassword"
+                autoComplete={'off'}
                 defaultValue={submitValue.password}
                 onChange={evt => {
                   if (!isPassword(evt.target.value)) {
@@ -167,6 +134,7 @@ const SignupTemplate: React.FC = () => {
                 name="passwordConfirm"
                 id="userPasswordConfirm"
                 defaultValue={submitValue.passwordConfirm}
+                autoComplete={'off'}
                 onChange={evt => {
                   if (!isSame(evt.target.value, submitValue.password)) {
                     console.log('비밀번호가 다릅니다.');
@@ -186,39 +154,28 @@ const SignupTemplate: React.FC = () => {
                   type="text"
                   name="phone_number"
                   id="userPhone"
+                  autoComplete={'off'}
                   defaultValue={submitValue.phone_number}
                   onChange={handleOnChange}
                   placeholder="휴대폰 번호를 적어주세요."
                 />
-                <Button type="button" size="sm" onClick={requestAuthNumber}>
+                <Button type="button" size="sm" onClick={requestAuthNumber} style={Button1Style}>
                   인증번호전송
                 </Button>
               </div>
-              <Modal isOpen={viewModal} toggle={toggleModal} size="sm" centered>
-                <ModalHeader toggle={toggleModal}>인증번호 입력</ModalHeader>
-                <ModalBody>
-                  <Input
-                    type="text"
-                    defaultValue={verifyNumber}
-                    laceholder="인증번호를 입력해주세요."
-                    onChange={handleVerifyNumber}
-                  />
-                </ModalBody>
-                <ModalFooter>
-                  <Button color="primary" onClick={checkAuthNumber}>
-                    인증번호확인
-                  </Button>
-                  <Button color="secondary" onClick={toggleModal}>
-                    취소
-                  </Button>
-                </ModalFooter>
-              </Modal>
+              <ConfirmModal
+                viewModal={viewModal}
+                phoneNumber={submitValue.phone_number}
+                setAuthToken={setAuthToken}
+                toggleModal={toggleModal}
+              />
             </FormGroup>
             <FormGroup>
               <Label for="userCommpany">회사명</Label>
               <Input
                 type="text"
                 name="name"
+                autoComplete={'off'}
                 id="userCommpany"
                 defaultValue={submitValue.name}
                 onChange={handleOnChange}
@@ -232,6 +189,7 @@ const SignupTemplate: React.FC = () => {
                   <Input
                     type="text"
                     name="account_bank"
+                    autoComplete={'off'}
                     defaultValue={submitValue.account_bank}
                     onChange={handleOnChange}
                     placeholder="은행명"
@@ -244,6 +202,7 @@ const SignupTemplate: React.FC = () => {
                   <Input
                     type="text"
                     name="account_number"
+                    autoComplete={'off'}
                     defaultValue={submitValue.account_number}
                     onChange={handleOnChange}
                     placeholder="계좌번호를 적어주세요."
@@ -256,6 +215,7 @@ const SignupTemplate: React.FC = () => {
                   <Input
                     type="text"
                     name="account_holder"
+                    autoComplete={'off'}
                     defaultValue={submitValue.account_holder}
                     onChange={handleOnChange}
                     placeholder="계좌주명"
@@ -265,7 +225,7 @@ const SignupTemplate: React.FC = () => {
             </Row>
             <Row className="form-btn">
               <Button className="form-btn__submit" type="submit" form="signup" color="info" block>
-                안오구에 회원가입 하기
+                안가구에 회원가입 하기
               </Button>
               <Col className="form-btn">
                 <Link className="form-btn__login" to="/Login">
@@ -278,6 +238,13 @@ const SignupTemplate: React.FC = () => {
       </Row>
     </Container>
   );
+};
+
+const ButtonStyle = {
+  width: '100px',
+};
+const Button1Style = {
+  width: '150px',
 };
 
 export default SignupTemplate;

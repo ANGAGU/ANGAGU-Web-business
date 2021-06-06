@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { useRouteMatch, useHistory } from 'react-router-dom';
 import { Container, Row, Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import { Fade } from 'react-awesome-reveal';
-import './style.css';
-
 import { ImageUploader } from 'components/molecules';
+import { notify } from 'App';
+
+import './style.css';
 
 import api from '../../../api';
 
@@ -57,9 +58,8 @@ const ProductDetailTemplate: React.FC = () => {
       delivery_charge: productValue.delivery_charge,
     });
     if (status === 'success') {
-      alert('OK!');
-      alert(`submit Data!${productValue.name}`);
       history.push('/Main/Product');
+      notify('상품 등록 완료!');
     } else {
       console.log('fail for send product info');
     }
@@ -163,6 +163,7 @@ const ProductDetailTemplate: React.FC = () => {
                 <Input
                   type="text"
                   name="name"
+                  autoComplete={'off'}
                   id="productName"
                   defaultValue={productValue.name}
                   onChange={handleOnChange}
@@ -177,6 +178,7 @@ const ProductDetailTemplate: React.FC = () => {
                   type="number"
                   name="price"
                   id="productPrice"
+                  autoComplete={'off'}
                   defaultValue={productValue.price}
                   onChange={handleOnChange}
                   placeholder="판매 가격을 적어주세요."
@@ -190,6 +192,7 @@ const ProductDetailTemplate: React.FC = () => {
                   type="number"
                   name="delivery_charge"
                   id="deliveryCharge"
+                  autoComplete={'off'}
                   defaultValue={productValue.delivery_charge}
                   onChange={handleOnChange}
                   placeholder="배송비를 적어주세요."
@@ -203,6 +206,7 @@ const ProductDetailTemplate: React.FC = () => {
                   type="number"
                   name="stock"
                   id="productStock"
+                  autoComplete={'off'}
                   defaultValue={productValue.stock}
                   onChange={handleOnChange}
                   placeholder="판매 수량을 적어주세요."
@@ -230,6 +234,7 @@ const ProductDetailTemplate: React.FC = () => {
                   type="textarea"
                   name="desc"
                   id="productDesc"
+                  autoComplete={'off'}
                   defaultValue={productValue.desc}
                   onChange={handleOnChange}
                   maxLength={500}

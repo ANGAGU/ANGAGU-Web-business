@@ -1,3 +1,4 @@
+import { notify } from 'App';
 /* eslint-disable no-alert */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const getLogin = async (titleType, api, id, pw, history) => {
@@ -5,13 +6,14 @@ const getLogin = async (titleType, api, id, pw, history) => {
     console.log(id, pw);
     /* **************************** 기업 로그인 ***************************** */
     if (titleType === '로그인') {
+      // 기업 로그인
       const result = await api.post('/company/login', {
         email: id,
         password: pw,
       });
       if (result.status === 'success') {
         // eslint-disable-next-line no-alert
-        alert('기업 로그인 성공');
+        notify('기업페이지 로그인 성공!');
         localStorage.setItem('token', result.data.token);
         localStorage.setItem('isAdmin', '');
         history.push('/Main');
