@@ -1,21 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useRouteMatch, useHistory } from 'react-router-dom';
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Modal,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
-} from 'reactstrap';
+import { Container, Row, Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
-import api from '../../../api';
+import api from 'api';
+import { ConfirmModal } from '../../molecules';
 import { isEmail, isPassword, isSame } from '../../../utils';
 import './style.css';
 
@@ -33,8 +21,6 @@ type UserInfo = {
 const SignupTemplate: React.FC = () => {
   // state & variable
   const [submitValue, setSubmitValue] = useState({} as UserInfo);
-  const [isValid, setIsValid] = useState(false as boolean);
-  const [verifyNumber, setVerifyNumber] = useState('' as string);
   const [authToken, setAuthToken] = useState('' as string);
   const [viewModal, setViewModal] = useState(false as boolean);
 
@@ -59,12 +45,6 @@ const SignupTemplate: React.FC = () => {
     setSubmitValue({ ...submitValue, [name]: value });
   };
 
-  const handleVerifyNumber = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = evt.target as HTMLInputElement;
-    console.log(value);
-    setVerifyNumber(value);
-  };
-
   const checkDuplicatedEmail = async () => {
     console.log(submitValue.email);
     const { status, data } = await api.post('/company/signup/email', {
@@ -85,20 +65,6 @@ const SignupTemplate: React.FC = () => {
       alert('OK!');
     } else {
       console.log('fail for send sms');
-    }
-    toggleModal();
-  };
-
-  const checkAuthNumber = async () => {
-    const { status, data } = await api.post('/company/signup/sms/verification', {
-      phone_number: submitValue.phone_number,
-      code: verifyNumber,
-    });
-    if (status === 'success') {
-      alert('OK!');
-      setAuthToken(data.token);
-    } else {
-      console.log('fail for verify sms');
     }
     toggleModal();
   };
@@ -197,26 +163,12 @@ const SignupTemplate: React.FC = () => {
                   인증번호전송
                 </Button>
               </div>
-              <Modal isOpen={viewModal} toggle={toggleModal} size="sm" centered>
-                <ModalHeader toggle={toggleModal}>인증번호 입력</ModalHeader>
-                <ModalBody>
-                  <Input
-                    type="text"
-                    defaultValue={verifyNumber}
-                    laceholder="인증번호를 입력해주세요."
-                    onChange={handleVerifyNumber}
-                    autoComplete={'off'}
-                  />
-                </ModalBody>
-                <ModalFooter>
-                  <Button color="primary" onClick={checkAuthNumber}>
-                    인증번호확인
-                  </Button>
-                  <Button color="secondary" onClick={toggleModal}>
-                    취소
-                  </Button>
-                </ModalFooter>
-              </Modal>
+              <ConfirmModal
+                viewModal={viewModal}
+                phoneNumber={submitValue.phone_number}
+                setAuthToken={setAuthToken}
+                toggleModal={toggleModal}
+              />
             </FormGroup>
             <FormGroup>
               <Label for="userCommpany">회사명</Label>
