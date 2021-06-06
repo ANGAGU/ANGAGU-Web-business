@@ -52,33 +52,44 @@
 
 
 <p align="center">
+  
+  - 메인 페이지
   <img width="1440" alt="로그인" src="https://user-images.githubusercontent.com/49927358/120923850-a7e06200-c70b-11eb-97c2-7ed81b1eada3.png">
+  <br>
+  - 상품 리스트 
   <img width="1440" alt="상품등록" src="https://user-images.githubusercontent.com/49927358/120923837-972fec00-c70b-11eb-9766-6dda9022b927.png">
+  <br>
+  - 상품 등록
   <img width="1440" alt="상품추가" src="https://user-images.githubusercontent.com/49927358/120923847-a4e57180-c70b-11eb-893b-7052fad349d2.png">
+  <br>
+  - 3D 모델 미리보기
   <img width="1440" alt="3d모델" src="https://user-images.githubusercontent.com/49927358/120923853-aadb5280-c70b-11eb-9e24-18f6780a4b16.png">
+  <br>
+  - 주문 관리
   <img width="1440" alt="주문" src="https://user-images.githubusercontent.com/49927358/120923857-ae6ed980-c70b-11eb-9e5b-cc3c3954838b.png">
+  <br>
+  - 관리자 정산관리
   <img width="1440" alt="관리자정산" src="https://user-images.githubusercontent.com/49927358/120923873-ca727b00-c70b-11eb-8d63-b49d8898e755.png">
+  <br>
 </p>
 
 <br>
 
-## 3. Tech
+## 3. Setup
+---
+<br>
+
+
+## 4. Tech
 
 ---
 
 |name|version|
 |------|---|
-|React| version 17.0.2|
-|AR Foundation|Version 4.1.7|
-|Unity UI|Version 1.0.0|
-|ARCore XR Plugin|Version 4.1.7|
+|React| Version 17.0.2|
+|typescript|Version 4.2.3|
+|Three.js|Version 0.129.0|
+|react-testing-library|Version 8.0.1|
+|Jest|Version 27.0.4|
 
-
-
-|name|
-|------|
-|React|
-|AR Foundation|
-|Unity UI|
-|ARCore XR Plugin|
 
