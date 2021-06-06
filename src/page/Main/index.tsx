@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { faBriefcase, faPaperPlane, faHouseUser, faChartPie } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBriefcase,
+  faPaperPlane,
+  faHouseUser,
+  faChartPie,
+  faUserFriends,
+} from '@fortawesome/free-solid-svg-icons';
 import { useHistory } from 'react-router-dom';
 import { SideBar, Content, TopBar } from '../../components';
 import api from '../../api';
@@ -14,6 +20,8 @@ const companyComponent = [
   { title: '주문관리', url: '/Main/ManageOrder', icon: faChartPie },
 ];
 const adminComponent = [
+  { title: '홈', url: '/Main', icon: faHouseUser },
+  { title: 'ADMIN 회원관리', url: '/Main/ManageUser', icon: faUserFriends },
   { title: 'ADMIN 상품관리', url: '/Main/ManageProduct', icon: faHouseUser },
   { title: 'ADMIN 정산관리', url: '/Main/ManageAdjust', icon: faBriefcase },
   // { title: 'AMDIN 상품상세', url: '/Main/Product/:id', icon: faPaperPlane },
