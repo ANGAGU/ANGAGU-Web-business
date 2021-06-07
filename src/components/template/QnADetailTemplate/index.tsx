@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Container } from 'reactstrap';
 import { Fade } from 'react-awesome-reveal';
-import { CompanyAdjustForm } from 'components/organisms';
+import api from 'api';
 
 import './style.css';
 import { Card, CardActions, CardContent, makeStyles, Typography, TextField, Button } from '@material-ui/core';
 
-const QnADetailTemplate: React.FC = () => {
+type QnADetailProps = {
+  id: string;
+};
+
+const QnADetailTemplate: React.FC<RouteComponentProps<QnADetailProps>> = ({ match }) => {
   const useStyles = makeStyles({
     root: {
       minWidth: 275,
@@ -39,7 +44,37 @@ const QnADetailTemplate: React.FC = () => {
     },
   });
 
+  const [question, setQuestion] = useState([
+    {
+      id: 0,
+      answer: '',
+      answer_time: '',
+      title: '',
+      product_id: 0,
+      customer_id: 0,
+      customer_name: '',
+      product_name: '',
+      create_time: '',
+      update_time: '',
+    },
+  ]);
   const classes = useStyles();
+
+  const getQuestion = async () => {
+    api.setAxiosDefaultHeader();
+    const idx = match.params.id;
+    const result = await api.get(`/company/board/${idx}`, {});
+    if (result.status === 'success') {
+      console.log(result.data);
+      setQuestion(result.data);
+    } else {
+      console.error('주문 조회 실패');
+    }
+  };
+
+  useEffect(() => {
+    getQuestion();
+  }, []);
   return (
     <Fade>
       <Container className="answer-page">

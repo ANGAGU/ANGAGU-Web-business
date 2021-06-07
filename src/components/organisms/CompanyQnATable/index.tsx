@@ -56,51 +56,32 @@ const CompanyQnATable = () => {
   const [questions, setQuestions] = useState([
     {
       id: 0,
+      answer: '',
+      answer_time: '',
+      title: '',
       product_id: 0,
-      company_id: 0,
       customer_id: 0,
-      review_id: null,
       customer_name: '',
       product_name: '',
       create_time: '',
       update_time: '',
     },
   ]);
-  const [deliverNum, setDeliverNum] = useState('');
   const classes = useStyles();
-  const getOrder = async () => {
-    try {
-      api.setAxiosDefaultHeader();
-      const result = await api.get('/company/order', {});
-      if (result.status === 'success') {
-        console.log(result.data);
-        setQuestions(result.data);
-      } else {
-        console.error('주문 조회 실패');
-      }
-    } catch {
+
+  const getQuestions = async () => {
+    api.setAxiosDefaultHeader();
+    const result = await api.get('/company/board', {});
+    if (result.status === 'success') {
+      console.log(result.data);
+      setQuestions(result.data);
+    } else {
       console.error('주문 조회 실패');
     }
   };
-  const updateOrder = async (id: number, number: any) => {
-    try {
-      api.setAxiosDefaultHeader();
-      const result = await api.put('/company/order', {
-        deliveryNumber: number,
-        orderId: id,
-      });
-      if (result.status === 'success') {
-        console.log('주문 수정 성공');
-        getOrder();
-      } else {
-        console.error('주문 수정 실패');
-      }
-    } catch {
-      console.error('주문 수정 실패');
-    }
-  };
+
   useEffect(() => {
-    getOrder();
+    getQuestions();
   }, []);
 
   return (
@@ -121,12 +102,12 @@ const CompanyQnATable = () => {
           {questions.map((row: any) => (
             <StyledTableRow key={row.id}>
               <StyledTableCell>{row.id}</StyledTableCell>
-              <StyledTableCell>{row.customer_name}</StyledTableCell>
+              <StyledTableCell>{row.customer_id}</StyledTableCell>
               <StyledTableCell>
-                <Link to={`/Main/Product/${row.product_id}`}>{row.product_name}</Link>
+                <Link to={`/Main/Product/${row.product_id}`}>{row.product_id}</Link>
               </StyledTableCell>
-              <StyledTableCell>문의 제목이 들어갈거에여</StyledTableCell>
-              <StyledTableCell>{row.delivery_number === null ? '답변 전' : '답변 완료'}</StyledTableCell>
+              <StyledTableCell>{row.title}</StyledTableCell>
+              <StyledTableCell>{row.answer === null ? '답변 전' : '답변 완료'}</StyledTableCell>
               <StyledTableCell>{row.create_time.substr(0, 10)}</StyledTableCell>
               <StyledTableCell>
                 <Link to={`/Main/QnA/${row.id}`}>
