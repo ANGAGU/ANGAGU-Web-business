@@ -9,4 +9,5 @@ export { default as CompanyAdjustTemplate } from './CompanyAdjustTemplate';
 export { default as AdminAdjustTemplate } from './AdminAdjustTemplate';
 export { default as ProductDetailTemplate } from './ProductDetailTemplate';
 export { default as AccountFinderTemplete } from './AccountFinderTemplete';
+export { default as CompanyRefundTemplate } from './CompanyRefundTemplate';
 export { default as MainTemplate } from './MainTemplate';
