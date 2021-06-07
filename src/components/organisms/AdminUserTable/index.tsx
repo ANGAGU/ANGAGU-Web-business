@@ -12,9 +12,11 @@ import {
   Paper,
   Button,
 } from '@material-ui/core';
-import { Dummy } from '../../../utils';
+import { Dummy } from 'utils';
 import './style.css';
-import api from '../../../api';
+import { notify } from 'App';
+import api from 'api';
+import ManageRegister from './libs';
 
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
@@ -33,24 +35,26 @@ const StyledTableRow = withStyles((theme: Theme) =>
     root: {
       '&:nth-of-type(odd)': {
         backgroundColor: theme.palette.action.hover,
-        height: '64px',
-      },
-      '&:nth-of-type(even)': {
-        height: '64px',
       },
     },
   }),
 )(TableRow);
 
-const useStyles = makeStyles({
-  table: {
-    minWidth: 700,
-  },
-  img: {
-    width: '105px',
-  },
-});
-
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    table: {
+      minWidth: 700,
+    },
+    img: {
+      width: '105px',
+    },
+    root: {
+      '& > *': {
+        margin: theme.spacing(1),
+      },
+    },
+  }),
+);
 const AdminUserTable = () => {
   const [orders, setOrders] = useState([
     {
@@ -73,7 +77,13 @@ const AdminUserTable = () => {
   ]);
   const [deliverNum, setDeliverNum] = useState('');
   const classes = useStyles();
-  const getOrder = async () => {
+  const [registers, setRegisters]: any = useState([]);
+
+  useEffect(() => {
+    setRegisters(Dummy.makeRegister(10));
+  }, []);
+
+  const getUsers = async () => {
     try {
       api.setAxiosDefaultHeader();
       const result = await api.get('/company/order', {});
@@ -87,87 +97,54 @@ const AdminUserTable = () => {
       console.error('주문 조회 실패');
     }
   };
-  const updateOrder = async (id: number, number: any) => {
-    try {
-      api.setAxiosDefaultHeader();
-      const result = await api.put('/company/order', {
-        deliveryNumber: number,
-        orderId: id,
-      });
-      if (result.status === 'success') {
-        console.log('주문 수정 성공');
-        getOrder();
-      } else {
-        console.error('주문 수정 실패');
-      }
-    } catch {
-      console.error('주문 수정 실패');
+  const approveUser = async (id: number, number: any) => {
+    api.setAxiosDefaultHeader();
+    const result = await api.put('/company/order', {
+      deliveryNumber: number,
+      orderId: id,
+    });
+    if (result.status === 'success') {
+      console.log('기업회원 승인 성공');
+      getUsers();
+    } else {
+      console.error('기업회원 승인 실패');
     }
   };
-  useEffect(() => {
-    getOrder();
-  }, []);
 
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>주문 ID</StyledTableCell>
-            <StyledTableCell>주문고객</StyledTableCell>
-            <StyledTableCell>상품명</StyledTableCell>
-            <StyledTableCell>개수&nbsp;(개)</StyledTableCell>
-            <StyledTableCell>가격&nbsp;(원)</StyledTableCell>
-            <StyledTableCell>배송상태</StyledTableCell>
-            <StyledTableCell>배송장번호</StyledTableCell>
-            <StyledTableCell>결제 시각</StyledTableCell>
+            <StyledTableCell>회원 ID</StyledTableCell>
+            <StyledTableCell>회원명</StyledTableCell>
+            <StyledTableCell>사업자등록번호</StyledTableCell>
+            <StyledTableCell>승인상태</StyledTableCell>
+            <StyledTableCell>요청시각</StyledTableCell>
+            <StyledTableCell> </StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {orders.map((row: any) => (
-            <StyledTableRow key={row.id}>
+          {registers.map((row: any, idx: any) => (
+            <StyledTableRow key={idx}>
               <StyledTableCell>{row.id}</StyledTableCell>
-              <StyledTableCell>{row.customer_name}</StyledTableCell>
-              <StyledTableCell>
-                <a href={`http://localhost:3000/Main/Product/${row.product_id}`}>{row.product_name}</a>
-              </StyledTableCell>
+              <StyledTableCell>{row.company}</StyledTableCell>
               <StyledTableCell>{row.count}</StyledTableCell>
-              <StyledTableCell>{row.price}</StyledTableCell>
-              <StyledTableCell>{row.delivery_number === null ? '배송 전' : '배송 완료'}</StyledTableCell>
+              <StyledTableCell>완료</StyledTableCell>
+
+              <StyledTableCell>{row.confirmTime}</StyledTableCell>
               <StyledTableCell>
-                {row.delivery_number ? (
-                  <a
-                    href={`https://www.ilogen.com/web/personal/trace/${row.delivery_number}123451`}
-                    target="_blank"
-                    rel="noreferrer"
+                <div className={classes.root}>
+                  <Button
+                    variant="outlined"
+                    onClick={e => {
+                      ManageRegister.registerProduct(row.id);
+                    }}
                   >
-                    {row.delivery_number}
-                  </a>
-                ) : (
-                  <>
-                    <TextField
-                      style={{ height: 32 }}
-                      inputProps={{ style: { height: 32, padding: '0 14px' } }}
-                      InputLabelProps={{ style: { height: 32 } }}
-                      id="outlined-basic"
-                      variant="outlined"
-                      onChange={(event: any) => {
-                        setDeliverNum(event.target.value);
-                      }}
-                    />
-                    <Button
-                      style={{ height: 32 }}
-                      variant="outlined"
-                      onClick={e => {
-                        updateOrder(row.id, deliverNum);
-                      }}
-                    >
-                      등록
-                    </Button>
-                  </>
-                )}
+                    승인
+                  </Button>
+                </div>
               </StyledTableCell>
-              <StyledTableCell>{row.create_time.substr(0, 10)}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
@@ -175,4 +152,5 @@ const AdminUserTable = () => {
     </TableContainer>
   );
 };
+
 export default AdminUserTable;
