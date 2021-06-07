@@ -130,7 +130,7 @@ const CompanyProductTemplate: React.FC = () => {
                   </Link>
                 </StyledTableCell>
                 <StyledTableCell>
-                  <View3DModal pid={product.id} purl={product['3d_model_url']} />
+                  <View3DModal productId={product.id} purl={product['3d_model_url']} />
                 </StyledTableCell>
               </StyledTableRow>
             ))}

@@ -12,7 +12,7 @@ import ThreeRender from '../../atoms/ThreeRender';
 import api from '../../../api';
 import './style.css';
 
-const View3DModal = ({ pid, purl }) => {
+const View3DModal = ({ productId, purl }) => {
   // set states
   const [modal, setModal] = useState(false);
   const [product3D, setProduct3D] = useState(null);
@@ -21,7 +21,7 @@ const View3DModal = ({ pid, purl }) => {
 
   const toggle = () => setModal(!modal);
   const inputRef = useRef(null);
-  console.log('view 3d modal', pid);
+  console.log('view 3d modal', productId);
   const handleclickInput = () => {
     if (inputRef.current !== null) {
       inputRef.current.setAttribute('multiple', '');
@@ -33,9 +33,14 @@ const View3DModal = ({ pid, purl }) => {
     const formData = new FormData();
     formData.append('file', evt.target.files[0]);
     api.setAxiosDefaultHeader();
-    const result = await api.upload(`/company/products/${pid}/ar`, {
-      product_ar: evt.target.files[0],
-    });
+    alert(evt.target.files[0].name);
+    const result = await api.upload(
+      `/bundle/${productId}`,
+      {
+        mainFile: evt.target.files[0],
+      },
+      true,
+    );
     if (result.status === 'success') {
       setProduct3D(`http://d3u3zwu9bmcdht.cloudfront.net/${result.data.url}`);
       setModelName(evt.target.files[0].name);
