@@ -10,3 +10,4 @@ export { default as AdminAdjustTemplate } from './AdminAdjustTemplate';
 export { default as ProductDetailTemplate } from './ProductDetailTemplate';
 export { default as AccountFinderTemplete } from './AccountFinderTemplete';
 export { default as MainTemplate } from './MainTemplate';
+export { default as AdminUserTemplate } from './AdminUserTemplate';
