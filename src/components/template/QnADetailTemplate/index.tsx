@@ -1,17 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { withRouter, RouteComponentProps, useLocation, Link } from 'react-router-dom';
 import { Container } from 'reactstrap';
 import { Fade } from 'react-awesome-reveal';
 import api from 'api';
+import { notify } from 'App';
 
 import './style.css';
 import { Card, CardActions, CardContent, makeStyles, Typography, TextField, Button } from '@material-ui/core';
+import { faHandHolding } from '@fortawesome/free-solid-svg-icons';
 
+type Question = {
+  id: number;
+  answer: string | null;
+  answer_time: string;
+  title: string;
+  content: string;
+  product_id: number;
+  product_name: string;
+  customer_id: number;
+  customer_name: string;
+  create_time: string;
+  update_time: string;
+};
 type QnADetailProps = {
-  id: string;
+  que: Question;
 };
 
-const QnADetailTemplate: React.FC<RouteComponentProps<QnADetailProps>> = ({ match }) => {
+const QnADetailTemplate: React.FC<RouteComponentProps> = ({ match }) => {
   const useStyles = makeStyles({
     root: {
       minWidth: 275,
@@ -44,36 +59,41 @@ const QnADetailTemplate: React.FC<RouteComponentProps<QnADetailProps>> = ({ matc
     },
   });
 
-  const [question, setQuestion] = useState([
-    {
-      id: 0,
-      answer: '',
-      answer_time: '',
-      title: '',
-      product_id: 0,
-      customer_id: 0,
-      customer_name: '',
-      product_name: '',
-      create_time: '',
-      update_time: '',
-    },
-  ]);
+  const questionProps = useLocation();
+  const [question, setQuestion] = useState({
+    id: 0,
+    answer: null,
+    answer_time: '',
+    title: '',
+    content: '',
+    product_id: 0,
+    customer_id: 0,
+    customer_name: '',
+    product_name: '',
+    create_time: '',
+    update_time: '',
+  } as Question);
+  const [answer, setAnswer] = useState('' as string);
   const classes = useStyles();
 
-  const getQuestion = async () => {
+  const updateAnswer = async () => {
     api.setAxiosDefaultHeader();
-    const idx = match.params.id;
-    const result = await api.get(`/company/board/${idx}`, {});
+    const result = await api.post(`/company/board/${question.id}`, { answer });
     if (result.status === 'success') {
-      console.log(result.data);
-      setQuestion(result.data);
+      notify('답변 등록이 완료되었습니다!');
     } else {
-      console.error('주문 조회 실패');
+      console.error('답변 등록 실패');
     }
   };
 
+  const handleOnChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = evt.target as HTMLInputElement;
+    setAnswer(value);
+  };
+
   useEffect(() => {
-    getQuestion();
+    const questionTemp = questionProps.state as QnADetailProps;
+    setQuestion(questionTemp.que);
   }, []);
   return (
     <Fade>
@@ -83,21 +103,27 @@ const QnADetailTemplate: React.FC<RouteComponentProps<QnADetailProps>> = ({ matc
         <Card className={classes.root}>
           <CardContent>
             {/* <img style={{ width: '50px', margin: '10px 0' }} alt="" src={userImg} /> */}
-            <Typography className={classes.product} color="textSecondary" gutterBottom>
-              상품 이름
-            </Typography>
+            <Link
+              to={{
+                pathname: `/Main/Product/${question.product_id}`,
+              }}
+            >
+              <Typography className={classes.product} color="textSecondary" gutterBottom>
+                {question.product_name}
+              </Typography>
+            </Link>
             <Typography variant="h6" component="h6">
               {/* <span style={{ marginLeft: '0px' }} className="company-name content-highlight">
                 사용자
               </span> */}
-              상품 문의 제목
+              {question.title}
             </Typography>
             <Typography className={classes.info} color="textSecondary">
-              사용자 정보 | 등록 날짜
+              {question.customer_name} | {question.create_time.substr(0, 10)}
             </Typography>
             <hr />
             <Typography className={classes.content} color="textSecondary">
-              상품 문의 내용입니다아아아아.
+              {question.content}
             </Typography>
           </CardContent>
         </Card>
@@ -105,16 +131,23 @@ const QnADetailTemplate: React.FC<RouteComponentProps<QnADetailProps>> = ({ matc
           <Typography style={{ float: 'left' }} variant="h6" component="h6">
             답변 남기기
           </Typography>
-          <Button style={{ float: 'right' }} variant="outlined">
-            등록하기
+
+          <Button style={{ float: 'right', marginLeft: '8px' }} variant="outlined" onClick={updateAnswer}>
+            {question.answer === null ? '등록하기' : '수정하기'}
           </Button>
+          {question.answer !== null && (
+            <Button style={{ float: 'right' }} variant="outlined" onClick={updateAnswer}>
+              삭제하기
+            </Button>
+          )}
           <TextField
             className={classes.answer}
             id="outlined-multiline-static"
             label="문의 답변"
             multiline
             rows={4}
-            defaultValue="문의에 대한 답변을 달아주세요:)"
+            defaultValue={question.answer}
+            onChange={handleOnChange}
             variant="outlined"
           />
         </div>

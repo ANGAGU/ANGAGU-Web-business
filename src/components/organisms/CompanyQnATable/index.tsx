@@ -59,6 +59,7 @@ const CompanyQnATable = () => {
       answer: '',
       answer_time: '',
       title: '',
+      content: '',
       product_id: 0,
       customer_id: 0,
       customer_name: '',
@@ -102,15 +103,21 @@ const CompanyQnATable = () => {
           {questions.map((row: any) => (
             <StyledTableRow key={row.id}>
               <StyledTableCell>{row.id}</StyledTableCell>
-              <StyledTableCell>{row.customer_id}</StyledTableCell>
+              <StyledTableCell>{row.customer_name}</StyledTableCell>
               <StyledTableCell>
-                <Link to={`/Main/Product/${row.product_id}`}>{row.product_id}</Link>
+                <Link
+                  to={{
+                    pathname: `/Main/Product/${row.product_id}`,
+                  }}
+                >
+                  {row.product_name}
+                </Link>
               </StyledTableCell>
               <StyledTableCell>{row.title}</StyledTableCell>
               <StyledTableCell>{row.answer === null ? '답변 전' : '답변 완료'}</StyledTableCell>
               <StyledTableCell>{row.create_time.substr(0, 10)}</StyledTableCell>
               <StyledTableCell>
-                <Link to={`/Main/QnA/${row.id}`}>
+                <Link to={{ pathname: `/Main/QnA/${row.id}`, state: { que: row } }}>
                   <Button style={{ height: 32 }} variant="outlined">
                     답변하기
                   </Button>
