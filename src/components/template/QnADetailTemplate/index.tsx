@@ -73,14 +73,18 @@ const QnADetailTemplate: React.FC<RouteComponentProps> = ({ match }) => {
     create_time: '',
     update_time: '',
   } as Question);
-  const [answer, setAnswer] = useState('' as string);
+  const [answer, setAnswer] = useState('' as string | null);
   const classes = useStyles();
 
-  const updateAnswer = async () => {
+  const updateAnswer = async (isDelete = false) => {
     api.setAxiosDefaultHeader();
-    const result = await api.post(`/company/board/${question.id}`, { answer });
+    const newAnswer = isDelete ? '' : answer;
+    setAnswer(newAnswer);
+    const result = await api.post(`/company/board/${question.id}`, { answer: newAnswer });
     if (result.status === 'success') {
-      notify('답변 등록이 완료되었습니다!');
+      if (isDelete) notify('답변이 삭제되었습니다!');
+      else notify('답변 등록이 완료되었습니다!');
+      setQuestion({ ...question, answer: newAnswer });
     } else {
       console.error('답변 등록 실패');
     }
@@ -95,6 +99,9 @@ const QnADetailTemplate: React.FC<RouteComponentProps> = ({ match }) => {
     const questionTemp = questionProps.state as QnADetailProps;
     setQuestion(questionTemp.que);
   }, []);
+  useEffect(() => {
+    setAnswer(question.answer);
+  }, [question]);
   return (
     <Fade>
       <Container className="answer-page">
@@ -102,7 +109,6 @@ const QnADetailTemplate: React.FC<RouteComponentProps> = ({ match }) => {
         <hr />
         <Card className={classes.root}>
           <CardContent>
-            {/* <img style={{ width: '50px', margin: '10px 0' }} alt="" src={userImg} /> */}
             <Link
               to={{
                 pathname: `/Main/Product/${question.product_id}`,
@@ -113,13 +119,11 @@ const QnADetailTemplate: React.FC<RouteComponentProps> = ({ match }) => {
               </Typography>
             </Link>
             <Typography variant="h6" component="h6">
-              {/* <span style={{ marginLeft: '0px' }} className="company-name content-highlight">
-                사용자
-              </span> */}
               {question.title}
             </Typography>
             <Typography className={classes.info} color="textSecondary">
-              {question.customer_name} | {question.create_time.substr(0, 10)}
+              {question.customer_name} |{' '}
+              {`${question.create_time.substr(0, 10)}-${question.create_time.substr(11, 5)}`}
             </Typography>
             <hr />
             <Typography className={classes.content} color="textSecondary">
@@ -132,11 +136,23 @@ const QnADetailTemplate: React.FC<RouteComponentProps> = ({ match }) => {
             답변 남기기
           </Typography>
 
-          <Button style={{ float: 'right', marginLeft: '8px' }} variant="outlined" onClick={updateAnswer}>
-            {question.answer === null ? '등록하기' : '수정하기'}
+          <Button
+            style={{ float: 'right', marginLeft: '8px' }}
+            variant="outlined"
+            onClick={() => {
+              updateAnswer();
+            }}
+          >
+            {question.answer === null || question.answer === '' ? '등록하기' : '수정하기'}
           </Button>
-          {question.answer !== null && (
-            <Button style={{ float: 'right' }} variant="outlined" onClick={updateAnswer}>
+          {question.answer !== null && question.answer !== '' && (
+            <Button
+              style={{ float: 'right' }}
+              variant="outlined"
+              onClick={() => {
+                updateAnswer(true);
+              }}
+            >
               삭제하기
             </Button>
           )}
@@ -146,9 +162,10 @@ const QnADetailTemplate: React.FC<RouteComponentProps> = ({ match }) => {
             label="문의 답변"
             multiline
             rows={4}
-            defaultValue={question.answer}
+            defaultValue={answer}
             onChange={handleOnChange}
             variant="outlined"
+            helperText={question.answer_time}
           />
         </div>
       </Container>

@@ -114,7 +114,9 @@ const CompanyQnATable = () => {
                 </Link>
               </StyledTableCell>
               <StyledTableCell>{row.title}</StyledTableCell>
-              <StyledTableCell>{row.answer === null ? '답변 전' : '답변 완료'}</StyledTableCell>
+              <StyledTableCell>
+                {row.answer === null || row.answer === '' ? '답변 전' : '답변 완료'}
+              </StyledTableCell>
               <StyledTableCell>{row.create_time.substr(0, 10)}</StyledTableCell>
               <StyledTableCell>
                 <Link to={{ pathname: `/Main/QnA/${row.id}`, state: { que: row } }}>
