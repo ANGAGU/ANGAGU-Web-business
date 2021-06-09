@@ -3,6 +3,7 @@ import { withRouter, RouteComponentProps, useLocation, Link } from 'react-router
 import { Container } from 'reactstrap';
 import { Fade } from 'react-awesome-reveal';
 import api from 'api';
+import { date2StringWithTime } from 'utils/shared';
 import { notify } from 'App';
 
 import './style.css';
@@ -122,8 +123,7 @@ const QnADetailTemplate: React.FC<RouteComponentProps> = ({ match }) => {
               {question.title}
             </Typography>
             <Typography className={classes.info} color="textSecondary">
-              {question.customer_name} |{' '}
-              {`${question.create_time.substr(0, 10)}-${question.create_time.substr(11, 5)}`}
+              {question.customer_name} | {date2StringWithTime(question.create_time)}
             </Typography>
             <hr />
             <Typography className={classes.content} color="textSecondary">
@@ -165,7 +165,7 @@ const QnADetailTemplate: React.FC<RouteComponentProps> = ({ match }) => {
             defaultValue={answer}
             onChange={handleOnChange}
             variant="outlined"
-            helperText={question.answer_time}
+            helperText={date2StringWithTime(question.answer_time)}
           />
         </div>
       </Container>
