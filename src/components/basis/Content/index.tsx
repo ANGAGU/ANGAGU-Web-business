@@ -15,6 +15,7 @@ import {
   ProductDetailTemplate,
   AdminProductTemplate,
   AdminAdjustTemplate,
+  CompanyRefundTemplate,
 } from '../../template';
 
 type ContentProps = {
@@ -40,6 +41,7 @@ const Content = ({ sidebarIsOpen, toggleSidebar }: ContentProps) => {
           <Route exact path={`${path}/QnA/:id`} component={QnADetailTemplate} />
           <Route exact path={`${path}/ManageProduct`} component={AdminProductTemplate} />
           <Route exact path={`${path}/ManageAdjust`} component={AdminAdjustTemplate} />
+          <Route exact path={`${path}/ManageRefund`} component={CompanyRefundTemplate} />
           <Route exact path={`${path}`} component={MainTemplate} />
         </Switch>
       </div>

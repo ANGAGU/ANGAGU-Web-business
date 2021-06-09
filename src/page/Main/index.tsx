@@ -5,6 +5,7 @@ import {
   faHouseUser,
   faChartPie,
   faQuestion,
+  faClone,
 } from '@fortawesome/free-solid-svg-icons';
 import { useHistory } from 'react-router-dom';
 import { SideBar, Content, TopBar } from '../../components';
@@ -19,6 +20,7 @@ const companyComponent = [
   { title: '상품상세', url: '/Main/Product/:id', icon: faPaperPlane },
   { title: '정산관리', url: '/Main/Adjust', icon: faBriefcase },
   { title: '주문관리', url: '/Main/ManageOrder', icon: faChartPie },
+  { title: '환불관리', url: '/Main/ManageRefund', icon: faClone },
 ];
 const adminComponent = [
   { title: 'ADMIN 상품관리', url: '/Main/ManageProduct', icon: faHouseUser },
