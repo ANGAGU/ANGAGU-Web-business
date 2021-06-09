@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { withRouter, RouteComponentProps, useLocation, Link } from 'react-router-dom';
+import { useHistory, RouteComponentProps, useLocation, Link } from 'react-router-dom';
 import { Container } from 'reactstrap';
 import { Fade } from 'react-awesome-reveal';
 import api from 'api';
@@ -76,6 +76,7 @@ const QnADetailTemplate: React.FC<RouteComponentProps> = ({ match }) => {
   } as Question);
   const [answer, setAnswer] = useState('' as string | null);
   const classes = useStyles();
+  const history = useHistory();
 
   const updateAnswer = async (isDelete = false) => {
     api.setAxiosDefaultHeader();
@@ -106,7 +107,18 @@ const QnADetailTemplate: React.FC<RouteComponentProps> = ({ match }) => {
   return (
     <Fade>
       <Container className="answer-page">
-        <h3>상품문의 상세</h3>
+        <div className="clearfix">
+          <h3 style={{ float: 'left' }}>상품문의 상세</h3>
+          <Button
+            style={{ float: 'right' }}
+            variant="outlined"
+            onClick={() => {
+              history.push('/Main/QnA');
+            }}
+          >
+            목록보기
+          </Button>
+        </div>
         <hr />
         <Card className={classes.root}>
           <CardContent>
@@ -139,6 +151,7 @@ const QnADetailTemplate: React.FC<RouteComponentProps> = ({ match }) => {
           <Button
             style={{ float: 'right', marginLeft: '8px' }}
             variant="outlined"
+            color="primary"
             onClick={() => {
               updateAnswer();
             }}
@@ -149,6 +162,7 @@ const QnADetailTemplate: React.FC<RouteComponentProps> = ({ match }) => {
             <Button
               style={{ float: 'right' }}
               variant="outlined"
+              color="secondary"
               onClick={() => {
                 updateAnswer(true);
               }}

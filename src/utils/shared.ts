@@ -28,7 +28,9 @@ export const date2String = (value: Date) => {
   return result;
 };
 export const date2StringWithTime = (value: string) => {
-  return `${value.substr(0, 10)}-${value.substr(11, 5)}`;
+  let result = '';
+  if (value !== null) result = `${value.substr(0, 10)}-${value.substr(11, 5)}`;
+  return result;
 };
 
 const companyFee = 3;
