@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable array-callback-return */
 /* eslint-disable spaced-comment */
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Col, Container, Row } from 'reactstrap';
 import { OBJModel } from 'react-3d-viewer';
 import { ObjModelLoader } from 'components/atoms';
@@ -12,16 +12,17 @@ import ThreeRender from '../../atoms/ThreeRender';
 import api from '../../../api';
 import './style.css';
 
-const View3DModal = ({ productId, purl }) => {
+const View3DModal = ({ productId, purl, status }) => {
   // set states
   const [modal, setModal] = useState(false);
   const [product3D, setProduct3D] = useState(null);
   const [productEl, setProductEl] = useState(null);
   const [modelName, setModelName] = useState('');
+  const [modelStatus, setModelStatus] = useState(status);
 
   const toggle = () => setModal(!modal);
   const inputRef = useRef(null);
-  console.log('view 3d modal', productId);
+
   const handleclickInput = () => {
     if (inputRef.current !== null) {
       inputRef.current.setAttribute('multiple', '');
@@ -30,14 +31,15 @@ const View3DModal = ({ productId, purl }) => {
   };
 
   const handleOnChange = async evt => {
+    const isModTemp = modelStatus === 0 || modelStatus === null ? 0 : 1;
     const formData = new FormData();
     formData.append('file', evt.target.files[0]);
     api.setAxiosDefaultHeader();
-    alert(evt.target.files[0].name);
     const result = await api.upload(
       `/bundle/${productId}`,
       {
         mainFile: evt.target.files[0],
+        isMod: isModTemp,
       },
       true,
     );
@@ -62,7 +64,7 @@ const View3DModal = ({ productId, purl }) => {
   return (
     <div>
       <Button outline color="secondary" onClick={toggle}>
-        {purl !== null ? '3D 모델 수정' : '3D 모델 등록'}
+        {modelStatus === 0 || modelStatus === null ? '3D 모델 등록' : '3D 모델 수정'}
       </Button>
       <Modal isOpen={modal} toggle={toggle} className={'product-3d-model__modal'} style={modalStyle}>
         <ModalHeader toggle={toggle}>{'3D모델 등록하기'}</ModalHeader>
@@ -89,7 +91,7 @@ const View3DModal = ({ productId, purl }) => {
           </Button>
           <Button color="primary" onClick={confirmModel}>
             확인
-          </Button>{' '}
+          </Button>
           <Button color="secondary" onClick={rejectModel}>
             취소
           </Button>

@@ -12,7 +12,8 @@ import {
   Table,
 } from '@material-ui/core';
 import { Fade } from 'react-awesome-reveal';
-import api from '../../../api';
+import { date2StringWithTime } from 'utils';
+import api from 'api';
 import { View3DModal } from '../../molecules';
 
 interface Product {
@@ -25,6 +26,7 @@ interface Product {
   thumb_url: string;
   create_time: string;
   '3d_model_url': string;
+  '3d_model_status': number;
 }
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
@@ -70,7 +72,7 @@ const CompanyProductTemplate: React.FC = () => {
     '이미지',
     '상품명',
     '판매가',
-    '별점',
+    '3d모델상태',
     '재고',
     '등록일자',
     '',
@@ -121,16 +123,22 @@ const CompanyProductTemplate: React.FC = () => {
                 </StyledTableCell>
                 <StyledTableCell>{product.name}</StyledTableCell>
                 <StyledTableCell>{product.price}</StyledTableCell>
-                <StyledTableCell>{5.0}</StyledTableCell>
+                <StyledTableCell>{product['3d_model_status']}</StyledTableCell>
                 <StyledTableCell>{product.stock}</StyledTableCell>
-                <StyledTableCell className="a-right a-right ">{product.create_time}</StyledTableCell>
+                <StyledTableCell className="a-right a-right ">
+                  {date2StringWithTime(product.create_time)}
+                </StyledTableCell>
                 <StyledTableCell className="last">
                   <Link to={`/Main/Product/${product.id}`}>
                     <Button color="secondary">수정하기</Button>
                   </Link>
                 </StyledTableCell>
                 <StyledTableCell>
-                  <View3DModal productId={product.id} purl={product['3d_model_url']} />
+                  <View3DModal
+                    productId={product.id}
+                    purl={product['3d_model_url']}
+                    status={product['3d_model_status']}
+                  />
                 </StyledTableCell>
               </StyledTableRow>
             ))}
