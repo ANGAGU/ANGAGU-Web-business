@@ -3,14 +3,14 @@ const TopBarLibs = {
     console.log(history);
     if (localStorage.getItem('isAdmin')) {
       // 관리자이면
+      history.push(`/`);
       localStorage.removeItem('isAdmin');
       localStorage.removeItem('token');
-      history.push(`/`);
     } else {
       // 관리자 아니면
+      history.push(`/`);
       localStorage.removeItem('isAdmin');
       localStorage.removeItem('token');
-      history.push(`/`);
     }
     if (history) history.push('/');
   },

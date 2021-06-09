@@ -46,21 +46,17 @@ const MainTemplate: React.FC = () => {
   const [totalFee, setTotalFee] = useState(0);
   const [lineGraph, setLineGraph] = useState(Dummy.chartData);
   const [doughnutGraph, setDoughnutGraph] = useState(Dummy.doughnutChartData);
-  const [isAdmin, setIsAdmin] = useState('' as string | null);
+  // const [isAdmin, setIsAdmin] = useState('' as string);
   const [countOrders, setCountOrders] = useState(0);
 
   useEffect(() => {
-    setIsAdmin(localStorage.getItem('isAdmin'));
-  }, []);
-
-  useEffect(() => {
-    if (isAdmin !== 'true') {
+    if (localStorage.getItem('isAdmin') === '') {
       getAdjust();
       getAdjustProducts();
       getCompanyOrder();
       getCompanyInfo();
     }
-  }, [isAdmin]);
+  }, []);
 
   useEffect(() => {
     calculateProfit();
