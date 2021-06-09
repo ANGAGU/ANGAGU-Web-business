@@ -1,27 +1,29 @@
 {
   "files": {
-    "main.css": "/ANGAGU_WEB_business/static/css/main.2b709460.chunk.css",
-    "main.js": "/ANGAGU_WEB_business/static/js/main.6dfca23a.chunk.js",
-    "main.js.map": "/ANGAGU_WEB_business/static/js/main.6dfca23a.chunk.js.map",
-    "runtime-main.js": "/ANGAGU_WEB_business/static/js/runtime-main.57c5669a.js",
-    "runtime-main.js.map": "/ANGAGU_WEB_business/static/js/runtime-main.57c5669a.js.map",
+    "main.css": "/ANGAGU_WEB_business/static/css/main.60e3e5b1.chunk.css",
+    "main.js": "/ANGAGU_WEB_business/static/js/main.041e6019.chunk.js",
+    "main.js.map": "/ANGAGU_WEB_business/static/js/main.041e6019.chunk.js.map",
+    "runtime-main.js": "/ANGAGU_WEB_business/static/js/runtime-main.116cece2.js",
+    "runtime-main.js.map": "/ANGAGU_WEB_business/static/js/runtime-main.116cece2.js.map",
     "static/css/2.4c97ca4f.chunk.css": "/ANGAGU_WEB_business/static/css/2.4c97ca4f.chunk.css",
-    "static/js/2.4c1fbdef.chunk.js": "/ANGAGU_WEB_business/static/js/2.4c1fbdef.chunk.js",
-    "static/js/2.4c1fbdef.chunk.js.map": "/ANGAGU_WEB_business/static/js/2.4c1fbdef.chunk.js.map",
-    "static/js/3.87b5792e.chunk.js": "/ANGAGU_WEB_business/static/js/3.87b5792e.chunk.js",
-    "static/js/3.87b5792e.chunk.js.map": "/ANGAGU_WEB_business/static/js/3.87b5792e.chunk.js.map",
+    "static/js/2.4a04e188.chunk.js": "/ANGAGU_WEB_business/static/js/2.4a04e188.chunk.js",
+    "static/js/2.4a04e188.chunk.js.map": "/ANGAGU_WEB_business/static/js/2.4a04e188.chunk.js.map",
+    "static/js/3.3edebcc7.chunk.js": "/ANGAGU_WEB_business/static/js/3.3edebcc7.chunk.js",
+    "static/js/3.3edebcc7.chunk.js.map": "/ANGAGU_WEB_business/static/js/3.3edebcc7.chunk.js.map",
     "index.html": "/ANGAGU_WEB_business/index.html",
     "static/css/2.4c97ca4f.chunk.css.map": "/ANGAGU_WEB_business/static/css/2.4c97ca4f.chunk.css.map",
-    "static/css/main.2b709460.chunk.css.map": "/ANGAGU_WEB_business/static/css/main.2b709460.chunk.css.map",
-    "static/js/2.4c1fbdef.chunk.js.LICENSE.txt": "/ANGAGU_WEB_business/static/js/2.4c1fbdef.chunk.js.LICENSE.txt",
-    "static/media/product_test.947ae717.jpeg": "/ANGAGU_WEB_business/static/media/product_test.947ae717.jpeg",
-    "static/media/slack.4c64bd41.png": "/ANGAGU_WEB_business/static/media/slack.4c64bd41.png"
+    "static/css/main.60e3e5b1.chunk.css.map": "/ANGAGU_WEB_business/static/css/main.60e3e5b1.chunk.css.map",
+    "static/js/2.4a04e188.chunk.js.LICENSE.txt": "/ANGAGU_WEB_business/static/js/2.4a04e188.chunk.js.LICENSE.txt",
+    "static/media/IKEA-Frosta_Stool-3D.a3ed88a7.mtl": "/ANGAGU_WEB_business/static/media/IKEA-Frosta_Stool-3D.a3ed88a7.mtl",
+    "static/media/IKEA-Frosta_Stool-3D.a6fe8b0e.obj": "/ANGAGU_WEB_business/static/media/IKEA-Frosta_Stool-3D.a6fe8b0e.obj",
+    "static/media/IKEA-MINUT_Lampadaire-3D.914bb898.mtl": "/ANGAGU_WEB_business/static/media/IKEA-MINUT_Lampadaire-3D.914bb898.mtl",
+    "static/media/user.1c52d496.png": "/ANGAGU_WEB_business/static/media/user.1c52d496.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.57c5669a.js",
+    "static/js/runtime-main.116cece2.js",
     "static/css/2.4c97ca4f.chunk.css",
-    "static/js/2.4c1fbdef.chunk.js",
-    "static/css/main.2b709460.chunk.css",
-    "static/js/main.6dfca23a.chunk.js"
+    "static/js/2.4a04e188.chunk.js",
+    "static/css/main.60e3e5b1.chunk.css",
+    "static/js/main.041e6019.chunk.js"
   ]
 }
