@@ -9,7 +9,7 @@ import './style.css';
 
 const useStyles = makeStyles(theme => ({
   frame: {
-    height: '60%',
+    minHeight: '500px',
     width: '50%',
     position: 'absolute',
     top: '20%',
