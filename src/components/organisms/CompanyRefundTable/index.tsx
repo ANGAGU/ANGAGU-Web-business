@@ -15,6 +15,7 @@ import {
 import { Dummy } from '../../../utils';
 import './style.css';
 import api from '../../../api';
+import { Link } from 'react-router-dom';
 
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
@@ -134,7 +135,13 @@ const CompanyRefundTable = () => {
                 <StyledTableCell>{row.id}</StyledTableCell>
                 <StyledTableCell>{row.customer_name}</StyledTableCell>
                 <StyledTableCell>
-                  <a href={`http://localhost:3000/Main/Product/${row.product_id}`}>{row.product_name}</a>
+                  <Link
+                    to={{
+                      pathname: `/Main/Product/${row.product_id}`,
+                    }}
+                  >
+                    {row.product_name}
+                  </Link>
                 </StyledTableCell>
                 <StyledTableCell>{row.count}</StyledTableCell>
                 <StyledTableCell>{row.price}</StyledTableCell>
