@@ -16,6 +16,9 @@ type ProductInfo = {
   group: string;
   desc: string;
   delivery_charge: number;
+  height: number;
+  width: number;
+  depth: number;
 };
 
 type PreviewURL = {
@@ -212,6 +215,50 @@ const ProductDetailTemplate: React.FC = () => {
                   placeholder="판매 수량을 적어주세요."
                 />
               </FormGroup>
+              <Row>
+                <Col xs="4">
+                  <FormGroup>
+                    <Label for="productWidth">가로</Label>
+                    <Input
+                      type="number"
+                      name="width"
+                      id="productWidth"
+                      autoComplete={'off'}
+                      defaultValue={productValue.width}
+                      onChange={handleOnChange}
+                      placeholder="제품 가로길이"
+                    />
+                  </FormGroup>
+                </Col>
+                <Col xs="4">
+                  <FormGroup>
+                    <Label for="productDepth">세로</Label>
+                    <Input
+                      type="number"
+                      name="depth"
+                      id="productDepth"
+                      autoComplete={'off'}
+                      defaultValue={productValue.depth}
+                      onChange={handleOnChange}
+                      placeholder="제품 세로길이"
+                    />
+                  </FormGroup>
+                </Col>
+                <Col xs="4">
+                  <FormGroup>
+                    <Label for="productHeight">높이</Label>
+                    <Input
+                      type="number"
+                      name="height"
+                      id="productHeight"
+                      autoComplete={'off'}
+                      defaultValue={productValue.height}
+                      onChange={handleOnChange}
+                      placeholder="제품 높이"
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
               {/* <FormGroup>
                 <Label for="productGroup" className={'image_label'}>
                   그룹
