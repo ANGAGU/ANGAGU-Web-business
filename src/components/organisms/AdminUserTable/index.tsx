@@ -12,11 +12,10 @@ import {
   Paper,
   Button,
 } from '@material-ui/core';
-import { Dummy } from 'utils';
+import { Dummy, date2StringWithTime } from 'utils';
 import './style.css';
 import { notify } from 'App';
 import api from 'api';
-import ManageRegister from './libs';
 
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
@@ -40,6 +39,21 @@ const StyledTableRow = withStyles((theme: Theme) =>
   }),
 )(TableRow);
 
+const StyledButton = withStyles({
+  root: {
+    // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    borderRadius: 3,
+    border: 0,
+    color: 'white',
+    // height: 48,
+    // padding: '0 30px',
+    // boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+  },
+  label: {
+    textTransform: 'capitalize',
+  },
+})(Button);
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     table: {
@@ -56,53 +70,44 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 const AdminUserTable = () => {
-  const [orders, setOrders] = useState([
+  const [users, setUsers] = useState([
     {
       id: 0,
       product_id: 0,
       company_id: 0,
       customer_id: 0,
-      import_1: '',
-      import_2: '',
+      is_approve: 0,
       count: 0,
       price: 0,
       address_id: 0,
-      delivery_number: null,
+      business_number: '',
       review_id: null,
-      customer_name: '',
-      product_name: '',
+      name: '',
+      email: '',
       create_time: '',
       update_time: '',
     },
   ]);
-  const [deliverNum, setDeliverNum] = useState('');
+
+  const [approveFilter, setApproveFilter] = useState(false);
   const classes = useStyles();
   const [registers, setRegisters]: any = useState([]);
 
   useEffect(() => {
-    setRegisters(Dummy.makeRegister(10));
+    getUsers();
   }, []);
 
   const getUsers = async () => {
-    try {
-      api.setAxiosDefaultHeader();
-      const result = await api.get('/company/order', {});
-      if (result.status === 'success') {
-        console.log(result.data);
-        setOrders(result.data);
-      } else {
-        console.error('주문 조회 실패');
-      }
-    } catch {
+    const result = await api.get('/admin/companies', {});
+    if (result.status === 'success') {
+      console.log(result.data);
+      setUsers(result.data.companies);
+    } else {
       console.error('주문 조회 실패');
     }
   };
-  const approveUser = async (id: number, number: any) => {
-    api.setAxiosDefaultHeader();
-    const result = await api.put('/company/order', {
-      deliveryNumber: number,
-      orderId: id,
-    });
+  const approveUser = async (id: number) => {
+    const result = await api.post(`/admin/company/approve/${id}`, {});
     if (result.status === 'success') {
       console.log('기업회원 승인 성공');
       getUsers();
@@ -111,43 +116,65 @@ const AdminUserTable = () => {
     }
   };
 
+  const filterList = (isFilter = false) => {
+    return users.filter(user => (!user.is_approve && user.business_number) || !isFilter);
+  };
+
+  const userList = () => {
+    return filterList(approveFilter).map((row: any, idx: any) => (
+      <StyledTableRow key={idx}>
+        <StyledTableCell>{row.id}</StyledTableCell>
+        <StyledTableCell>{row.name}</StyledTableCell>
+        <StyledTableCell>{row.email}</StyledTableCell>
+        <StyledTableCell>{row.business_number}</StyledTableCell>
+        <StyledTableCell>{row.is_approve ? '승인' : '미승인'}</StyledTableCell>
+        <StyledTableCell>{date2StringWithTime(row.create_time)}</StyledTableCell>
+        <StyledTableCell>
+          <div className={classes.root}>
+            <Button
+              variant="outlined"
+              disabled={row.business_number === null || row.is_approve}
+              onClick={e => {
+                approveUser(row.id);
+              }}
+            >
+              {filterApproveButton(row.is_approve, row.business_number)}
+            </Button>
+          </div>
+        </StyledTableCell>
+      </StyledTableRow>
+    ));
+  };
+
+  const filterApproveButton = (isApprove: number, businessNum: string): string => {
+    if (businessNum === null) return '사업자등록 필요';
+    if (isApprove) return '승인완료';
+    return '승인';
+  };
+
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>회원 ID</StyledTableCell>
-            <StyledTableCell>회원명</StyledTableCell>
+            <StyledTableCell>기업 ID</StyledTableCell>
+            <StyledTableCell>기업명</StyledTableCell>
+            <StyledTableCell>email</StyledTableCell>
             <StyledTableCell>사업자등록번호</StyledTableCell>
-            <StyledTableCell>승인상태</StyledTableCell>
+            <StyledTableCell>
+              <StyledButton
+                onClick={() => {
+                  setApproveFilter(!approveFilter);
+                }}
+              >
+                승인상태
+              </StyledButton>
+            </StyledTableCell>
             <StyledTableCell>요청시각</StyledTableCell>
             <StyledTableCell> </StyledTableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-          {registers.map((row: any, idx: any) => (
-            <StyledTableRow key={idx}>
-              <StyledTableCell>{row.id}</StyledTableCell>
-              <StyledTableCell>{row.company}</StyledTableCell>
-              <StyledTableCell>{row.count}</StyledTableCell>
-              <StyledTableCell>완료</StyledTableCell>
-
-              <StyledTableCell>{row.confirmTime}</StyledTableCell>
-              <StyledTableCell>
-                <div className={classes.root}>
-                  <Button
-                    variant="outlined"
-                    onClick={e => {
-                      ManageRegister.registerProduct(row.id);
-                    }}
-                  >
-                    승인
-                  </Button>
-                </div>
-              </StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
+        <TableBody>{userList()}</TableBody>
       </Table>
     </TableContainer>
   );
