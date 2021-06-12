@@ -18,7 +18,6 @@ const Scene = ({ model }) => {
   useEffect(() => {
     setModel(model);
   }, []);
-  console.log('scene', model3D);
   const materials = useLoader(MTLLoader, mesh);
   const obj = useLoader(OBJLoader, model3D, loader => {
     materials.preload();
@@ -31,7 +30,6 @@ const ObjModelLoader = ({ model, mtl }) => {
   const [model3D, setModel3D] = useState(null);
   useEffect(() => {
     setModel3D(model);
-    console.log('loader', model1);
   }, []);
   return (
     <div className="App" style={AppStyle}>

@@ -51,10 +51,10 @@ const CompanyInfoForm: React.FC = () => {
           accountBank: result.data.account_bank,
         });
       } else {
-        console.log(result);
+        console.error(result);
       }
     } catch {
-      console.log('error');
+      console.error('error');
     }
   };
   const updateInfo = async (e: any) => {
@@ -73,10 +73,10 @@ const CompanyInfoForm: React.FC = () => {
         alert('업데이트 성공');
         window.location.reload();
       } else {
-        console.log(result);
+        console.error(result);
       }
     } catch {
-      console.log('error');
+      console.error('error');
     }
   };
 

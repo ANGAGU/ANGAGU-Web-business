@@ -35,25 +35,23 @@ const SignupTemplate: React.FC = () => {
       alert('OK!');
       history.push('/Login');
     } else {
-      console.log('fail to signup');
+      console.error('fail to signup');
     }
   };
 
   const handleOnChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = evt.target as HTMLInputElement;
-    console.log(name, value);
     setSubmitValue({ ...submitValue, [name]: value });
   };
 
   const checkDuplicatedEmail = async () => {
-    console.log(submitValue.email);
     const { status, data } = await api.post('/company/signup/email', {
       email: submitValue.email,
     });
     if (status === 'success') {
       alert('OK!');
     } else {
-      console.log('fail email check');
+      console.error('fail email check');
     }
   };
 
@@ -64,7 +62,7 @@ const SignupTemplate: React.FC = () => {
     if (status === 'success') {
       alert('OK!');
     } else {
-      console.log('fail for send sms');
+      console.error('fail for send sms');
     }
     toggleModal();
   };
