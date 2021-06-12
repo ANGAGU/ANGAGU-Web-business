@@ -36,6 +36,8 @@ const ProductDetailTemplate: React.FC<RouteComponentProps<ProductDetailProps>> =
   const [productValue, setProductValue] = useState({} as ProductInfo);
   const [descImg, setDescImg] = useState(null as File | null);
   const [thumbImg, setThumbImg] = useState(null as File | null);
+  const [isModification, setIsModification] = useState(false as boolean);
+  const [productId, setProductId] = useState('' as string);
   const [detailImgs, setDetailImgs] = useState([] as Array<File | null>);
   const [detailImgOrder, setDetailImgOrder] = useState({});
   const [previewURL, setPreviewURL] = useState({} as PreviewURL);
@@ -50,7 +52,11 @@ const ProductDetailTemplate: React.FC<RouteComponentProps<ProductDetailProps>> =
 
   useEffect(() => {
     const idx = match.params.id;
-    getProduct(idx);
+    if (idx !== 'new') {
+      setProductId(idx);
+      setIsModification(true);
+      getProduct(idx);
+    }
   }, []);
 
   const getProduct = async (idx: string) => {
@@ -63,20 +69,42 @@ const ProductDetailTemplate: React.FC<RouteComponentProps<ProductDetailProps>> =
   };
   const submitProductInfo = async (evt: React.FormEvent<EventTarget>) => {
     evt.preventDefault();
+    const detailImg = thumbImg as File;
+    let params: any;
+    if (isModification) {
+      params = {
+        detail: JSON.stringify({
+          description: productValue.description,
+          name: productValue.name,
+          price: productValue.price,
+          stock: productValue.stock,
+          delivery_charge: productValue.delivery_charge,
+          width: productValue.width,
+          height: productValue.height,
+          depth: productValue.depth,
+        }),
+      };
+      if (thumbImg !== null) params.thumb_image = thumbImg;
+      if (descImg !== null) params.desc_image = descImg;
+    } else
+      params = {
+        product_image: [detailImg],
+        order: detailImg ? JSON.stringify({ [detailImg.name]: 1 }) : null,
+        desc_image: descImg,
+        thumb_image: thumbImg,
+        description: productValue.description,
+        name: productValue.name,
+        price: productValue.price,
+        stock: productValue.stock,
+        delivery_charge: productValue.delivery_charge,
+        width: productValue.width,
+        height: productValue.height,
+        depth: productValue.depth,
+      };
 
     // for 상세 이미지 test 처리
-    const detailImg = thumbImg as File;
-    const { status, data } = await api.upload('/company/products', {
-      product_image: [detailImg],
-      order: JSON.stringify({ [detailImg.name]: 1 }),
-      desc_image: descImg,
-      thumb_image: thumbImg,
-      description: productValue.description,
-      name: productValue.name,
-      price: productValue.price,
-      stock: productValue.stock,
-      delivery_charge: productValue.delivery_charge,
-    });
+
+    const { status, data } = await api.upload(`/company/products/${productId}`, params, isModification);
     if (status === 'success') {
       history.push('/Main/Product');
       notify('상품 등록 완료!');
