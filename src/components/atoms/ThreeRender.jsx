@@ -70,18 +70,21 @@ function useResponsiveCanvas(initialSize) {
 function main(div, url, size, fileExtention, _modelTexture) {
   const canvas = document.createElement('canvas');
   const [getWidth, getHeight] = size;
-  canvas.width = getWidth;
-  canvas.height = getHeight;
+  canvas.width = div.offsetWidth;
+  canvas.height = div.offsetHeight;
   canvas.style.display = 'block';
   div.appendChild(canvas);
+  console.log(canvas.parentElement);
+
   const renderer = new THREE.WebGLRenderer({ canvas });
 
   const fov = 45;
   const aspect = 2; // the canvas default
+  // const aspect = window.innerWidth / window.innerHeight;
   const near = 0.1;
   const far = 1000;
   const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-  camera.position.set(0, 10, 50);
+  camera.position.set(10, 20, 50);
 
   const controls = new OrbitControls(camera, canvas);
   controls.target.set(0, 5, 0);
@@ -119,8 +122,18 @@ function main(div, url, size, fileExtention, _modelTexture) {
           materials.preload();
           objLoader.setMaterials(materials);
           objLoader.load(url, object => {
-            console.log('model', object);
-            object.scale.set(0.1, 0.1, 0.1);
+            let box = new THREE.Box3().setFromObject(object);
+            console.log(box.max);
+            let scale = 0.1;
+            if (box.max.x >= box.max.y && box.max.x >= box.max.z) {
+              scale = 20 / box.max.x;
+            } else if (box.max.y >= box.max.x && box.max.y >= box.max.z) {
+              scale = 20 / box.max.y;
+            } else if (box.max.z >= box.max.y && box.max.z >= box.max.x) {
+              scale = 20 / box.max.z;
+            }
+
+            object.scale.set(scale, scale, scale);
             object.position.set(0, 0, 0);
             scene.add(object);
           });
@@ -129,9 +142,6 @@ function main(div, url, size, fileExtention, _modelTexture) {
       case 'fbx':
         const fbxLoader = new FBXLoader();
         fbxLoader.load(url, function (object) {
-          // mixer = new THREE.AnimationMixer(object);
-          // const action = mixer.clipAction(object.animations[0]);
-          // action.play();
           object.traverse(function (child) {
             if (child.isMesh) {
               child.castShadow = true;
@@ -150,16 +160,19 @@ function main(div, url, size, fileExtention, _modelTexture) {
         });
         break;
       case '3ds':
-        const normal = new THREE.TextureLoader().load('models/3ds/portalgun/textures/normal.jpg');
+        const normal = new THREE.TextureLoader().load(
+          `http://d3u3zwu9bmcdht.cloudfront.net/${_modelTexture[0]}`,
+        );
         const tdsLoader = new TDSLoader();
         tdsLoader.setResourcePath('models/3ds/portalgun/textures/');
         tdsLoader.load(url, function (object) {
           object.traverse(function (child) {
             if (child.isMesh) {
-              child.material.specular.setScalar(0.1);
+              child.material.specular.setScalar(1);
               child.material.normalMap = normal;
             }
           });
+          object.position.set(0, 5, 0);
           scene.add(object);
         });
         break;
@@ -188,13 +201,21 @@ function main(div, url, size, fileExtention, _modelTexture) {
   }
   requestAnimationFrame(render);
 }
+
 function ThreeRender({ size: initialSize, modelURL, modelEx, modelTexture }) {
+  console.log(initialSize);
   const [width, height] = initialSize;
-  console.log('texture', modelTexture);
+  console.log(initialSize);
   const mountRef = useRef();
   useEffect(() => {
     main(mountRef.current, modelURL, initialSize, modelEx, modelTexture);
   }, []);
-  return <div style={{ height: '100%', width: '100%' }} ref={mountRef} />;
+  return (
+    <div
+      style={{ height: '100%', width: '100%', display: 'flex', justifyContent: 'center' }}
+      ref={mountRef}
+    />
+  );
 }
+
 export default ThreeRender;
