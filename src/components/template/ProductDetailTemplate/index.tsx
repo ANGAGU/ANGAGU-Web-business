@@ -324,7 +324,7 @@ const ProductDetailTemplate: React.FC<RouteComponentProps<ProductDetailProps>> =
                 </Label>
                 <Input
                   type="textarea"
-                  name="desc"
+                  name="description"
                   id="productDesc"
                   autoComplete={'off'}
                   defaultValue={productValue.description}

@@ -41,7 +41,7 @@ const MainTemplate: React.FC = () => {
   const [productProfitList, setProductProfitList] = useState([] as Array<ProductProfit>);
   const [company, setCompany] = useState('회사' as string);
   const [companyEmail, setCompanyEmail] = useState('' as string);
-  const [companyDate, setCompanyDate] = useState(new Date('1995-12-17T03:24:00'));
+  const [companyDate, setCompanyDate] = useState(new Date());
   const [totalProfit, setTotalProfit] = useState(0);
   const [totalFee, setTotalFee] = useState(0);
   const [lineGraph, setLineGraph] = useState(Dummy.chartData);
@@ -146,8 +146,6 @@ const MainTemplate: React.FC = () => {
   return (
     <Fade>
       <Container className="main-page">
-        {/* <h3>환영합니다</h3> */}
-        {/* <hr /> */}
         <div style={{ display: 'flex', padding: '10px 10px' }}>
           <div style={{ flex: 1 }}>
             <Card className={classes.root}>
@@ -190,7 +188,6 @@ const MainTemplate: React.FC = () => {
                   <span className="adjust-month content-highlight"> 이번 달 </span>
                   입금 예정 금액은
                   <span className="adjust-profit content-highlight">
-                    {' '}
                     {makeMoneyStr((totalProfit - totalFee).toString())}원
                   </span>
                   입니다.
