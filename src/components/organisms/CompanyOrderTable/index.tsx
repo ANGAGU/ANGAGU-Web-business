@@ -78,7 +78,6 @@ const CompanyOrderTable = () => {
       api.setAxiosDefaultHeader();
       const result = await api.get('/company/order', {});
       if (result.status === 'success') {
-        console.log(result.data);
         setOrders(result.data);
       } else {
         console.error('주문 조회 실패');
@@ -95,7 +94,6 @@ const CompanyOrderTable = () => {
         orderId: id,
       });
       if (result.status === 'success') {
-        console.log('주문 수정 성공');
         getOrder();
       } else {
         console.error('주문 수정 실패');

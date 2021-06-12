@@ -5,7 +5,6 @@ import { bodyStyle } from './style';
 
 const Login: React.FC = () => {
   const { path } = useRouteMatch();
-  console.log('login page', path);
   return (
     <div style={bodyStyle}>
       <Route exact path={`${path}/Signup`} component={SignupTemplate} />

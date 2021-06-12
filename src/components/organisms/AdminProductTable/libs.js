@@ -12,10 +12,10 @@ const ManageRegister = {
         // eslint-disable-next-line no-alert
         alert('로그인 성공');
       } else {
-        console.log(result);
+        console.error(result);
       }
     } catch {
-      console.log('error');
+      console.error('error');
       alert('승인에 실패했습니다.');
     }
   },
@@ -32,7 +32,7 @@ const ManageRegister = {
         return [];
       }
     } catch {
-      console.log('error');
+      console.error('error');
       alert('승인에 실패했습니다.');
       return [];
     }

@@ -44,7 +44,6 @@ const CompanyFilter: React.FC<CompanyFilterProps> = ({ selectCompanyFunc }) => {
     setCompany(value);
 
     const result = companyList.filter(name => name.includes(value));
-    console.log(result);
     if (result.length === 0) setFilteredList(['검색결과가 없습니다.']);
     else setFilteredList(result);
   };
@@ -72,7 +71,9 @@ const CompanyFilter: React.FC<CompanyFilterProps> = ({ selectCompanyFunc }) => {
           {filteredList.map((el, index) => (
             <li
               className={
-                filteredList.length !== index + 1 ? 'result-list__item' : 'result-list__item result-list__item--last'
+                filteredList.length !== index + 1
+                  ? 'result-list__item'
+                  : 'result-list__item result-list__item--last'
               }
               onClick={() => selectCompany(el)}
             >

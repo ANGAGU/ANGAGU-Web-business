@@ -26,7 +26,6 @@ type ContentProps = {
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const Content = ({ sidebarIsOpen, toggleSidebar }: ContentProps) => {
   const { path } = useRouteMatch(); // 요청시의 path?
-  console.log('path : ', path);
   return (
     <Container fluid className={classNames('content', { 'is-open': sidebarIsOpen })}>
       <div id="content_container">

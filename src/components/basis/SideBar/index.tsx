@@ -14,7 +14,6 @@ type SideBarProps = {
   menu: any;
 };
 const SideBar: React.FC<SideBarProps> = ({ isOpen, toggle, menu }) => {
-  console.log(window.location.pathname);
   return (
     <div className={classNames('sidebar', { 'is-open': isOpen })}>
       <Fade direction="right">
