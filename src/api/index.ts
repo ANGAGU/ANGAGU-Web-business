@@ -54,7 +54,7 @@ const api = {
       return error;
     }
   },
-  async upload(endpoint: string, param: any) {
+  async upload(endpoint: string, param: any, isPut = false) {
     api.setAxiosDefaultHeader();
     const params = setCommonParams(param);
     const headers = {
@@ -71,9 +71,15 @@ const api = {
       return '';
     });
     try {
-      const response = await axios.post(`${server}${endpoint}`, formData, {
-        headers,
-      });
+      let response;
+      if (isPut)
+        response = await axios.put(`${server}${endpoint}`, formData, {
+          headers,
+        });
+      else
+        response = await axios.post(`${server}${endpoint}`, formData, {
+          headers,
+        });
       return response.data;
     } catch (error) {
       alert(`ERROR: ${error.response.data.message}`);
