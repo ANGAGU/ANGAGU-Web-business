@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable array-callback-return */
 /* eslint-disable spaced-comment */
@@ -16,12 +17,12 @@ const View3DModal = ({ pid, purl }) => {
   // set states
   const [modal, setModal] = useState(false);
   const [product3D, setProduct3D] = useState(null);
-  const [productEl, setProductEl] = useState(null);
+  const [productTexture, setProductTexture] = useState(null);
+  const [productEx, setProductEx] = useState(null);
   const [modelName, setModelName] = useState('');
 
   const toggle = () => setModal(!modal);
   const inputRef = useRef(null);
-  console.log('view 3d modal', pid);
   const handleclickInput = () => {
     if (inputRef.current !== null) {
       inputRef.current.setAttribute('multiple', '');
@@ -30,18 +31,44 @@ const View3DModal = ({ pid, purl }) => {
   };
 
   const handleOnChange = async evt => {
-    const formData = new FormData();
-    formData.append('file', evt.target.files[0]);
+    console.log(evt.target.files);
+    let mainFiles = [];
+    let textureFiles = [];
+    if (evt.target.files.length >= 1) {
+      Array.from(evt.target.files).forEach(item => {
+        console.log(item.name.split('.')[1]);
+        if (item.name.split('.')[1] === 'obj') {
+          setProductEx('obj');
+          mainFiles.push(item);
+        } else if (item.name.split('.')[1] === 'fbx') {
+          setProductEx('fbx');
+          mainFiles.push(item);
+        } else if (item.name.split('.')[1] === '3ds') {
+          setProductEx('3ds');
+          mainFiles.push(item);
+        } else if (item.name.split('.')[1] === 'dae') {
+          setProductEx('dae');
+          mainFiles.push(item);
+        } else if (item.name.split('.')[1] === 'dxf') {
+          setProductEx('dxf');
+          mainFiles.push(item);
+        } else textureFiles.push(item);
+        return '';
+      });
+    }
+
     api.setAxiosDefaultHeader();
+    console.log(evt.target.files);
     const result = await api.upload(`/company/products/${pid}/ar`, {
-      product_ar: evt.target.files[0],
+      mainFile: mainFiles,
+      textureFile: textureFiles,
     });
     if (result.status === 'success') {
-      setProduct3D(`http://d3u3zwu9bmcdht.cloudfront.net/${result.data.url}`);
-      setModelName(evt.target.files[0].name);
-      // setProduct3D(fileDownloadUrl);
+      console.log(result.data);
+      setProduct3D(`http://d3u3zwu9bmcdht.cloudfront.net/${result.data.mainUrl}`);
+      setProductTexture(result.data.textureUrl);
     } else {
-      console.log('ERROR: in customer products');
+      console.error('ERROR: in customer products');
     }
   };
 
@@ -70,8 +97,13 @@ const View3DModal = ({ pid, purl }) => {
             </Row>
             <Row>
               <Col className="model-view" style={visStyle}>
-                {product3D && (
-                  <ThreeRender size={['1200', '600']} modelURL={product3D} modelName={modelName} />
+                {product3D && productTexture && (
+                  <ThreeRender
+                    size={['1200', '600']}
+                    modelURL={product3D}
+                    modelEx={productEx}
+                    modelTexture={productTexture}
+                  />
                 )}
                 {/* {product3D && <ObjModelLoader model={product3D} mtl={mesh} />} */}
               </Col>

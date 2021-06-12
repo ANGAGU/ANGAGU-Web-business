@@ -91,7 +91,7 @@ const CompanyProductTemplate: React.FC = () => {
     if (result.status === 'success') {
       setProducts(result.data);
     } else {
-      console.log('ERROR: in customer products');
+      console.error('ERROR: in customer products');
     }
   };
   return (
