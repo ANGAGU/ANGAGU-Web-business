@@ -25,7 +25,6 @@ const View3DModal = ({ pid, purl }) => {
   const boxRef = useRef(null);
   useEffect(async () => {
     api.setAxiosDefaultHeader();
-    console.log(pid, purl);
     const result = await api.get(`/company/products/${pid}/ar`, {});
     if (result.status === 'success') {
       setProduct3D(`http://d3u3zwu9bmcdht.cloudfront.net/${result.data.mainUrl}`);
@@ -46,15 +45,18 @@ const View3DModal = ({ pid, purl }) => {
   useEffect(() => {
     // The 'current' property contains info of the reference:
     // align, title, ... , width, height, etc.
-    console.log('boxRef', boxRef);
     if (boxRef.current) {
       let height = boxRef.current.offsetHeight;
       let width = boxRef.current.offsetWidth;
-      console.log('test', height, width);
       setSize([width.toString(), height.toString()]);
     }
   }, [boxRef]);
   const handleclickInput = () => {
+    // let modelView = document.getElementById('modelView');
+    // if (modelView.lastChild) modelView.removeChild(modelView.lastChild);
+    setProduct3D(null);
+    setProductEx(null);
+    setProductTexture(null);
     if (inputRef.current !== null) {
       inputRef.current.setAttribute('multiple', '');
     }
@@ -87,7 +89,6 @@ const View3DModal = ({ pid, purl }) => {
     }
 
     api.setAxiosDefaultHeader();
-    console.log(evt.target.files);
     const result = await api.upload(`/company/products/${pid}/ar`, {
       mainFile: mainFiles,
       textureFile: textureFiles,
@@ -110,7 +111,6 @@ const View3DModal = ({ pid, purl }) => {
     if (modelView.lastChild) modelView.removeChild(modelView.lastChild);
     toggle();
   };
-  console.log('size', size);
   return (
     <div>
       <Button outline color="secondary" onClick={toggle}>

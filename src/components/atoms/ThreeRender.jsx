@@ -4,7 +4,6 @@
 /* eslint-disable no-case-declarations */
 /* eslint-disable default-case */
 /* eslint-disable no-lone-blocks */
-import { RoomTwoTone } from '@material-ui/icons';
 import React, { useEffect, useState, useRef } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
@@ -13,8 +12,8 @@ import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
 import { TDSLoader } from 'three/examples/jsm/loaders/TDSLoader';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 import { ColladaLoader } from 'three/examples/jsm/loaders/ColladaLoader';
-import mesh1 from '../../assets/IKEA-MINUT_Lampadaire-3D.mtl';
-// import model1 from '../../assets/IKEA-Frosta_Stool-3D.obj';
+import MoonLoader from 'react-spinners/MoonLoader';
+import { css } from '@emotion/react';
 
 function useResponsiveCanvas(initialSize) {
   const canvasRef = useRef();
@@ -74,7 +73,6 @@ function main(div, url, size, fileExtention, _modelTexture) {
   canvas.height = div.offsetHeight;
   canvas.style.display = 'block';
   div.appendChild(canvas);
-  console.log(canvas.parentElement);
 
   const renderer = new THREE.WebGLRenderer({ canvas });
 
@@ -115,7 +113,6 @@ function main(div, url, size, fileExtention, _modelTexture) {
   {
     switch (fileExtention) {
       case 'obj':
-        // console.log('texture', _modelTexture);
         const mtlLoader = new MTLLoader();
         const objLoader = new OBJLoader();
         mtlLoader.load(`http://d3u3zwu9bmcdht.cloudfront.net/${_modelTexture[0]}`, materials => {
@@ -123,7 +120,6 @@ function main(div, url, size, fileExtention, _modelTexture) {
           objLoader.setMaterials(materials);
           objLoader.load(url, object => {
             let box = new THREE.Box3().setFromObject(object);
-            console.log(box.max);
             let scale = 0.1;
             if (box.max.x >= box.max.y && box.max.x >= box.max.z) {
               scale = 20 / box.max.x;
@@ -203,10 +199,14 @@ function main(div, url, size, fileExtention, _modelTexture) {
 }
 
 function ThreeRender({ size: initialSize, modelURL, modelEx, modelTexture }) {
-  console.log(initialSize);
-  const [width, height] = initialSize;
-  console.log(initialSize);
+  const [loading, setLoading] = useState(true);
+  const [color, setColor] = useState('#ff00ff');
   const mountRef = useRef();
+  const override = css`
+    display: block;
+    margin: 0 auto;
+    border-color: red;
+  `;
   useEffect(() => {
     main(mountRef.current, modelURL, initialSize, modelEx, modelTexture);
   }, []);
