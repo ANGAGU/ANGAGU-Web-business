@@ -13,9 +13,8 @@ body {
   font-family: 'Poppins', sans-serif;
   background: #fafafa;
   height: 100%;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',
-    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
 ol,
@@ -37,4 +36,21 @@ html {
 
 #root {
   height: 100%;
+}
+.toast-alert {
+  border-radius: 5px !important;
+}
+
+/* clearfix */
+.clearfix {
+  *zoom: 1;
+}
+.clearfix:before,
+.clearfix:after {
+  display: block;
+  content: '';
+  line-height: 0;
+}
+.clearfix:after {
+  clear: both;
 }

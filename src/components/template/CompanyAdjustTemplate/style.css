@@ -1,3 +1,14 @@
+.adjust-page {
+  padding: 20px 0;
+}
+
+.admin-adjust {
+  padding: 45px 25px 40px;
+}
+
+.company-adjust {
+  padding: 45px 25px 40px;
+}
 .adjust-filter {
   margin-bottom: 20px;
 }
@@ -31,14 +42,22 @@
   font-size: 30px;
   font-weight: 600;
   margin: 0 15px;
-  color: #7386d5;
+  color: cadetblue;
 }
 
 .content__profit-detail {
   margin: 0 15px;
   color: darkgrey;
 }
-.product-profit-table {
+
+.content__toggle-btn {
+  position: relative;
+  top: -25px;
+  left: -20px;
+  float: right;
+}
+
+.profit-table {
   width: 100%;
   margin-bottom: 8px;
   text-align: center;

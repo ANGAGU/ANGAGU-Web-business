@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { Container } from 'reactstrap';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
+import { Fade } from 'react-awesome-reveal';
 import './style.css';
 import {
   CompanyProductTemplate,
@@ -8,8 +9,13 @@ import {
   CompanyOrderTemplate,
   CompanyInfoTemplate,
   CompanyAdjustTemplate,
+  CompanyQnATemplate,
+  QnADetailTemplate,
+  MainTemplate,
   ProductDetailTemplate,
   AdminProductTemplate,
+  AdminAdjustTemplate,
+  CompanyRefundTemplate,
 } from '../../template';
 
 type ContentProps = {
@@ -31,7 +37,12 @@ const Content = ({ sidebarIsOpen, toggleSidebar }: ContentProps) => {
           <Route exact path={`${path}/ManageOrder`} component={CompanyOrderTemplate} />
           <Route exact path={`${path}/Info`} component={CompanyInfoTemplate} />
           <Route exact path={`${path}/Adjust`} component={CompanyAdjustTemplate} />
+          <Route exact path={`${path}/QnA`} component={CompanyQnATemplate} />
+          <Route exact path={`${path}/QnA/:id`} component={QnADetailTemplate} />
           <Route exact path={`${path}/ManageProduct`} component={AdminProductTemplate} />
+          <Route exact path={`${path}/ManageAdjust`} component={AdminAdjustTemplate} />
+          <Route exact path={`${path}/ManageRefund`} component={CompanyRefundTemplate} />
+          <Route exact path={`${path}`} component={MainTemplate} />
         </Switch>
       </div>
     </Container>

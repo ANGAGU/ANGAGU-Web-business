@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { withStyles, Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import {
@@ -11,11 +11,9 @@ import {
   TableBody,
   Table,
 } from '@material-ui/core';
-import { Dummy } from '../../../utils';
-// import './style.css';
-
-// 임시
-import testImg from '../../../assets/product_test.jpeg';
+import { Fade } from 'react-awesome-reveal';
+import api from '../../../api';
+import { View3DModal } from '../../molecules';
 
 interface Product {
   id: number;
@@ -24,7 +22,9 @@ interface Product {
   price: string;
   stock: number;
   rate: number;
+  thumb_url: string;
   create_time: string;
+  '3d_model_url': string;
 }
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
@@ -64,75 +64,80 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 const CompanyProductTemplate: React.FC = () => {
-  const productsTitleList = ['', '상품 아이디', '이미지', '상품명', '판매가', '별점', '재고', '등록일자', ''];
+  const productsTitleList = [
+    '',
+    '상품 아이디',
+    '이미지',
+    '상품명',
+    '판매가',
+    '별점',
+    '재고',
+    '등록일자',
+    '',
+    '3D',
+  ];
   // set state
   const classes = useStyles();
-  const [products, setProducts] = useState(Dummy.makeProducts(10));
-  // for api data binding
-  // const [products, setProducts] = useState([] as Array<Product>);
-  // useEffect(() => {
-  //   const getProducts = async () => {
-  //     const result = await api.get('/customer/products', {});
-  //     if (result.status === 'success') {
-  //       setProducts(result.data);
-  //     }
-  //   };
-  //   getProducts();
-  // }, []);
+  const [products, setProducts] = useState([] as Array<Product>);
 
+  useEffect(() => {
+    getProducts();
+  }, []);
+
+  const getProducts = async () => {
+    // 나중에 한번에 api.ts에서 통합하기
+    api.setAxiosDefaultHeader();
+    const result = await api.get('/company/products', {});
+    if (result.status === 'success') {
+      setProducts(result.data);
+    } else {
+      console.log('ERROR: in customer products');
+    }
+  };
   return (
-    <>
-      {/* <div className="product-page">
-        <div className="x_content">
-          <Table striped className="product-table">
-            <thead>
-              <tr className="headings">{productsHeader}</tr>
-            </thead>
-
-            <tbody>{productList}</tbody>
-          </Table>
-        </div>
-      </div> */}
+    <Fade cascade damping={0.01}>
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="customized table">
           <TableHead>
             <TableRow>
               {productsTitleList.map((row, idx) => (
-                <StyledTableCell key={`product_title ${idx}`}>row</StyledTableCell>
+                <StyledTableCell key={`product_title ${idx}`}>{row}</StyledTableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {products.map((product, index) => (
-              <StyledTableRow
-                key={`product_body ${index}`}
-                className={index % 2 === 0 ? 'even pointer' : 'odd pointer'}
-              >
+            {products.map(product => (
+              <StyledTableRow key={product.id}>
                 <StyledTableCell className="a-center">
                   <input type="checkbox" className="flat" name="table_records" />
                 </StyledTableCell>
-                <StyledTableCell className=" ">{product.id}</StyledTableCell>
-                <StyledTableCell className=" ">
-                  <img className="product__img" alt="" src={testImg} />
+                <StyledTableCell>{product.id}</StyledTableCell>
+                <StyledTableCell>
+                  <img
+                    className="product__img"
+                    alt=""
+                    src={`http://d3u3zwu9bmcdht.cloudfront.net/${product.thumb_url}`}
+                  />
                 </StyledTableCell>
-                <StyledTableCell className=" ">
-                  {product.name} <i className="success fa fa-long-arrow-up" />
-                </StyledTableCell>
-                <StyledTableCell className=" ">{product.price}</StyledTableCell>
-                <StyledTableCell className=" ">{5.0}</StyledTableCell>
-                <StyledTableCell className=" ">{product.stock}</StyledTableCell>
+                <StyledTableCell>{product.name}</StyledTableCell>
+                <StyledTableCell>{product.price}</StyledTableCell>
+                <StyledTableCell>{5.0}</StyledTableCell>
+                <StyledTableCell>{product.stock}</StyledTableCell>
                 <StyledTableCell className="a-right a-right ">{product.create_time}</StyledTableCell>
                 <StyledTableCell className="last">
-                  <Link to="/Main/Product/1">
+                  <Link to={`/Main/Product/${product.id}`}>
                     <Button color="secondary">수정하기</Button>
                   </Link>
+                </StyledTableCell>
+                <StyledTableCell>
+                  <View3DModal pid={product.id} purl={product['3d_model_url']} />
                 </StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-    </>
+    </Fade>
   );
 };
 

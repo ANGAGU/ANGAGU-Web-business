@@ -1,0 +1,54 @@
+.adjust-page {
+  padding: 20px 0;
+}
+
+.admin-adjust {
+  padding: 45px 25px;
+}
+
+.company-adjust {
+  padding: 45px 25px 40px;
+}
+.adjust-filter {
+  margin-bottom: 20px;
+}
+.filter-form,
+.filter-form__content {
+  display: flex;
+}
+.filter-form__content {
+  margin-right: 30px;
+}
+
+.filter-form__content .content__ttl {
+  margin-right: 10px;
+}
+#filter-month {
+  width: 100px;
+}
+.adjust-block {
+  justify-content: center;
+  align-items: center;
+  border: solid 2px #dee2e6;
+  border-radius: 20px;
+  padding: 30px;
+}
+
+.adjust-content {
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+}
+.content__profit {
+  font-size: 25px;
+}
+
+.content__profit-detail {
+  margin: 0 15px;
+  color: darkgrey;
+}
+.product-profit-table {
+  width: 100%;
+  margin-bottom: 8px;
+  text-align: center;
+}

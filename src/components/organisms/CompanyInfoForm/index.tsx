@@ -22,7 +22,7 @@ const CompanyInfoForm: React.FC = () => {
 
   // const [ownerName, setOwnerName] = useState('');
   // const [businessNumber, setBusinessNumber] = useState('');
-  const createData = (name: string, id: string, text: string, account?: string, type?: number) => {
+  const createData = (name: string, id: string, text: string, account?: any, type?: number) => {
     return { name, id, text, account, type };
   };
   const bankList = ['국민', '우리', '신한', '하나', '카카오'];
@@ -64,9 +64,9 @@ const CompanyInfoForm: React.FC = () => {
       const result = await api.post('/company/info', {
         name: data.name,
         password: data.password,
-        account_number: data.accountNumber,
-        account_holder: data.accountHolder,
-        account_bank: data.accountBank,
+        accountNumber: data.accountNumber,
+        accountHolder: data.accountHolder,
+        accountBank: data.accountBank,
       });
       if (result.status === 'success') {
         // eslint-disable-next-line no-alert
@@ -111,7 +111,6 @@ const CompanyInfoForm: React.FC = () => {
                 <Input
                   name={item.id}
                   id={item.id}
-                  placeholder={item.account}
                   value={item.account}
                   onChange={e => setData({ ...data, [item.id]: e.target.value })}
                 />

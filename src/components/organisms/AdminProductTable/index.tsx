@@ -13,7 +13,7 @@ import {
 
 import { Dummy } from '../../../utils';
 import ManageRegister from './libs';
-import { ModalMol } from '../../molecules';
+import { PureModal } from '../../molecules';
 
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
@@ -89,7 +89,7 @@ const AdminProductTable = () => {
                 <img className={classes.img} alt="" src={row.img} />
               </StyledTableCell>
               <StyledTableCell>
-                <ModalMol
+                <PureModal
                   title={'3D모델 확인'}
                   buttonLabel={'3D 모델 확인'}
                   className={'3dModelUrl'}

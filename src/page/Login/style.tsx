@@ -1,5 +1,5 @@
 const bodyStyle = {
-  background: 'antiquewhite',
+  background: '#212529',
   height: '100%',
 };
 

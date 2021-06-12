@@ -4,6 +4,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
+import { Fade } from 'react-awesome-reveal';
+
 import { CompanyInfoForm } from '../../organisms';
 
 interface TabPanelProps {
@@ -52,28 +54,34 @@ const CompanyInfoTemplate: React.FC = () => {
     setValue(newValue);
   };
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Tabs value={value} style={TapStyle} onChange={handleChange} aria-label="simple tabs example">
-          <Tab label="기업정보" {...a11yProps(0)} />
-          {/* <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} /> */}
-        </Tabs>
-      </AppBar>
-      <TabPanel value={value} index={0}>
-        <CompanyInfoForm />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        Item Two
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        Item Three
-      </TabPanel>
-    </div>
+    <Fade>
+      <div className={classes.root}>
+        <AppBar style={TapStyle} position="static">
+          <Tabs value={value} style={TapStyle} onChange={handleChange} aria-label="simple tabs example">
+            <Tab label="기업정보" {...a11yProps(0)} />
+          </Tabs>
+        </AppBar>
+        <TabPanel value={value} index={0}>
+          <CompanyInfoForm />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          Item Two
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          Item Three
+        </TabPanel>
+      </div>
+    </Fade>
   );
 };
 const TapStyle = {
   backgroundColor: 'black',
+  height: 56,
+  borderTopLeftRadius: 5,
+  borderTopRightRadius: 5,
+  display: 'flex',
+  paddingTop: 3,
+  justifyContent: 'center',
 };
 
 export default CompanyInfoTemplate;
