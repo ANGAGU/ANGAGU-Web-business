@@ -104,7 +104,12 @@ const ProductDetailTemplate: React.FC<RouteComponentProps<ProductDetailProps>> =
 
     // for 상세 이미지 test 처리
 
-    const { status, data } = await api.upload(`/company/products/${productId}`, params, isModification);
+    const { status, data } = await api.upload(
+      `/company/products/${productId}`,
+      params,
+      false,
+      isModification,
+    );
     if (status === 'success') {
       history.push('/Main/Product');
       notify('상품 등록 완료!');
