@@ -3,7 +3,7 @@ import CompanyFilter from './index';
 
 const companyFilterProps = {
   selectCompany: () => {
-    console.log('dummy');
+    console.log('');
   },
 };
 describe('Product Page', () => {

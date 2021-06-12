@@ -90,8 +90,6 @@ const CompanyProductTemplate: React.FC = () => {
     const result = await api.get('/company/products', {});
     if (result.status === 'success') {
       setProducts(result.data);
-    } else {
-      console.log('ERROR: in customer products');
     }
   };
   return (

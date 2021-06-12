@@ -3,9 +3,6 @@ import { Jumbotron, Col, Button, Form, FormGroup, Label, Input, FormText } from 
 import './style.css';
 
 const CompanyRegisterTemplate: React.FC = (props: any) => {
-  useEffect(() => {
-    console.log(props);
-  }, []);
   return (
     <Jumbotron>
       <Form>
