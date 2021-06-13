@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Container, Input, Button } from 'reactstrap';
-import { Dummy, date2String, calculateFee, drawLineGraph, drawDoughnutGraph } from 'utils';
+import { Dummy, date2String, calculateFee, drawLineGraph, drawDoughnutGraph, makeMoneyStr } from 'utils';
 import { Fade } from 'react-awesome-reveal';
 import { CompanyFilter, MonthSelector, LineChart, DoughnutChart } from '../../molecules';
 import { companyProfitTitleList } from '../../../commons/constants/string';
@@ -118,11 +118,12 @@ const AdminAdjustTemplate: React.FC<AdjustPageProps> = ({ isAdmin }) => {
                   {`${adminDate.getFullYear()}년 ${adminDate.getMonth() + 1}월`}
                 </span>
                 수익 수수료는
-                <span className="adjust-profit content-highlight">{totalFee}원</span>
+                <span className="adjust-profit content-highlight">{makeMoneyStr(totalFee.toString())}원</span>
                 입니다.
               </div>
               <div className="content__profit-detail">
-                총 매출 {totalProfit}원 - 기업 수익 {totalProfit - totalFee}원
+                총 매출 {makeMoneyStr(totalProfit.toString())}원 - 기업 수익{' '}
+                {makeMoneyStr((totalProfit - totalFee).toString())}원
               </div>
               <Button
                 style={{ float: 'right', marginBottom: '20px' }}
