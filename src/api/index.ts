@@ -54,7 +54,8 @@ const api = {
       return error;
     }
   },
-  async upload(endpoint: string, param: any, is3D = false) {
+
+  async upload(endpoint: string, param: any, is3D = false, isPut = false) {
     api.setAxiosDefaultHeader();
     const params = setCommonParams(param);
     const headers = {
@@ -73,12 +74,18 @@ const api = {
       return '';
     });
     try {
-      const response = await axios.post(`${serverTemp}${endpoint}`, formData, {
-        headers,
-      });
+      let response;
+      if (isPut)
+        response = await axios.put(`${serverTemp}${endpoint}`, formData, {
+          headers,
+        });
+      else
+        response = await axios.post(`${serverTemp}${endpoint}`, formData, {
+          headers,
+        });
       return response.data;
     } catch (error) {
-      // alert(`ERROR: ${error.response.data.message}`);
+      alert(`ERROR: ${error.response.data.message}`);
       return false;
     }
   },
