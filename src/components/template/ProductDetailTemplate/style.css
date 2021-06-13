@@ -31,9 +31,7 @@
   overflow: hidden;
   white-space: nowrap;
 }
-.product-col__img {
-  height: calc(100vh);
-}
+
 .product-img {
   height: 50vh;
 }

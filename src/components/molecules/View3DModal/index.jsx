@@ -20,12 +20,16 @@ const View3DModal = ({ pid, purl }) => {
   const [productTexture, setProductTexture] = useState(null);
   const [productEx, setProductEx] = useState(null);
   const [size, setSize] = useState(['1000', '600']);
+
+  const [mainFileList, setMainFileList] = useState([]);
+  const [textureFileList, setTextureFileList] = useState([]);
+
   const [modelName, setModelName] = useState('');
   const inputRef = useRef(null);
   const boxRef = useRef(null);
+
   useEffect(async () => {
     api.setAxiosDefaultHeader();
-    console.log(pid, purl);
     const result = await api.get(`/company/products/${pid}/ar`, {});
     if (result.status === 'success') {
       setProduct3D(`http://d3u3zwu9bmcdht.cloudfront.net/${result.data.mainUrl}`);
@@ -33,28 +37,19 @@ const View3DModal = ({ pid, purl }) => {
       setProductEx(result.data.mainUrl.split('.')[1]);
     }
   }, []);
-
   const toggle = () => setModal(!modal);
-  // const boxRef = useCallback(node => {
-  //   if (node !== null) {
-  //     setSize([
-  //       node.getBoundingClientRect().width.toString(),
-  //       node.getBoundingClientRect().height.toString(),
-  //     ]);
-  //   }
-  // }, []);
   useEffect(() => {
-    // The 'current' property contains info of the reference:
-    // align, title, ... , width, height, etc.
-    console.log('boxRef', boxRef);
     if (boxRef.current) {
       let height = boxRef.current.offsetHeight;
       let width = boxRef.current.offsetWidth;
-      console.log('test', height, width);
       setSize([width.toString(), height.toString()]);
     }
   }, [boxRef]);
+
   const handleclickInput = () => {
+    setProduct3D(null);
+    setProductEx(null);
+    setProductTexture(null);
     if (inputRef.current !== null) {
       inputRef.current.setAttribute('multiple', '');
     }
@@ -64,7 +59,12 @@ const View3DModal = ({ pid, purl }) => {
   const handleOnChange = async evt => {
     let mainFiles = [];
     let textureFiles = [];
-    if (evt.target.files.length >= 1) {
+    if (evt.target.files.length <= 1) {
+      notify('어멋 잘못 올리셨네요');
+      toggle();
+      return;
+    }
+    if (evt.target.files.length > 1) {
       Array.from(evt.target.files).forEach(item => {
         if (item.name.split('.')[1] === 'obj') {
           setProductEx('obj');
@@ -81,13 +81,21 @@ const View3DModal = ({ pid, purl }) => {
         } else if (item.name.split('.')[1] === 'dxf') {
           setProductEx('dxf');
           mainFiles.push(item);
-        } else textureFiles.push(item);
+        } else if (item.name.split('.')[1] === 'png') {
+          textureFiles.push(item);
+        } else if (item.name.split('.')[1] === 'jpg') {
+          textureFiles.push(item);
+        } else if (item.name.split('.')[1] === 'mtl') {
+          textureFiles.push(item);
+        } else {
+          notify('어멋 잘못 올리셨네요');
+          toggle();
+        }
         return '';
       });
     }
 
     api.setAxiosDefaultHeader();
-    console.log(evt.target.files);
     const result = await api.upload(`/company/products/${pid}/ar`, {
       mainFile: mainFiles,
       textureFile: textureFiles,
@@ -95,14 +103,30 @@ const View3DModal = ({ pid, purl }) => {
     if (result.status === 'success') {
       setProduct3D(`http://d3u3zwu9bmcdht.cloudfront.net/${result.data.mainUrl}`);
       setProductTexture(result.data.textureUrl);
+      setMainFileList(mainFiles);
+      setTextureFileList(textureFiles);
     }
   };
 
-  const confirmModel = () => {
-    notify('상품 3D 모델 업로드 완료!');
-    let modelView = document.getElementById('modelView');
-    if (modelView.lastChild) modelView.removeChild(modelView.lastChild);
-    toggle();
+  const confirmModel = async () => {
+    // notify('상품 3D 모델 업로드 완료!');
+    api.setAxiosDefaultHeader();
+    let mod = purl !== null ? 1 : 0;
+    const result = await api.upload(
+      `/bundle/${pid}`,
+      {
+        mainFile: mainFileList[0],
+        textureFile: textureFileList,
+        isMod: mod,
+      },
+      true,
+    );
+    if (result.status === 'success') {
+      notify('상품 3D 모델 번들링 요청 완료');
+      let modelView = document.getElementById('modelView');
+      if (modelView.lastChild) modelView.removeChild(modelView.lastChild);
+      toggle();
+    }
   };
 
   const rejectModel = () => {
@@ -110,7 +134,6 @@ const View3DModal = ({ pid, purl }) => {
     if (modelView.lastChild) modelView.removeChild(modelView.lastChild);
     toggle();
   };
-  console.log('size', size);
   return (
     <div>
       <Button outline color="secondary" onClick={toggle}>
@@ -126,7 +149,7 @@ const View3DModal = ({ pid, purl }) => {
               </Col>
             </Row>
             <Row style={modalBodyStyle}>
-              <Col id="modelView" className="model-view" style={visStyle} forwardref={boxRef}>
+              <Col id="modelView" className="model-view" style={visStyle}>
                 {product3D && productTexture && (
                   <ThreeRender
                     size={size}
@@ -135,8 +158,6 @@ const View3DModal = ({ pid, purl }) => {
                     modelTexture={productTexture}
                   />
                 )}
-
-                {/* {product3D && <ObjModelLoader model={product3D} mtl={mesh} />} */}
               </Col>
             </Row>
           </Container>
