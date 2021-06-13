@@ -23,6 +23,7 @@ const SignupTemplate: React.FC = () => {
   const [submitValue, setSubmitValue] = useState({} as UserInfo);
   const [authToken, setAuthToken] = useState('' as string);
   const [viewModal, setViewModal] = useState(false as boolean);
+  const bankList = ['국민', '우리', '신한', '하나', '카카오'];
 
   const history = useHistory();
 
@@ -41,6 +42,7 @@ const SignupTemplate: React.FC = () => {
 
   const handleOnChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = evt.target as HTMLInputElement;
+    console.log(name, value);
     setSubmitValue({ ...submitValue, [name]: value });
   };
 
@@ -185,13 +187,17 @@ const SignupTemplate: React.FC = () => {
                 <FormGroup>
                   <Label for="userAccount">은행</Label>
                   <Input
-                    type="text"
+                    type="select"
                     name="account_bank"
                     autoComplete={'off'}
                     defaultValue={submitValue.account_bank}
                     onChange={handleOnChange}
                     placeholder="은행명"
-                  />
+                  >
+                    {bankList.map((i, idx) => (
+                      <option key={`formGroup ${idx}`}>{i}</option>
+                    ))}
+                  </Input>
                 </FormGroup>
               </Col>
               <Col xs="6">

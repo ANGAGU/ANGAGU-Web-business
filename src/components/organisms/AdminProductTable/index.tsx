@@ -75,7 +75,6 @@ const AdminProductTable = () => {
             <StyledTableCell>재고&nbsp;(개)</StyledTableCell>
             <StyledTableCell>가격&nbsp;(원)</StyledTableCell>
             <StyledTableCell>등록 시각</StyledTableCell>
-            <StyledTableCell> </StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -90,18 +89,6 @@ const AdminProductTable = () => {
               <StyledTableCell>{row.count}</StyledTableCell>
               <StyledTableCell>{row.price}</StyledTableCell>
               <StyledTableCell>{row.confirmTime}</StyledTableCell>
-              <StyledTableCell>
-                <div className={classes.root}>
-                  <Button
-                    variant="outlined"
-                    onClick={e => {
-                      ManageRegister.registerProduct(row.id);
-                    }}
-                  >
-                    승인
-                  </Button>
-                </div>
-              </StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

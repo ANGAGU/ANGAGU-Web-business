@@ -26,7 +26,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> & {
   };
 
   const checkAuthNumber = async () => {
-    setCode(verifyNumber);
+    if (type === 'id') setCode(verifyNumber);
     let endpoint = '/company/signup/sms/verification';
     if (type === 'pw') endpoint = '/company/find/verification';
     if (type !== 'id') {

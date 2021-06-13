@@ -1,33 +1,49 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Jumbotron, Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import api from '../../../api';
 import './style.css';
 
 const CompanyRegisterTemplate: React.FC = (props: any) => {
+  const [businessNumber, setBusinessNumber] = useState(0);
+  const [data, setData] = useState({
+    name: 'test',
+    phoneNumber: '010-0000-0000',
+    email: 'test@test.com',
+    password: 'test',
+    businessNumber: '1302938741-1231323312',
+    accountNumber: '1234-0000-123123',
+    accountHolder: 'test',
+    accountBank: '국민',
+    is_prove: 0,
+  });
+  const submitNumber = async () => {
+    api.setAxiosDefaultHeader();
+    const result = await api.post('/company/info/business', {
+      businessNumber,
+    });
+    if (result.status === 'success') {
+      // eslint-disable-next-line no-alert
+      alert('업데이트 성공');
+      window.location.reload();
+    } else {
+      console.error(result);
+    }
+  };
   return (
-    <Jumbotron>
+    <Jumbotron style={{ height: '50%' }}>
       <Form>
         <FormGroup row>
           <Label for="businessName" sm={2}>
-            사업자 명
+            사업자 번호
           </Label>
           <Col sm={10}>
-            <Input type="email" name="email" id="businessName" placeholder="사업자 명을 입력하세요" />
-          </Col>
-        </FormGroup>
-        <FormGroup row>
-          <Label for="phoneNumber" sm={2}>
-            연락처
-          </Label>
-          <Col sm={10}>
-            <Input type="email" name="phone" id="phoneNumber" placeholder="000-0000-0000" />
-          </Col>
-        </FormGroup>
-        <FormGroup row>
-          <Label for="exampleText" sm={2}>
-            추가 필요사항 기입
-          </Label>
-          <Col sm={10}>
-            <Input type="textarea" name="text" id="exampleText" />
+            <Input
+              type="email"
+              name="email"
+              id="businessName"
+              onClick={(e: any) => setBusinessNumber(e.target.value)}
+              placeholder="사업자 번호를 입력하세요"
+            />
           </Col>
         </FormGroup>
         <FormGroup row>
@@ -41,7 +57,7 @@ const CompanyRegisterTemplate: React.FC = (props: any) => {
         </FormGroup>
         <FormGroup check row>
           <Col sm={{ size: 10, offset: 2 }}>
-            <Button>등록 신청하기</Button>
+            <Button onClick={submitNumber}>등록 신청하기</Button>
           </Col>
         </FormGroup>
       </Form>

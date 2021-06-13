@@ -36,11 +36,21 @@ const SideBar: React.FC<SideBarProps> = ({ isOpen, toggle, menu }) => {
             {menu.map((item: any, idx: number) => (
               <SideBarItem key={`sidebar items ${idx}`} title={item.title} url={item.url} icon={item.icon} />
             ))}
-            <SideBarItem title={'FAQ'} url={'/faq'} icon={faQuestion} />
-            <SideBarItem title={'Contact'} url={'/contact'} icon={faImage} />
+            {/* <SideBarItem title={'Contact'} url={'/contact'} icon={faImage} /> */}
           </Fade>
         </Nav>
       </div>
+      <footer>
+        <ul>
+          <li>회사소개</li>
+          <li>개인정보보호정책</li>
+          <li>위치</li>
+          <li>
+            <a href="tel:010-XXXX-XXXX">고객센터</a>
+          </li>
+        </ul>
+        <address>주소: 서울특별시 마포구 아현동 백범로</address>
+      </footer>
     </div>
   );
 };
