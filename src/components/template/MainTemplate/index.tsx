@@ -46,17 +46,21 @@ const MainTemplate: React.FC = () => {
   const [totalFee, setTotalFee] = useState(0);
   const [lineGraph, setLineGraph] = useState(Dummy.chartData);
   const [doughnutGraph, setDoughnutGraph] = useState(Dummy.doughnutChartData);
-  // const [isAdmin, setIsAdmin] = useState('' as string);
+  const [isAdmin, setIsAdmin] = useState('' as string | null);
   const [countOrders, setCountOrders] = useState(0);
 
   useEffect(() => {
-    if (localStorage.getItem('isAdmin') === '') {
+    setIsAdmin(localStorage.getItem('isAdmin'));
+  }, []);
+
+  useEffect(() => {
+    if (isAdmin !== 'true') {
       getAdjust();
       getAdjustProducts();
       getCompanyOrder();
       getCompanyInfo();
     }
-  }, []);
+  }, [isAdmin]);
 
   useEffect(() => {
     calculateProfit();
@@ -142,8 +146,6 @@ const MainTemplate: React.FC = () => {
   return (
     <Fade>
       <Container className="main-page">
-        {/* <h3>환영합니다</h3> */}
-        {/* <hr /> */}
         <div style={{ display: 'flex', padding: '10px 10px' }}>
           <div style={{ flex: 1 }}>
             <Card className={classes.root}>
@@ -186,7 +188,6 @@ const MainTemplate: React.FC = () => {
                   <span className="adjust-month content-highlight"> 이번 달 </span>
                   입금 예정 금액은
                   <span className="adjust-profit content-highlight">
-                    {' '}
                     {makeMoneyStr((totalProfit - totalFee).toString())}원
                   </span>
                   입니다.

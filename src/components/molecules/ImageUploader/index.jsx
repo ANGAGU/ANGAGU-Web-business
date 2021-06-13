@@ -1,11 +1,17 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Input, Media, Label, Button } from 'reactstrap';
-import { notify } from 'App';
 import './style.css';
+import { notify } from 'App';
 
-const ImageUploader = ({ label, setImg }) => {
+const ImageUploader = ({ label, setImg, url }) => {
   const inputRef = useRef(null);
   const [previewUrl, setPreviewUrl] = useState('');
+
+  useEffect(() => {
+    if (url !== null && url !== undefined) {
+      setPreviewUrl(`http://d3u3zwu9bmcdht.cloudfront.net/${url}`);
+    }
+  }, [url]);
 
   const handleclickInput = () => {
     inputRef.current.click();
