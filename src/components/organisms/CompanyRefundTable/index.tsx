@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { withStyles, Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import {
   TextField,
@@ -134,7 +135,13 @@ const CompanyRefundTable = () => {
                 <StyledTableCell>{row.id}</StyledTableCell>
                 <StyledTableCell>{row.customer_name}</StyledTableCell>
                 <StyledTableCell>
-                  <a href={`http://localhost:3000/Main/Product/${row.product_id}`}>{row.product_name}</a>
+                  <Link
+                    to={{
+                      pathname: `/Main/Product/${row.product_id}`,
+                    }}
+                  >
+                    {row.product_name}
+                  </Link>
                 </StyledTableCell>
                 <StyledTableCell>{row.count}</StyledTableCell>
                 <StyledTableCell>{row.price}</StyledTableCell>
