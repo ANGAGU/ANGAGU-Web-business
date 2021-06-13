@@ -48,6 +48,8 @@ const MainTemplate: React.FC = () => {
   const [companyProfitList, setCompanyProfitList] = useState([] as Array<CompanyProfit>);
   const [productProfitList, setProductProfitList] = useState([] as Array<ProductProfit>);
   const [company, setCompany] = useState('회사' as string);
+  const [companyCount, setCompanyCount] = useState(0 as number);
+  const [approveCount, setApproveCount] = useState(0 as number);
   const [companyEmail, setCompanyEmail] = useState('' as string);
   const [companyDate, setCompanyDate] = useState(new Date());
   const [totalProfit, setTotalProfit] = useState(0);
@@ -68,6 +70,7 @@ const MainTemplate: React.FC = () => {
       setIsAdmin(true);
       getAdminAdjust();
       getAdjustCompanies();
+      getCompanies();
     }
   }, []);
 
@@ -133,6 +136,20 @@ const MainTemplate: React.FC = () => {
     setTotalProfit(total);
   };
 
+  const getCompanies = async () => {
+    const { status, data } = await api.get('/admin/companies', {});
+    if (status === 'success') {
+      let cnt = 0;
+      setCompanyCount(data.companies.length);
+      data.companies.map((el: any) => {
+        if (el.is_approve === 0) cnt = +1;
+        return '';
+      });
+      setApproveCount(cnt);
+    } else {
+      console.log('기업 정보 호출 실패');
+    }
+  };
   const calculateAdminProfit = () => {
     let total = 0;
     companyProfitList.map(co => {
@@ -201,23 +218,29 @@ const MainTemplate: React.FC = () => {
                 </Typography>
                 <Typography variant="h5" component="h2">
                   <span style={{ marginLeft: '0px' }} className="company-name content-highlight">
-                    {company}
+                    {isAdmin ? 'Scanit' : company}
                   </span>
                   님
                 </Typography>
                 <Typography className={classes.pos} color="textSecondary">
                   {companyEmail}
                 </Typography>
-                <Typography variant="body2" component="p">
-                  등록된 상품 수: 4개
-                  <br />총 주문건수: 39개
-                </Typography>
+                {isAdmin ? (
+                  <Typography variant="body2" component="p">
+                    가입한 기업 수: {companyCount}
+                  </Typography>
+                ) : (
+                  <Typography variant="body2" component="p">
+                    등록된 상품 수: 4개
+                    <br />총 주문건수: 39개
+                  </Typography>
+                )}
               </CardContent>
               <CardActions>
                 <Button
                   size="small"
                   onClick={() => {
-                    history.push('/Main/Info');
+                    if (!isAdmin) history.push('/Main/Info');
                   }}
                 >
                   회원 정보 수정
@@ -261,25 +284,47 @@ const MainTemplate: React.FC = () => {
                 정산관리 페이지 가기
               </Button>
             </div>
-            <div className="main-block">
-              <div className="main-content">
-                <div className="content__profit">
-                  <span className="company-name content-highlight">{company}</span>의
-                  <span>&nbsp;&nbsp;&nbsp;현재 대기 중인 주문건수는</span>
-                  <span className="adjust-profit content-highlight"> {countOrders}개</span>
-                  입니다.
+            {isAdmin ? (
+              <div className="main-block">
+                <div className="main-content">
+                  <div className="content__profit">
+                    <span className="company-name content-highlight">Scanit</span>의
+                    <span>&nbsp;&nbsp;&nbsp;현재 대기 중인 회원 승인 건수는</span>
+                    <span className="adjust-profit content-highlight"> {approveCount}개</span>
+                    입니다.
+                  </div>
+                  <div className="content-detail">회원관리 페이지에서 자세한 사항을 확인해주세요!</div>
                 </div>
-                <div className="content-detail">상품 배송 후 송장번호를 입력해 주세요!</div>
+                <Button
+                  className="content-btn"
+                  onClick={() => {
+                    history.push('/Main/ManageUser');
+                  }}
+                >
+                  회원관리 페이지 가기
+                </Button>
               </div>
-              <Button
-                className="content-btn"
-                onClick={() => {
-                  history.push('/Main/ManageOrder');
-                }}
-              >
-                주문관리 페이지 가기
-              </Button>
-            </div>
+            ) : (
+              <div className="main-block">
+                <div className="main-content">
+                  <div className="content__profit">
+                    <span className="company-name content-highlight">{company}</span>의
+                    <span>&nbsp;&nbsp;&nbsp;현재 대기 중인 주문건수는</span>
+                    <span className="adjust-profit content-highlight"> {countOrders}개</span>
+                    입니다.
+                  </div>
+                  <div className="content-detail">상품 배송 후 송장번호를 입력해 주세요!</div>
+                </div>
+                <Button
+                  className="content-btn"
+                  onClick={() => {
+                    history.push('/Main/ManageOrder');
+                  }}
+                >
+                  주문관리 페이지 가기
+                </Button>
+              </div>
+            )}
           </div>
         </div>
         <hr />
