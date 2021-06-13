@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Input, Media, Label, Button } from 'reactstrap';
+import { notify } from 'App';
 import './style.css';
 
 const ImageUploader = ({ label, setImg }) => {
@@ -11,6 +12,20 @@ const ImageUploader = ({ label, setImg }) => {
   };
 
   const handleOnChange = evt => {
+    let checkFileEx = false;
+    Array.from(evt.target.files).forEach(item => {
+      if (item.name.split('.')[1] === 'jpeg') {
+        checkFileEx = true;
+      } else if (item.name.split('.')[1] === 'jpg') {
+        checkFileEx = true;
+      } else if (item.name.split('.')[1] === 'png') {
+        checkFileEx = true;
+      }
+    });
+    if (!checkFileEx) {
+      notify('잘못된 파일입니다');
+      return;
+    }
     setPreviewUrl(URL.createObjectURL(evt.target.files[0]));
     setImg(evt.target.files[0]);
   };
