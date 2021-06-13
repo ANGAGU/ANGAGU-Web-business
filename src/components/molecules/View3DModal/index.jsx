@@ -20,6 +20,10 @@ const View3DModal = ({ pid, purl }) => {
   const [productTexture, setProductTexture] = useState(null);
   const [productEx, setProductEx] = useState(null);
   const [size, setSize] = useState(['1000', '600']);
+
+  const [mainFileList, setMainFileList] = useState([]);
+  const [textureFileList, setTextureFileList] = useState([]);
+
   const [modelName, setModelName] = useState('');
   const inputRef = useRef(null);
   const boxRef = useRef(null);
@@ -34,17 +38,7 @@ const View3DModal = ({ pid, purl }) => {
   }, []);
 
   const toggle = () => setModal(!modal);
-  // const boxRef = useCallback(node => {
-  //   if (node !== null) {
-  //     setSize([
-  //       node.getBoundingClientRect().width.toString(),
-  //       node.getBoundingClientRect().height.toString(),
-  //     ]);
-  //   }
-  // }, []);
   useEffect(() => {
-    // The 'current' property contains info of the reference:
-    // align, title, ... , width, height, etc.
     if (boxRef.current) {
       let height = boxRef.current.offsetHeight;
       let width = boxRef.current.offsetWidth;
@@ -52,8 +46,6 @@ const View3DModal = ({ pid, purl }) => {
     }
   }, [boxRef]);
   const handleclickInput = () => {
-    // let modelView = document.getElementById('modelView');
-    // if (modelView.lastChild) modelView.removeChild(modelView.lastChild);
     setProduct3D(null);
     setProductEx(null);
     setProductTexture(null);
@@ -96,14 +88,31 @@ const View3DModal = ({ pid, purl }) => {
     if (result.status === 'success') {
       setProduct3D(`http://d3u3zwu9bmcdht.cloudfront.net/${result.data.mainUrl}`);
       setProductTexture(result.data.textureUrl);
+      setMainFileList(mainFiles);
+      setTextureFileList(textureFiles);
     }
   };
 
-  const confirmModel = () => {
-    notify('상품 3D 모델 업로드 완료!');
-    let modelView = document.getElementById('modelView');
-    if (modelView.lastChild) modelView.removeChild(modelView.lastChild);
-    toggle();
+  const confirmModel = async () => {
+    // notify('상품 3D 모델 업로드 완료!');
+    api.setAxiosDefaultHeader();
+    let mod = purl !== null ? 1 : 0;
+    console.log(mod);
+    const result = await api.upload(
+      `/bundle/${pid}`,
+      {
+        mainFile: mainFileList[0],
+        textureFile: textureFileList,
+        isMod: mod,
+      },
+      true,
+    );
+    if (result.status === 'success') {
+      notify('상품 3D 모델 번들링 요청 완료');
+      let modelView = document.getElementById('modelView');
+      if (modelView.lastChild) modelView.removeChild(modelView.lastChild);
+      toggle();
+    }
   };
 
   const rejectModel = () => {
@@ -126,7 +135,7 @@ const View3DModal = ({ pid, purl }) => {
               </Col>
             </Row>
             <Row style={modalBodyStyle}>
-              <Col id="modelView" className="model-view" style={visStyle} forwardref={boxRef}>
+              <Col id="modelView" className="model-view" style={visStyle}>
                 {product3D && productTexture && (
                   <ThreeRender
                     size={size}
