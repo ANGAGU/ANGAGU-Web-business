@@ -20,6 +20,7 @@ type Adjust = {
   order_id: number;
   price: number;
   update_time: string;
+  total_price: string;
 };
 
 type ProductProfit = {
@@ -27,6 +28,12 @@ type ProductProfit = {
   name: string;
   total_price: string; // revenue - commission
   total_count: number;
+};
+
+type CompanyProfit = {
+  company_id: number;
+  name: string;
+  total_price: string; // revenue - commission
 };
 
 type Order = {
@@ -38,6 +45,7 @@ const MainTemplate: React.FC = () => {
   const [curDate, setCurDate] = useState(new Date());
 
   const [adjustList, setAdjustList] = useState([] as Array<Adjust>);
+  const [companyProfitList, setCompanyProfitList] = useState([] as Array<CompanyProfit>);
   const [productProfitList, setProductProfitList] = useState([] as Array<ProductProfit>);
   const [company, setCompany] = useState('회사' as string);
   const [companyEmail, setCompanyEmail] = useState('' as string);
@@ -46,15 +54,20 @@ const MainTemplate: React.FC = () => {
   const [totalFee, setTotalFee] = useState(0);
   const [lineGraph, setLineGraph] = useState(Dummy.chartData);
   const [doughnutGraph, setDoughnutGraph] = useState(Dummy.doughnutChartData);
-  // const [isAdmin, setIsAdmin] = useState('' as string);
+  const [isAdmin, setIsAdmin] = useState(null as boolean | null);
   const [countOrders, setCountOrders] = useState(0);
 
   useEffect(() => {
     if (localStorage.getItem('isAdmin') === '') {
+      setIsAdmin(false);
       getAdjust();
       getAdjustProducts();
       getCompanyOrder();
       getCompanyInfo();
+    } else {
+      setIsAdmin(true);
+      getAdminAdjust();
+      getAdjustCompanies();
     }
   }, []);
 
@@ -63,12 +76,18 @@ const MainTemplate: React.FC = () => {
   }, [productProfitList]);
 
   useEffect(() => {
+    calculateAdminProfit();
+  }, [companyProfitList]);
+
+  useEffect(() => {
     setTotalFee(calculateFee(totalProfit));
-    setDoughnutGraph(drawDoughnutGraph(productProfitList, totalProfit));
+    setDoughnutGraph(
+      drawDoughnutGraph(isAdmin ? companyProfitList : productProfitList, totalProfit, isAdmin),
+    );
   }, [totalProfit]);
 
   useEffect(() => {
-    setLineGraph(drawLineGraph(adjustList));
+    setLineGraph(drawLineGraph(adjustList, isAdmin));
   }, [adjustList]);
 
   const getAdjust = async () => {
@@ -112,6 +131,34 @@ const MainTemplate: React.FC = () => {
       return 0;
     });
     setTotalProfit(total);
+  };
+
+  const calculateAdminProfit = () => {
+    let total = 0;
+    companyProfitList.map(co => {
+      total += Number(co.total_price);
+      return 0;
+    });
+    setTotalProfit(total);
+  };
+
+  const getAdminAdjust = async () => {
+    // ?? api 응답 형식 달라짐???
+    const { status, data } = await api.get('/admin/sale', {});
+
+    if (data.status === 'success') {
+      setAdjustList(data.data);
+    }
+  };
+
+  const getAdjustCompanies = async () => {
+    const { status, data } = await api.get('/admin/sale/company', {
+      month: `${date2String(companyDate)}-01`,
+    });
+
+    if (data.status === 'success') {
+      setCompanyProfitList(data.data);
+    }
   };
 
   const useStyles = makeStyles({
@@ -181,22 +228,34 @@ const MainTemplate: React.FC = () => {
           <div style={{ flex: 2 }}>
             <div className="main-block">
               <div className="main-content">
-                <div className="content__profit">
-                  <span className="company-name content-highlight">{company}</span>의
-                  <span className="adjust-month content-highlight"> 이번 달 </span>
-                  입금 예정 금액은
-                  <span className="adjust-profit content-highlight">
-                    {' '}
-                    {makeMoneyStr((totalProfit - totalFee).toString())}원
-                  </span>
-                  입니다.
-                </div>
+                {isAdmin ? (
+                  <div className="content__profit">
+                    <span className="company-name content-highlight">Scanit</span>의
+                    <span className="adjust-month content-highlight"> 이번 달 </span>
+                    수익 예정 수수료는
+                    <span className="adjust-profit content-highlight">
+                      {makeMoneyStr(totalFee.toString())}원
+                    </span>
+                    입니다.
+                  </div>
+                ) : (
+                  <div className="content__profit">
+                    <span className="company-name content-highlight">{company}</span>의
+                    <span className="adjust-month content-highlight"> 이번 달 </span>
+                    입금 예정 금액은
+                    <span className="adjust-profit content-highlight">
+                      {makeMoneyStr((totalProfit - totalFee).toString())}원
+                    </span>
+                    입니다.
+                  </div>
+                )}
                 <div className="content-detail">정산관리 페이지에서 더 자세히 알아보세요!</div>
               </div>
               <Button
                 className="content-btn"
                 onClick={() => {
-                  history.push('/Main/Adjust');
+                  if (isAdmin) history.push('/Main/ManageAdjust');
+                  else history.push('/Main/Adjust');
                 }}
               >
                 정산관리 페이지 가기
