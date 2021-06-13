@@ -61,7 +61,7 @@ const ProductDetailTemplate: React.FC = () => {
       history.push('/Main/Product');
       notify('상품 등록 완료!');
     } else {
-      console.log('fail for send product info');
+      console.error('fail for send product info');
     }
   };
 
@@ -94,8 +94,6 @@ const ProductDetailTemplate: React.FC = () => {
     const tempList = detailImgs;
     tempList[Number(name) - 1] = files[0]; // eslint 구조분해할당 선호 에러 발생.. 구조분해로 어떻게 해야하나 확인해보기
     setDetailImgs(tempList);
-
-    console.log(detailImgs);
     // set order
     setDetailImgOrder({ ...detailImgOrder, [files[0].name]: Number(name) });
     // imgFormData.append(name, files[0]);

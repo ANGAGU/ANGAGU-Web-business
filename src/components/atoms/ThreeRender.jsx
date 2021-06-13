@@ -1,21 +1,19 @@
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable import/no-unresolved */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-/* eslint-disable no-shadow */
 /* eslint-disable prefer-const */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-var */
-/* eslint-disable vars-on-top */
-/* eslint-disable react/no-this-in-sfc */
+/* eslint-disable no-shadow */
+/* eslint-disable no-case-declarations */
+/* eslint-disable default-case */
+/* eslint-disable no-lone-blocks */
 import { RoomTwoTone } from '@material-ui/icons';
 import React, { useEffect, useState, useRef } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
+import { TDSLoader } from 'three/examples/jsm/loaders/TDSLoader';
+import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 import { ColladaLoader } from 'three/examples/jsm/loaders/ColladaLoader';
 import mesh1 from '../../assets/IKEA-MINUT_Lampadaire-3D.mtl';
-import ObjModelLoader from './ObjModelLoader';
 // import model1 from '../../assets/IKEA-Frosta_Stool-3D.obj';
 
 function useResponsiveCanvas(initialSize) {
@@ -25,7 +23,6 @@ function useResponsiveCanvas(initialSize) {
 
   // set initial svg and size
   useEffect(() => {
-    console.log(initialSize);
     const canvas = document.createElement('canvas');
     const mount = mountRef.current;
     canvas.style.display = 'block';
@@ -55,7 +52,6 @@ function useResponsiveCanvas(initialSize) {
       }
     });
     resizeObserver.observe(mount);
-    console.log(mount.children);
     mount.appendChild(canvas);
 
     // cleanup
@@ -70,21 +66,25 @@ function useResponsiveCanvas(initialSize) {
     size,
   };
 }
-function main(div, url, size, fileName) {
+
+function main(div, url, size, fileExtention, _modelTexture) {
   const canvas = document.createElement('canvas');
   const [getWidth, getHeight] = size;
-  canvas.width = getWidth;
-  canvas.height = getHeight;
+  canvas.width = div.offsetWidth;
+  canvas.height = div.offsetHeight;
   canvas.style.display = 'block';
   div.appendChild(canvas);
+  console.log(canvas.parentElement);
+
   const renderer = new THREE.WebGLRenderer({ canvas });
 
   const fov = 45;
   const aspect = 2; // the canvas default
+  // const aspect = window.innerWidth / window.innerHeight;
   const near = 0.1;
   const far = 1000;
   const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-  camera.position.set(0, 10, 50);
+  camera.position.set(10, 20, 50);
 
   const controls = new OrbitControls(camera, canvas);
   controls.target.set(0, 5, 0);
@@ -92,27 +92,6 @@ function main(div, url, size, fileName) {
 
   const scene = new THREE.Scene();
   scene.background = new THREE.Color('black');
-
-  // {
-  //   const planeSize = 60;
-
-  //   const loader = new THREE.TextureLoader();
-  //   const texture = loader.load('https://threejsfundamentals.org/threejs/resources/images/checker.png');
-  //   texture.wrapS = THREE.RepeatWrapping;
-  //   texture.wrapT = THREE.RepeatWrapping;
-  //   texture.magFilter = THREE.NearestFilter;
-  //   const repeats = planeSize / 2;
-  //   texture.repeat.set(repeats, repeats);
-
-  //   const planeGeo = new THREE.PlaneGeometry(planeSize, planeSize);
-  //   const planeMat = new THREE.MeshPhongMaterial({
-  //     map: texture,
-  //     side: THREE.DoubleSide,
-  //   });
-  //   const mesh = new THREE.Mesh(planeGeo, planeMat);
-  //   mesh.rotation.x = Math.PI * -0.5;
-  //   scene.add(mesh);
-  // }
 
   {
     const skyColor = 0xb1e1ff; // light blue
@@ -134,67 +113,70 @@ function main(div, url, size, fileName) {
   }
 
   {
-    // const mtlLoader = new MTLLoader();
-    // const loader = new THREE.TextureLoader();
-    // const texture = loader.load('../../assets/stool/plywood_diff_1k.jpg');
-    // const objMat = new THREE.MeshPhongMaterial({
-    //   map: texture,
-    //   side: THREE.DoubleSide,
-    // });
-    // const objLoader = new OBJLoader();
-    // objLoader.setMaterials(objMat);
-    // objLoader.load(url, object => {
-    //   object.scale.set(0.006, 0.006, 0.006);
-    //   object.position.set(0.3, 0.3, 0.3);
-    //   scene.add(object);
-    // });
-    // const textureLoader = new THREE.TextureLoader();
-    // const mapTex = textureLoader.load('../../assets/stool/open3dmodel_com_wooden__4.jpg');
-    // const material = new THREE.MeshPhongMaterial({ map: mapTex });
-    // const objLoader = new OBJLoader();
-    // // objLoader.setMaterials(mtl);
-    // objLoader.load(url, object => {
-    //   // var texture = new THREE.TextureLoader().load('../../assets/stool/open3dmodel_com_wooden__4.jpg');
-    //   object.traverse(function (child) {
-    //     // aka setTexture
-    //     if (child.isMesh) {
-    //       child.material = material;
-    //     }
-    //   });
-    //   object.scale.set(0.006, 0.006, 0.006);
-    //   object.position.set(0.3, 0.3, 0.3);
-    //   scene.add(object);
-    // });
-    // const textureLoader = new THREE.TextureLoader();
-    // const texture = textureLoader.load('../../assets/stool/open3dmodel_com_wooden__4.jpg');
-    const mtlLoader = new MTLLoader();
-    const objLoader = new OBJLoader();
-    mtlLoader.load(mesh1, materials => {
-      materials.preload();
-      objLoader.setMaterials(materials);
-      objLoader.load(url, object => {
-        object.scale.set(0.01, 0.01, 0.01);
-        object.position.set(0, -3, 0);
-        scene.add(object);
-      });
-    });
-    // objLoader.load(url, function (object) {
-    //   object.traverse(obj => {
-    //     console.log(obj.isMesh);
-    //     if (obj.isMesh) obj.material.color.set(0xffb6c1);
-    //   });
-    //   // object.position.y = -95;
-    //   object.scale.set(0.02, 0.02, 0.02);
-    //   object.position.set(0.3, 0.3, 0.3);
-    //   scene.add(object);
-    // });
+    switch (fileExtention) {
+      case 'obj':
+        // console.log('texture', _modelTexture);
+        const mtlLoader = new MTLLoader();
+        const objLoader = new OBJLoader();
+        mtlLoader.load(`http://d3u3zwu9bmcdht.cloudfront.net/${_modelTexture[0]}`, materials => {
+          materials.preload();
+          objLoader.setMaterials(materials);
+          objLoader.load(url, object => {
+            let box = new THREE.Box3().setFromObject(object);
+            console.log(box.max);
+            let scale = 0.1;
+            if (box.max.x >= box.max.y && box.max.x >= box.max.z) {
+              scale = 20 / box.max.x;
+            } else if (box.max.y >= box.max.x && box.max.y >= box.max.z) {
+              scale = 20 / box.max.y;
+            } else if (box.max.z >= box.max.y && box.max.z >= box.max.x) {
+              scale = 20 / box.max.z;
+            }
 
-    // const DAELoader = new ColladaLoader();
-    // // DAELoader.options.convertUpAxis = true;
-    // DAELoader.load(url, collada => {
-    //   collada.scene.scale.set(1, 1, 1);
-    //   scene.add(collada.scene);
-    // });
+            object.scale.set(scale, scale, scale);
+            object.position.set(0, 0, 0);
+            scene.add(object);
+          });
+        });
+        break;
+      case 'fbx':
+        const fbxLoader = new FBXLoader();
+        fbxLoader.load(url, function (object) {
+          object.traverse(function (child) {
+            if (child.isMesh) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+            }
+          });
+          scene.add(object);
+        });
+        break;
+      case 'dae':
+        const daeLoader = new ColladaLoader();
+        // DAELoader.options.convertUpAxis = true;
+        daeLoader.load(url, collada => {
+          collada.scene.scale.set(1, 1, 1);
+          scene.add(collada.scene);
+        });
+        break;
+      case '3ds':
+        const normal = new THREE.TextureLoader().load(
+          `http://d3u3zwu9bmcdht.cloudfront.net/${_modelTexture[0]}`,
+        );
+        const tdsLoader = new TDSLoader();
+        tdsLoader.setResourcePath('models/3ds/portalgun/textures/');
+        tdsLoader.load(url, function (object) {
+          object.traverse(function (child) {
+            if (child.isMesh) {
+              child.material.specular.setScalar(1);
+              child.material.normalMap = normal;
+            }
+          });
+          object.position.set(0, 5, 0);
+          scene.add(object);
+        });
+        break;
+    }
   }
 
   function resizeRendererToDisplaySize(renderer) {
@@ -219,12 +201,21 @@ function main(div, url, size, fileName) {
   }
   requestAnimationFrame(render);
 }
-function ThreeRender({ size: initialSize, modelURL, modelName }) {
+
+function ThreeRender({ size: initialSize, modelURL, modelEx, modelTexture }) {
+  console.log(initialSize);
   const [width, height] = initialSize;
+  console.log(initialSize);
   const mountRef = useRef();
   useEffect(() => {
-    main(mountRef.current, modelURL, initialSize, modelName);
+    main(mountRef.current, modelURL, initialSize, modelEx, modelTexture);
   }, []);
-  return <div style={{ height: '100%', width: '100%' }} ref={mountRef} />;
+  return (
+    <div
+      style={{ height: '100%', width: '100%', display: 'flex', justifyContent: 'center' }}
+      ref={mountRef}
+    />
+  );
 }
+
 export default ThreeRender;

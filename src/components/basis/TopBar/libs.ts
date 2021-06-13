@@ -1,6 +1,5 @@
 const TopBarLibs = {
   Logout: (e?: any, history?: any) => {
-    console.log(history);
     if (localStorage.getItem('isAdmin')) {
       // 관리자이면
       history.push(`/`);
