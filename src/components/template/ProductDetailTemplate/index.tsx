@@ -38,16 +38,9 @@ const ProductDetailTemplate: React.FC<RouteComponentProps<ProductDetailProps>> =
   const [thumbImg, setThumbImg] = useState(null as File | null);
   const [isModification, setIsModification] = useState(false as boolean);
   const [productId, setProductId] = useState('' as string);
-  const [detailImgs, setDetailImgs] = useState([] as Array<File | null>);
-  const [detailImgOrder, setDetailImgOrder] = useState({});
-  const [previewURL, setPreviewURL] = useState({} as PreviewURL);
 
   const history = useHistory();
-  const imgFormData = new FormData();
-  const productsGroupList: Array<string> = ['폭신폭신 의자', '안폭신폭신 의자', '물침대', '돌침대'];
 
-  // comp
-  const productGroup = productsGroupList.map(group => <option key={group}>{group}</option>);
   // method
 
   useEffect(() => {
@@ -123,36 +116,15 @@ const ProductDetailTemplate: React.FC<RouteComponentProps<ProductDetailProps>> =
     setProductValue({ ...productValue, [name]: value });
   };
 
-  // const handleDescImg = (evt: React.ChangeEvent<HTMLInputElement>) => {
-  //   const files = evt.target.files as FileList;
-  //   setDescImg(files[0]);
-  //   handleOnChange(evt);
-  // };
-  // const handleThumbImg = (evt: React.ChangeEvent<HTMLInputElement>) => {
-  //   const files = evt.target.files as FileList;
-  //   setThumbImg(files[0]);
-  //   handleOnChange(evt);
-  // };
-  // const handleDetailImg = (evt: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { name } = evt.target as HTMLInputElement;
-  //   const files = evt.target.files as FileList;
-  //   // set preview
-  //   const reader = new FileReader();
-  //   reader.onloadend = () => {
-  //     setPreviewURL({ ...previewURL, [name]: reader.result });
-  //   };
-  //   reader.readAsDataURL(files[0]);
-
-  //   // set img file
-  //   const tempList = detailImgs;
-  //   tempList[Number(name) - 1] = files[0]; // eslint 구조분해할당 선호 에러 발생.. 구조분해로 어떻게 해야하나 확인해보기
-  //   setDetailImgs(tempList);
-
-  //   console.log(detailImgs);
-  //   // set order
-  //   setDetailImgOrder({ ...detailImgOrder, [files[0].name]: Number(name) });
-  //   // imgFormData.append(name, files[0]);
-  // };
+  const deleteProduct = async () => {
+    const { status, data } = await api.delete(`/company/products/${productId}`, {});
+    if (status === 'success') {
+      history.push('/Main/Product');
+      notify('상품 삭제 완료!');
+    } else {
+      console.log('fail for delete product detail');
+    }
+  };
 
   return (
     <Fade cascade damping={0.01}>
@@ -162,8 +134,11 @@ const ProductDetailTemplate: React.FC<RouteComponentProps<ProductDetailProps>> =
             <h4 className="product__title">상품정보</h4>
           </Col>
           <Col className="product-detail__btn-blk" style={marginStyle}>
-            <Button type="submit" form="productPrimary">
-              Submit
+            <Button style={btnStyle} onClick={deleteProduct}>
+              삭제하기
+            </Button>
+            <Button style={btnStyle} type="submit" form="productPrimary">
+              등록하기
             </Button>
           </Col>
         </Row>
@@ -179,21 +154,6 @@ const ProductDetailTemplate: React.FC<RouteComponentProps<ProductDetailProps>> =
                     <ImageUploader label="test" setImg={setThumbImg} url={productValue.thumb_url} />
                     {/* <Input type="file" name="thumb_image" id="productThumbImg" onChange={handleThumbImg} /> */}
                   </FormGroup>
-
-                  {/* <FormGroup className={'form_group'}>
-                    <Label for="productDetailImg" className={'image_label'}>
-                      상품 상세 이미지
-                    </Label>
-                    <Input type="file" name="1" onChange={handleDetailImg} />
-                 
-                    <Input type="file" name="2" onChange={handleDetailImg} />
-                    <Input type="file" name="3" onChange={handleDetailImg} />
-                    <Input type="file" name="4" onChange={handleDetailImg} />
-                    <Input type="file" name="5" onChange={handleDetailImg} />
-                    <FormText color="muted" className={'description_label'}>
-                      상품 상세 이미지를 넣어주세요 :)
-                    </FormText>
-                  </FormGroup> */}
 
                   <FormGroup className={'form_group form_group--last'}>
                     <Label for="productDescImg" className={'image_label'}>
@@ -309,20 +269,6 @@ const ProductDetailTemplate: React.FC<RouteComponentProps<ProductDetailProps>> =
                   </FormGroup>
                 </Col>
               </Row>
-              {/* <FormGroup>
-                <Label for="productGroup" className={'image_label'}>
-                  그룹
-                </Label>
-                <Input
-                  type="select"
-                  name="group"
-                  id="productGroup"
-                  defaultValue={productValue.group}
-                  onChange={handleOnChange}
-                >
-                  {productGroup}
-                </Input>
-              </FormGroup> */}
               <FormGroup>
                 <Label for="productDesc" className={'image_label'}>
                   상품 상세 설명
@@ -360,24 +306,16 @@ const containerStyle = {
   maxWidth: '100%',
   height: '100vh',
 };
-// const contentStyle = {
-//   height: '100vh',
-// };
+
 const colStyle = {
-  // borderRight: 'solid 1px',
   paddingLeft: '25px',
   paddingRight: '25px',
   overflow: 'scroll',
 };
-const horizonLine = (
-  <hr
-    style={{
-      color: '#000000',
-      backgroundColor: '#000000',
-      height: 0.5,
-      borderColor: '#000000',
-    }}
-  />
-);
+
+const btnStyle = {
+  marginLeft: '10px',
+  backgroundColor: 'rgba(255,255,255,0.1)',
+};
 
 export default ProductDetailTemplate;
