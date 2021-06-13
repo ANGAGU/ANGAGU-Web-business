@@ -160,6 +160,7 @@ function main(div, url, size, fileExtention, _modelTexture) {
         });
         break;
       case 'dae':
+        console.log('daedae', url);
         const daeLoader = new ColladaLoader();
         // DAELoader.options.convertUpAxis = true;
         daeLoader.load(url, collada => {

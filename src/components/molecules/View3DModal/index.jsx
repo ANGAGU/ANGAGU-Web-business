@@ -60,9 +60,21 @@ const View3DModal = ({ pid, purl }) => {
     let mainFiles = [];
     let textureFiles = [];
     if (evt.target.files.length <= 1) {
-      notify('어멋 잘못 올리셨네요');
-      toggle();
-      return;
+      console.log(evt.target.files);
+      let fileContinue = false;
+      if (evt.target.files[0].name.split('.')[1] === 'dae') {
+        fileContinue = true;
+        setProductEx('dae');
+        mainFiles.push(evt.target.files[0]);
+      } else if (evt.target.files[0].name.split('.')[1] === '3ds') {
+        fileContinue = true;
+        setProductEx('3ds');
+        mainFiles.push(evt.target.files[0]);
+      }
+      if (fileContinue === false) {
+        notify('어멋 잘못 올리셨네요');
+        toggle();
+      }
     }
     if (evt.target.files.length > 1) {
       Array.from(evt.target.files).forEach(item => {
