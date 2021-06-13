@@ -27,6 +27,7 @@ const View3DModal = ({ pid, purl }) => {
   const [modelName, setModelName] = useState('');
   const inputRef = useRef(null);
   const boxRef = useRef(null);
+
   useEffect(async () => {
     api.setAxiosDefaultHeader();
     const result = await api.get(`/company/products/${pid}/ar`, {});
@@ -36,7 +37,6 @@ const View3DModal = ({ pid, purl }) => {
       setProductEx(result.data.mainUrl.split('.')[1]);
     }
   }, []);
-
   const toggle = () => setModal(!modal);
   useEffect(() => {
     if (boxRef.current) {
@@ -45,6 +45,7 @@ const View3DModal = ({ pid, purl }) => {
       setSize([width.toString(), height.toString()]);
     }
   }, [boxRef]);
+
   const handleclickInput = () => {
     setProduct3D(null);
     setProductEx(null);
@@ -58,7 +59,12 @@ const View3DModal = ({ pid, purl }) => {
   const handleOnChange = async evt => {
     let mainFiles = [];
     let textureFiles = [];
-    if (evt.target.files.length >= 1) {
+    if (evt.target.files.length <= 1) {
+      notify('어멋 잘못 올리셨네요');
+      toggle();
+      return;
+    }
+    if (evt.target.files.length > 1) {
       Array.from(evt.target.files).forEach(item => {
         if (item.name.split('.')[1] === 'obj') {
           setProductEx('obj');
@@ -75,7 +81,16 @@ const View3DModal = ({ pid, purl }) => {
         } else if (item.name.split('.')[1] === 'dxf') {
           setProductEx('dxf');
           mainFiles.push(item);
-        } else textureFiles.push(item);
+        } else if (item.name.split('.')[1] === 'png') {
+          textureFiles.push(item);
+        } else if (item.name.split('.')[1] === 'jpg') {
+          textureFiles.push(item);
+        } else if (item.name.split('.')[1] === 'mtl') {
+          textureFiles.push(item);
+        } else {
+          notify('어멋 잘못 올리셨네요');
+          toggle();
+        }
         return '';
       });
     }
@@ -97,7 +112,6 @@ const View3DModal = ({ pid, purl }) => {
     // notify('상품 3D 모델 업로드 완료!');
     api.setAxiosDefaultHeader();
     let mod = purl !== null ? 1 : 0;
-    console.log(mod);
     const result = await api.upload(
       `/bundle/${pid}`,
       {
@@ -144,8 +158,6 @@ const View3DModal = ({ pid, purl }) => {
                     modelTexture={productTexture}
                   />
                 )}
-
-                {/* {product3D && <ObjModelLoader model={product3D} mtl={mesh} />} */}
               </Col>
             </Row>
           </Container>

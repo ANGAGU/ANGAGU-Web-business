@@ -115,6 +115,7 @@ function main(div, url, size, fileExtention, _modelTexture) {
       case 'obj':
         const mtlLoader = new MTLLoader();
         const objLoader = new OBJLoader();
+        console.log(_modelTexture);
         mtlLoader.load(`http://d3u3zwu9bmcdht.cloudfront.net/${_modelTexture[0]}`, materials => {
           materials.preload();
           objLoader.setMaterials(materials);
@@ -138,6 +139,17 @@ function main(div, url, size, fileExtention, _modelTexture) {
       case 'fbx':
         const fbxLoader = new FBXLoader();
         fbxLoader.load(url, function (object) {
+          let box = new THREE.Box3().setFromObject(object);
+          let scale = 0.1;
+          if (box.max.x >= box.max.y && box.max.x >= box.max.z) {
+            scale = 20 / box.max.x;
+          } else if (box.max.y >= box.max.x && box.max.y >= box.max.z) {
+            scale = 20 / box.max.y;
+          } else if (box.max.z >= box.max.y && box.max.z >= box.max.x) {
+            scale = 20 / box.max.z;
+          }
+
+          object.scale.set(scale, scale, scale);
           object.traverse(function (child) {
             if (child.isMesh) {
               child.castShadow = true;
@@ -151,7 +163,18 @@ function main(div, url, size, fileExtention, _modelTexture) {
         const daeLoader = new ColladaLoader();
         // DAELoader.options.convertUpAxis = true;
         daeLoader.load(url, collada => {
-          collada.scene.scale.set(1, 1, 1);
+          let box = new THREE.Box3().setFromObject(collada.scene);
+          let scale = 0.1;
+          if (box.max.x >= box.max.y && box.max.x >= box.max.z) {
+            scale = 20 / box.max.x;
+          } else if (box.max.y >= box.max.x && box.max.y >= box.max.z) {
+            scale = 20 / box.max.y;
+          } else if (box.max.z >= box.max.y && box.max.z >= box.max.x) {
+            scale = 20 / box.max.z;
+          }
+
+          collada.scene.scale.set(scale, scale, scale);
+          // collada.scene.scale.set(1, 1, 1);
           scene.add(collada.scene);
         });
         break;
@@ -162,6 +185,17 @@ function main(div, url, size, fileExtention, _modelTexture) {
         const tdsLoader = new TDSLoader();
         tdsLoader.setResourcePath('models/3ds/portalgun/textures/');
         tdsLoader.load(url, function (object) {
+          let box = new THREE.Box3().setFromObject(object);
+          let scale = 0.1;
+          if (box.max.x >= box.max.y && box.max.x >= box.max.z) {
+            scale = 20 / box.max.x;
+          } else if (box.max.y >= box.max.x && box.max.y >= box.max.z) {
+            scale = 20 / box.max.y;
+          } else if (box.max.z >= box.max.y && box.max.z >= box.max.x) {
+            scale = 20 / box.max.z;
+          }
+
+          object.scale.set(scale, scale, scale);
           object.traverse(function (child) {
             if (child.isMesh) {
               child.material.specular.setScalar(1);
