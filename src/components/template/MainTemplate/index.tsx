@@ -41,26 +41,22 @@ const MainTemplate: React.FC = () => {
   const [productProfitList, setProductProfitList] = useState([] as Array<ProductProfit>);
   const [company, setCompany] = useState('회사' as string);
   const [companyEmail, setCompanyEmail] = useState('' as string);
-  const [companyDate, setCompanyDate] = useState(new Date('1995-12-17T03:24:00'));
+  const [companyDate, setCompanyDate] = useState(new Date());
   const [totalProfit, setTotalProfit] = useState(0);
   const [totalFee, setTotalFee] = useState(0);
   const [lineGraph, setLineGraph] = useState(Dummy.chartData);
   const [doughnutGraph, setDoughnutGraph] = useState(Dummy.doughnutChartData);
-  const [isAdmin, setIsAdmin] = useState('' as string | null);
+  // const [isAdmin, setIsAdmin] = useState('' as string);
   const [countOrders, setCountOrders] = useState(0);
 
   useEffect(() => {
-    setIsAdmin(localStorage.getItem('isAdmin'));
-  }, []);
-
-  useEffect(() => {
-    if (isAdmin !== 'true') {
+    if (localStorage.getItem('isAdmin') === '') {
       getAdjust();
       getAdjustProducts();
       getCompanyOrder();
       getCompanyInfo();
     }
-  }, [isAdmin]);
+  }, []);
 
   useEffect(() => {
     calculateProfit();

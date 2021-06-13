@@ -4,6 +4,7 @@ import {
   faPaperPlane,
   faHouseUser,
   faChartPie,
+  faUserFriends,
   faQuestion,
   faClone,
 } from '@fortawesome/free-solid-svg-icons';
@@ -23,6 +24,8 @@ const companyComponent = [
   { title: '환불관리', url: '/Main/ManageRefund', icon: faClone },
 ];
 const adminComponent = [
+  { title: '홈', url: '/Main', icon: faHouseUser },
+  { title: 'ADMIN 회원관리', url: '/Main/ManageUser', icon: faUserFriends },
   { title: 'ADMIN 상품관리', url: '/Main/ManageProduct', icon: faHouseUser },
   { title: 'ADMIN 정산관리', url: '/Main/ManageAdjust', icon: faBriefcase },
   // { title: 'AMDIN 상품상세', url: '/Main/Product/:id', icon: faPaperPlane },

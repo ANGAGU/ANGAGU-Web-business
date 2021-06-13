@@ -15,6 +15,7 @@ import {
   ProductDetailTemplate,
   AdminProductTemplate,
   AdminAdjustTemplate,
+  AdminUserTemplate,
   CompanyRefundTemplate,
 } from '../../template';
 
@@ -26,6 +27,7 @@ type ContentProps = {
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const Content = ({ sidebarIsOpen, toggleSidebar }: ContentProps) => {
   const { path } = useRouteMatch(); // 요청시의 path?
+  console.log('path : ', path);
   return (
     <Container fluid className={classNames('content', { 'is-open': sidebarIsOpen })}>
       <div id="content_container">
@@ -40,6 +42,7 @@ const Content = ({ sidebarIsOpen, toggleSidebar }: ContentProps) => {
           <Route exact path={`${path}/QnA/:id`} component={QnADetailTemplate} />
           <Route exact path={`${path}/ManageProduct`} component={AdminProductTemplate} />
           <Route exact path={`${path}/ManageAdjust`} component={AdminAdjustTemplate} />
+          <Route exact path={`${path}/ManageUser`} component={AdminUserTemplate} />
           <Route exact path={`${path}/ManageRefund`} component={CompanyRefundTemplate} />
           <Route exact path={`${path}`} component={MainTemplate} />
         </Switch>
