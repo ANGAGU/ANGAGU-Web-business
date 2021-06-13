@@ -57,7 +57,7 @@ const ProductDetailTemplate: React.FC<RouteComponentProps<ProductDetailProps>> =
     if (status === 'success') {
       setProductValue(data);
     } else {
-      console.log('fail for get product info');
+      console.error('fail for get product info');
     }
   };
   const submitProductInfo = async (evt: React.FormEvent<EventTarget>) => {
@@ -107,7 +107,7 @@ const ProductDetailTemplate: React.FC<RouteComponentProps<ProductDetailProps>> =
       history.push('/Main/Product');
       notify('상품 등록 완료!');
     } else {
-      console.log('fail for send product info');
+      console.error('fail for send product info');
     }
   };
 
@@ -122,7 +122,7 @@ const ProductDetailTemplate: React.FC<RouteComponentProps<ProductDetailProps>> =
       history.push('/Main/Product');
       notify('상품 삭제 완료!');
     } else {
-      console.log('fail for delete product detail');
+      console.error('fail for delete product detail');
     }
   };
 

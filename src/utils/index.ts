@@ -5,6 +5,7 @@ export {
   isSame,
   string2Date,
   date2String,
+  date2StringWithTime,
   calculateFee,
   makeMoneyStr,
   drawLineGraph,
