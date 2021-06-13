@@ -72,7 +72,6 @@ const AdminProductTable = () => {
             <StyledTableCell>기업 ID</StyledTableCell>
             <StyledTableCell>상품명</StyledTableCell>
             <StyledTableCell>상품이미지</StyledTableCell>
-            <StyledTableCell>3D모델확인</StyledTableCell>
             <StyledTableCell>재고&nbsp;(개)</StyledTableCell>
             <StyledTableCell>가격&nbsp;(원)</StyledTableCell>
             <StyledTableCell>등록 시각</StyledTableCell>
@@ -87,14 +86,6 @@ const AdminProductTable = () => {
               <StyledTableCell>{row.name}</StyledTableCell>
               <StyledTableCell>
                 <img className={classes.img} alt="" src={row.img} />
-              </StyledTableCell>
-              <StyledTableCell>
-                <PureModal
-                  title={'3D모델 확인'}
-                  buttonLabel={'3D 모델 확인'}
-                  className={'3dModelUrl'}
-                  name={row.url_3d}
-                />
               </StyledTableCell>
               <StyledTableCell>{row.count}</StyledTableCell>
               <StyledTableCell>{row.price}</StyledTableCell>
