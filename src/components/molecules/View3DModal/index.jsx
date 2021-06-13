@@ -110,21 +110,26 @@ const View3DModal = ({ pid, purl }) => {
 
   const confirmModel = async () => {
     // notify('상품 3D 모델 업로드 완료!');
-    api.setAxiosDefaultHeader();
-    let mod = purl !== null ? 1 : 0;
-    const result = await api.upload(
-      `/bundle/${pid}`,
-      {
-        mainFile: mainFileList[0],
-        textureFile: textureFileList,
-        isMod: mod,
-      },
-      true,
-    );
-    if (result.status === 'success') {
-      notify('상품 3D 모델 번들링 요청 완료');
-      let modelView = document.getElementById('modelView');
-      if (modelView.lastChild) modelView.removeChild(modelView.lastChild);
+    if (mainFileList.length > 0) {
+      api.setAxiosDefaultHeader();
+      let mod = purl !== null ? 1 : 0;
+      const result = await api.upload(
+        `/bundle/${pid}`,
+        {
+          mainFile: mainFileList[0],
+          textureFile: textureFileList,
+          isMod: mod,
+        },
+        true,
+      );
+      if (result.status === 'success') {
+        notify('상품 3D 모델 번들링 요청 완료');
+        let modelView = document.getElementById('modelView');
+        if (modelView.lastChild) modelView.removeChild(modelView.lastChild);
+        toggle();
+      }
+    } else {
+      notify('파일이 존재하지 않습니다. 다시 시도해주세요.');
       toggle();
     }
   };
