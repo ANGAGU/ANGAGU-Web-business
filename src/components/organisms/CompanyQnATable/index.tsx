@@ -43,6 +43,19 @@ const StyledTableRow = withStyles((theme: Theme) =>
   }),
 )(TableRow);
 
+const StyledButton = withStyles({
+  root: {
+    //  border: 0,
+    color: 'white',
+    // height: 48,
+    // padding: '0 30px',
+    // boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+  },
+  label: {
+    textTransform: 'capitalize',
+  },
+})(Button);
+
 const useStyles = makeStyles({
   table: {
     minWidth: 700,
@@ -85,6 +98,35 @@ const CompanyQnATable = () => {
     getQuestions();
   }, []);
 
+  // const filterList = questions.filter()
+  const questionList = () =>
+    questions.map((row: any) => (
+      <StyledTableRow key={row.id}>
+        <StyledTableCell>{row.id}</StyledTableCell>
+        <StyledTableCell>{row.customer_name}</StyledTableCell>
+        <StyledTableCell>
+          <Link
+            to={{
+              pathname: `/Main/Product/${row.product_id}`,
+            }}
+          >
+            {row.product_name}
+          </Link>
+        </StyledTableCell>
+        <StyledTableCell>{row.title}</StyledTableCell>
+        <StyledTableCell>
+          {row.answer === null || row.answer === '' ? '답변 전' : '답변 완료'}
+        </StyledTableCell>
+        <StyledTableCell>{row.create_time.substr(0, 10)}</StyledTableCell>
+        <StyledTableCell>
+          <Link to={{ pathname: `/Main/QnA/${row.id}`, state: { que: row } }}>
+            <Button style={{ height: 32 }} variant="outlined">
+              답변하기
+            </Button>
+          </Link>
+        </StyledTableCell>
+      </StyledTableRow>
+    ));
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="customized table">
@@ -94,40 +136,14 @@ const CompanyQnATable = () => {
             <StyledTableCell>문의고객</StyledTableCell>
             <StyledTableCell>상품명</StyledTableCell>
             <StyledTableCell>제목</StyledTableCell>
-            <StyledTableCell>문의상태</StyledTableCell>
+            <StyledTableCell>
+              <StyledButton>문의상태</StyledButton>
+            </StyledTableCell>
             <StyledTableCell>문의시각</StyledTableCell>
             <StyledTableCell />
           </TableRow>
         </TableHead>
-        <TableBody>
-          {questions.map((row: any) => (
-            <StyledTableRow key={row.id}>
-              <StyledTableCell>{row.id}</StyledTableCell>
-              <StyledTableCell>{row.customer_name}</StyledTableCell>
-              <StyledTableCell>
-                <Link
-                  to={{
-                    pathname: `/Main/Product/${row.product_id}`,
-                  }}
-                >
-                  {row.product_name}
-                </Link>
-              </StyledTableCell>
-              <StyledTableCell>{row.title}</StyledTableCell>
-              <StyledTableCell>
-                {row.answer === null || row.answer === '' ? '답변 전' : '답변 완료'}
-              </StyledTableCell>
-              <StyledTableCell>{row.create_time.substr(0, 10)}</StyledTableCell>
-              <StyledTableCell>
-                <Link to={{ pathname: `/Main/QnA/${row.id}`, state: { que: row } }}>
-                  <Button style={{ height: 32 }} variant="outlined">
-                    답변하기
-                  </Button>
-                </Link>
-              </StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
+        <TableBody>{}</TableBody>
       </Table>
     </TableContainer>
   );
