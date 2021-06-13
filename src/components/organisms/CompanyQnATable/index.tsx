@@ -13,6 +13,7 @@ import {
   Paper,
   Button,
 } from '@material-ui/core';
+import { QuestionAnswer } from '@material-ui/icons';
 import { Dummy } from '../../../utils';
 import './style.css';
 import api from '../../../api';
@@ -45,11 +46,7 @@ const StyledTableRow = withStyles((theme: Theme) =>
 
 const StyledButton = withStyles({
   root: {
-    //  border: 0,
     color: 'white',
-    // height: 48,
-    // padding: '0 30px',
-    // boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
   },
   label: {
     textTransform: 'capitalize',
@@ -62,6 +59,13 @@ const useStyles = makeStyles({
   },
   img: {
     width: '105px',
+  },
+  icon: {
+    marginLeft: '6px',
+  },
+  answerFilter: {
+    marginLeft: '6px',
+    color: 'rgba(255, 255, 255, 0.3)',
   },
 });
 
@@ -81,6 +85,7 @@ const CompanyQnATable = () => {
       update_time: '',
     },
   ]);
+  const [answerFilter, setAnswerFilter] = useState(false);
   const classes = useStyles();
 
   const getQuestions = async () => {
@@ -98,9 +103,11 @@ const CompanyQnATable = () => {
     getQuestions();
   }, []);
 
-  // const filterList = questions.filter()
-  const questionList = () =>
-    questions.map((row: any) => (
+  const filterList = (isFilter = false) => {
+    return questions.filter(question => question.answer === null || question.answer === '' || !isFilter);
+  };
+  const questionList = () => {
+    return filterList(answerFilter).map((row: any) => (
       <StyledTableRow key={row.id}>
         <StyledTableCell>{row.id}</StyledTableCell>
         <StyledTableCell>{row.customer_name}</StyledTableCell>
@@ -127,6 +134,7 @@ const CompanyQnATable = () => {
         </StyledTableCell>
       </StyledTableRow>
     ));
+  };
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="customized table">
@@ -137,13 +145,20 @@ const CompanyQnATable = () => {
             <StyledTableCell>상품명</StyledTableCell>
             <StyledTableCell>제목</StyledTableCell>
             <StyledTableCell>
-              <StyledButton>문의상태</StyledButton>
+              <StyledButton
+                onClick={() => {
+                  setAnswerFilter(!answerFilter);
+                }}
+              >
+                문의상태
+                <QuestionAnswer className={answerFilter ? classes.icon : classes.answerFilter} />
+              </StyledButton>
             </StyledTableCell>
             <StyledTableCell>문의시각</StyledTableCell>
             <StyledTableCell />
           </TableRow>
         </TableHead>
-        <TableBody>{}</TableBody>
+        <TableBody>{questionList()}</TableBody>
       </Table>
     </TableContainer>
   );
