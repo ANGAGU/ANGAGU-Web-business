@@ -12,6 +12,7 @@ import {
   Paper,
   Button,
 } from '@material-ui/core';
+import { CheckBox } from '@material-ui/icons';
 import { Dummy, date2StringWithTime } from 'utils';
 import './style.css';
 import { notify } from 'App';
@@ -60,6 +61,13 @@ const useStyles = makeStyles((theme: Theme) =>
       '& > *': {
         margin: theme.spacing(1),
       },
+    },
+    icon: {
+      marginLeft: '6px',
+    },
+    approveFilter: {
+      marginLeft: '6px',
+      color: 'rgba(255, 255, 255, 0.3)',
     },
   }),
 );
@@ -162,6 +170,7 @@ const AdminUserTable = () => {
                 }}
               >
                 승인상태
+                <CheckBox className={approveFilter ? classes.icon : classes.approveFilter} />
               </StyledButton>
             </StyledTableCell>
             <StyledTableCell>요청시각</StyledTableCell>
