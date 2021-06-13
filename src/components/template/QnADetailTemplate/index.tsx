@@ -75,6 +75,7 @@ const QnADetailTemplate: React.FC<RouteComponentProps> = ({ match }) => {
     update_time: '',
   } as Question);
   const [answer, setAnswer] = useState('' as string | null);
+  const [hasAnswer, setHasAnswer] = useState(false as boolean);
   const classes = useStyles();
   const history = useHistory();
 
@@ -84,8 +85,13 @@ const QnADetailTemplate: React.FC<RouteComponentProps> = ({ match }) => {
     setAnswer(newAnswer);
     const result = await api.post(`/company/board/${question.id}`, { answer: newAnswer });
     if (result.status === 'success') {
-      if (isDelete) notify('답변이 삭제되었습니다!');
-      else notify('답변 등록이 완료되었습니다!');
+      if (isDelete) {
+        notify('답변이 삭제되었습니다!');
+        setHasAnswer(false);
+      } else {
+        notify('답변 등록이 완료되었습니다!');
+        setHasAnswer(true);
+      }
       setQuestion({ ...question, answer: newAnswer });
     } else {
       console.error('답변 등록 실패');
@@ -103,6 +109,7 @@ const QnADetailTemplate: React.FC<RouteComponentProps> = ({ match }) => {
   }, []);
   useEffect(() => {
     setAnswer(question.answer);
+    setHasAnswer(question.answer === null || question.answer === '');
   }, [question]);
   return (
     <Fade>
@@ -156,9 +163,9 @@ const QnADetailTemplate: React.FC<RouteComponentProps> = ({ match }) => {
               updateAnswer();
             }}
           >
-            {question.answer === null || question.answer === '' ? '등록하기' : '수정하기'}
+            {hasAnswer ? '등록하기' : '수정하기'}
           </Button>
-          {question.answer !== null && question.answer !== '' && (
+          {!hasAnswer && (
             <Button
               style={{ float: 'right' }}
               variant="outlined"
@@ -179,7 +186,7 @@ const QnADetailTemplate: React.FC<RouteComponentProps> = ({ match }) => {
             defaultValue={answer}
             onChange={handleOnChange}
             variant="outlined"
-            helperText={date2StringWithTime(question.answer_time)}
+            helperText={hasAnswer ? '' : date2StringWithTime(question.answer_time)}
           />
         </div>
       </Container>
