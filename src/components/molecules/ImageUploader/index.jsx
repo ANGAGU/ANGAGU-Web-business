@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Input, Media, Label, Button } from 'reactstrap';
 import './style.css';
+import { notify } from 'App';
 
 const ImageUploader = ({ label, setImg, url }) => {
   const inputRef = useRef(null);
