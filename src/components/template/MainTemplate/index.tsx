@@ -48,6 +48,9 @@ const MainTemplate: React.FC = () => {
   const [companyProfitList, setCompanyProfitList] = useState([] as Array<CompanyProfit>);
   const [productProfitList, setProductProfitList] = useState([] as Array<ProductProfit>);
   const [company, setCompany] = useState('회사' as string);
+  const [totalProductCount, setTotalProductCount] = useState(0 as number);
+  const [totalOrderCount, setTotalOrderCount] = useState(0 as number);
+
   const [companyCount, setCompanyCount] = useState(0 as number);
   const [approveCount, setApproveCount] = useState(0 as number);
   const [companyEmail, setCompanyEmail] = useState('' as string);
@@ -66,6 +69,7 @@ const MainTemplate: React.FC = () => {
       getAdjustProducts();
       getCompanyOrder();
       getCompanyInfo();
+      getProducts();
     } else {
       setIsAdmin(true);
       getAdminAdjust();
@@ -108,6 +112,14 @@ const MainTemplate: React.FC = () => {
     }
   };
 
+  const getProducts = async () => {
+    api.setAxiosDefaultHeader();
+    const { status, data } = await api.get('/company/products', {});
+    if (status === 'success') {
+      setTotalProductCount(data.length);
+    }
+  };
+
   const getCompanyOrder = async () => {
     const { status, data } = await api.get('/company/order', {});
     if (status === 'success') {
@@ -116,6 +128,7 @@ const MainTemplate: React.FC = () => {
         if (el.delivery_number === null) cnt += 1;
         return 0;
       });
+      setTotalOrderCount(data.length);
       setCountOrders(cnt);
     }
   };
@@ -206,8 +219,6 @@ const MainTemplate: React.FC = () => {
   return (
     <Fade>
       <Container className="main-page">
-        {/* <h3>환영합니다</h3> */}
-        {/* <hr /> */}
         <div style={{ display: 'flex', padding: '10px 10px' }}>
           <div style={{ flex: 1 }}>
             <Card className={classes.root}>
@@ -231,8 +242,8 @@ const MainTemplate: React.FC = () => {
                   </Typography>
                 ) : (
                   <Typography variant="body2" component="p">
-                    등록된 상품 수: 4개
-                    <br />총 주문건수: 39개
+                    등록된 상품 수: {totalProductCount}개
+                    <br />총 주문건수: {totalOrderCount}개
                   </Typography>
                 )}
               </CardContent>
