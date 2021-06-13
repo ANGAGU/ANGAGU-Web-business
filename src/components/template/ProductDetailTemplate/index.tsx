@@ -83,6 +83,7 @@ const ProductDetailTemplate: React.FC = () => {
   const handleDetailImg = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { name } = evt.target as HTMLInputElement;
     const files = evt.target.files as FileList;
+
     // set preview
     const reader = new FileReader();
     reader.onloadend = () => {
