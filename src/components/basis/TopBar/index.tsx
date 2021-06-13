@@ -15,6 +15,7 @@ const TopBar = ({ toggleSidebar }: TopBarProps) => {
   const toggleTopbar = () => setTopbarOpen(!topbarIsOpen);
   const history = useHistory();
   const { path } = useRouteMatch();
+  const admin: any = localStorage.getItem('isAdmin');
   return (
     <Navbar className="navbar shadow-sm p-3   " expand="md" style={NavBarStyle}>
       <Button color="info" style={ButtonStyle} onClick={toggleSidebar}>
@@ -23,16 +24,19 @@ const TopBar = ({ toggleSidebar }: TopBarProps) => {
       <NavbarToggler onClick={toggleTopbar} />
       <Collapse isOpen={topbarIsOpen} navbar>
         <Nav className="ml-auto" navbar>
-          <Button
-            outline
-            color="secondary"
-            onClick={e => {
-              TopBarLibs.goToRegister(history, `${path}/Register`);
-            }}
-            style={ButtonMargin}
-          >
-            사업자 등록 필요
-          </Button>{' '}
+          {admin === 'true' ? null : (
+            <Button
+              outline
+              color="secondary"
+              onClick={e => {
+                TopBarLibs.goToRegister(history, `${path}/Register`);
+              }}
+              style={ButtonMargin}
+            >
+              사업자 등록 필요
+            </Button>
+          )}
+
           <Button
             outline
             color="secondary"
