@@ -127,7 +127,6 @@ const CompanyInfoForm: React.FC = () => {
                   name={item.id}
                   id={item.id}
                   placeholder={item.text}
-                  value={item.text}
                   onChange={e => setData({ ...data, [item.id]: e.target.value })}
                 />
               </Col>
