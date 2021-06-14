@@ -136,7 +136,11 @@ const CompanyAdjustForm: React.FC = () => {
     setDoughnutGraph(graphData);
   };
 
-  const productProfitHeader = projuctProfitTitleList.map(ttl => <th className="column-title">{ttl}</th>);
+  const productProfitHeader = projuctProfitTitleList.map((ttl, inx) => (
+    <th key={`t${inx}`} className="column-title">
+      {ttl}
+    </th>
+  ));
 
   const productProfits = productProfitList.map(product => (
     <tr key={product.product_id}>
