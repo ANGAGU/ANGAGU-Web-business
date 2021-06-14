@@ -10,7 +10,7 @@ import {
   TableBody,
   Table,
 } from '@material-ui/core';
-
+import api from '../../../api';
 import { Dummy } from '../../../utils';
 import ManageRegister from './libs';
 import { PureModal } from '../../molecules';
@@ -52,16 +52,36 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   }),
 );
-
+interface Product {
+  id: number;
+  img: string;
+  name: string;
+  price: string;
+  stock: number;
+  rate: number;
+  thumb_url: string;
+  create_time: string;
+  '3d_model_url': string;
+  '3d_model_status': string;
+}
 const AdminProductTable = () => {
   const [isAdmin, setIsAdmin] = useState(localStorage.getItem('isAdmin'));
-  const [registers, setRegisters]: any = useState([]);
-  const classes = useStyles();
+  const [products, setProducts] = useState([] as Array<Product>);
 
+  const classes = useStyles();
+  const getProducts = async () => {
+    // 나중에 한번에 api.ts에서 통합하기
+    api.setAxiosDefaultHeader();
+    const result = await api.get('/admin/products', {});
+  
+    if (result.status === 'success') {
+      setProducts(result.data);
+    }
+  };
   useEffect(() => {
-    // setRegisters(ManageRegister.getRegisterProduct());
-    setRegisters(Dummy.makeRegister(10));
+    getProducts();
   }, []);
+  console.log(products);
 
   return (
     <TableContainer component={Paper}>
@@ -75,20 +95,25 @@ const AdminProductTable = () => {
             <StyledTableCell>재고&nbsp;(개)</StyledTableCell>
             <StyledTableCell>가격&nbsp;(원)</StyledTableCell>
             <StyledTableCell>등록 시각</StyledTableCell>
+            <StyledTableCell>3D 유무</StyledTableCell>
+
+
           </TableRow>
         </TableHead>
         <TableBody>
-          {registers.map((row: any, idx: any) => (
+          {products.map((row: any, idx: any) => (
             <StyledTableRow key={idx}>
               <StyledTableCell>{row.id}</StyledTableCell>
-              <StyledTableCell>{row.company}</StyledTableCell>
+              <StyledTableCell>{row.company_id}</StyledTableCell>
               <StyledTableCell>{row.name}</StyledTableCell>
               <StyledTableCell>
-                <img className={classes.img} alt="" src={row.img} />
+                <img className={classes.img} alt="" src={`http://d3u3zwu9bmcdht.cloudfront.net/${row.thumb_url}`} />
               </StyledTableCell>
-              <StyledTableCell>{row.count}</StyledTableCell>
+              <StyledTableCell>{row.stock}</StyledTableCell>
               <StyledTableCell>{row.price}</StyledTableCell>
-              <StyledTableCell>{row.confirmTime}</StyledTableCell>
+              <StyledTableCell>{row.update_time}</StyledTableCell>
+              <StyledTableCell>{row['3d_model_status'] === null ? '등록필요' : '등록완료'}</StyledTableCell>
+
             </StyledTableRow>
           ))}
         </TableBody>

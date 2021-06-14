@@ -29,23 +29,25 @@ const TopBar = ({ toggleSidebar }: TopBarProps) => {
   });
   const admin: any = localStorage.getItem('isAdmin');
   const getCominfo = async () => {
-    api.setAxiosDefaultHeader();
-    const result = await api.get('/company/info', {});
-    if (result.status === 'success') {
-      setData({
-        name: result.data.name,
-        phoneNumber: result.data.phone_number,
-        email: result.data.email,
-        password: result.data.password,
-        businessNumber: result.data.business_number,
-        accountNumber: result.data.account_number,
-        accountHolder: result.data.account_holder,
-        accountBank: result.data.account_bank,
-        is_approve: result.data.is_approve,
-      });
-    } else {
-      console.error(result);
-    }
+    if (admin !== 'true') {
+      api.setAxiosDefaultHeader();
+      const result = await api.get('/company/info', {});
+      if (result.status === 'success') {
+        setData({
+          name: result.data.name,
+          phoneNumber: result.data.phone_number,
+          email: result.data.email,
+          password: result.data.password,
+          businessNumber: result.data.business_number,
+          accountNumber: result.data.account_number,
+          accountHolder: result.data.account_holder,
+          accountBank: result.data.account_bank,
+          is_approve: result.data.is_approve,
+        });
+      } else {
+        console.error(result);
+      }
+    } 
   };
   useEffect(() => {
     getCominfo();
@@ -59,7 +61,7 @@ const TopBar = ({ toggleSidebar }: TopBarProps) => {
       <NavbarToggler onClick={toggleTopbar} />
       <Collapse isOpen={topbarIsOpen} navbar>
         <Nav className="ml-auto" navbar>
-          {data.is_approve === 1 ? null : (
+          {data.is_approve === 1 || admin==='true' ? null : (
             <Button
               outline
               color="secondary"
