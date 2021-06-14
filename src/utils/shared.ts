@@ -42,7 +42,7 @@ export const makeMoneyStr = (value: string) => {
   return value.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
 };
 
-export const drawLineGraph = (adjustList: any, isAdmin = false) => {
+export const drawLineGraph = (adjustList: any, isAdmin = false as boolean | null) => {
   const lineLabels = ['', '', '', '', '', ''];
   const lineData = [0, 0, 0, 0, 0, 0];
   let monthAgo = new Date();
@@ -74,7 +74,11 @@ export const drawLineGraph = (adjustList: any, isAdmin = false) => {
   return graphData;
 };
 
-export const drawDoughnutGraph = (profitList: any, totalProfit: number, isAdmin = false) => {
+export const drawDoughnutGraph = (
+  profitList: any,
+  totalProfit: number,
+  isAdmin = false as boolean | null,
+) => {
   const doughnutLabels = [] as Array<string>;
   const doughnutData = [] as Array<number>;
 

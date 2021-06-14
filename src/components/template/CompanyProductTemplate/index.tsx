@@ -1,6 +1,7 @@
 /* eslint-disable no-else-return */
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { date2StringWithTime } from 'utils';
 import { withStyles, Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import {
   Button,
@@ -14,6 +15,7 @@ import {
   Breadcrumbs,
 } from '@material-ui/core';
 import { Fade } from 'react-awesome-reveal';
+import { NumericLiteral } from 'typescript';
 import api from '../../../api';
 import { View3DModal } from '../../molecules';
 
@@ -28,6 +30,7 @@ interface Product {
   create_time: string;
   '3d_model_url': string;
   '3d_model_status': string;
+  sell_count: number;
 }
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
@@ -73,8 +76,9 @@ const CompanyProductTemplate: React.FC = () => {
     '이미지',
     '상품명',
     '판매가',
-    '상태',
+    '모델상태',
     '재고',
+    '판매량',
     '등록일자',
     '',
     '3D',
@@ -137,7 +141,10 @@ const CompanyProductTemplate: React.FC = () => {
                 <StyledTableCell>{product.price}</StyledTableCell>
                 <StyledTableCell>{getStatus(product['3d_model_status'])}</StyledTableCell>
                 <StyledTableCell>{product.stock}</StyledTableCell>
-                <StyledTableCell className="a-right a-right ">{product.create_time}</StyledTableCell>
+                <StyledTableCell>{product.sell_count}</StyledTableCell>
+                <StyledTableCell className="a-right a-right ">
+                  {date2StringWithTime(product.create_time)}
+                </StyledTableCell>
                 <StyledTableCell className="last">
                   <Link to={`/Main/Product/${product.id}`}>
                     <Button color="secondary">수정하기</Button>

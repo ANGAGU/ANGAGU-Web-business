@@ -105,7 +105,7 @@ const AdminUserTable = () => {
       console.log(result.data);
       setUsers(result.data.companies);
     } else {
-      console.error('주문 조회 실패');
+      console.error('회원 조회 실패');
     }
   };
   const approveUser = async (id: number) => {

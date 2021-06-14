@@ -17,7 +17,7 @@ const getLogin = async (titleType, api, id, pw, history) => {
         localStorage.setItem('isAdmin', '');
         history.push('/Main');
       } else {
-        alert('로그인에 실패하였습니다.');
+        notify('로그인에 실패하였습니다.', 'error');
         history.push('/');
       }
     } else {
@@ -29,17 +29,17 @@ const getLogin = async (titleType, api, id, pw, history) => {
       });
       if (result.status === 'success') {
         // eslint-disable-next-line no-alert
-        alert('관리자 로그인 성공');
+        notify('관리자 페이지 로그인 성공!');
         localStorage.setItem('token', result.data.token);
         localStorage.setItem('isAdmin', true);
         history.push('/Main');
       } else {
-        alert('로그인에 실패하였습니다.');
+        notify('로그인에 실패하였습니다.', 'error');
         history.push('/');
       }
     }
   } catch (err) {
-    alert('로그인에 실패하였습니다.');
+    notify('로그인에 실패하였습니다.', 'error');
     history.push('/');
   }
 };
