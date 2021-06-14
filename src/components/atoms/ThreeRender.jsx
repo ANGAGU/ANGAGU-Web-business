@@ -66,7 +66,7 @@ function useResponsiveCanvas(initialSize) {
   };
 }
 
-function main(div, url, size, fileExtention, _modelTexture) {
+function main(div, url, size, fileExtention, _modelTexture, _status) {
   const canvas = document.createElement('canvas');
   const [getWidth, getHeight] = size;
   canvas.width = div.offsetWidth;
@@ -111,6 +111,7 @@ function main(div, url, size, fileExtention, _modelTexture) {
   }
 
   {
+    
     switch (fileExtention) {
       case 'obj':
         const mtlLoader = new MTLLoader();
@@ -233,7 +234,7 @@ function main(div, url, size, fileExtention, _modelTexture) {
   requestAnimationFrame(render);
 }
 
-function ThreeRender({ size: initialSize, modelURL, modelEx, modelTexture }) {
+function ThreeRender({ size: initialSize, modelURL, modelEx, modelTexture, status }) {
   const [loading, setLoading] = useState(true);
   const [color, setColor] = useState('#ff00ff');
   const mountRef = useRef();
@@ -243,7 +244,7 @@ function ThreeRender({ size: initialSize, modelURL, modelEx, modelTexture }) {
     border-color: red;
   `;
   useEffect(() => {
-    main(mountRef.current, modelURL, initialSize, modelEx, modelTexture);
+    main(mountRef.current, modelURL, initialSize, modelEx, modelTexture, status);
   }, []);
   return (
     <div
