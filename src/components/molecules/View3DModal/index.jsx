@@ -13,7 +13,7 @@ import ThreeRender from '../../atoms/ThreeRender';
 import api from '../../../api';
 import './style.css';
 
-const View3DModal = ({ pid, purl }) => {
+const View3DModal = ({ status, pid, purl }) => {
   // set states
   const [modal, setModal] = useState(false);
   const [product3D, setProduct3D] = useState(null);
@@ -70,6 +70,10 @@ const View3DModal = ({ pid, purl }) => {
         fileContinue = true;
         setProductEx('3ds');
         mainFiles.push(evt.target.files[0]);
+      }else if (evt.target.files[0].name.split('.')[1] === 'DAE') {
+        fileContinue = true;
+        setProductEx('dae');
+        mainFiles.push(evt.target.files[0]);
       }
       if (fileContinue === false) {
         notify('어멋 잘못 올리셨네요');
@@ -90,7 +94,10 @@ const View3DModal = ({ pid, purl }) => {
         } else if (item.name.split('.')[1] === 'dae') {
           setProductEx('dae');
           mainFiles.push(item);
-        } else if (item.name.split('.')[1] === 'dxf') {
+        } else if (item.name.split('.')[1] === 'DAE') {
+          setProductEx('dae');
+          mainFiles.push(item);
+        }else if (item.name.split('.')[1] === 'dxf') {
           setProductEx('dxf');
           mainFiles.push(item);
         } else if (item.name.split('.')[1] === 'png') {
@@ -141,7 +148,7 @@ const View3DModal = ({ pid, purl }) => {
         toggle();
       }
     } else {
-      notify('파일이 존재하지 않습니다. 다시 시도해주세요.');
+      notify('변경된 파일이 없습니다. 다시 시도해주세요.');
       toggle();
     }
   };
@@ -154,7 +161,7 @@ const View3DModal = ({ pid, purl }) => {
   return (
     <div>
       <Button outline color="secondary" onClick={toggle}>
-        {purl !== null ? '3D 모델 수정' : '3D 모델 등록'}
+        {status !== null ? '3D 모델 수정' : '3D 모델 등록'}
       </Button>
       <Modal isOpen={modal} toggle={toggle} className={'product-3d-model__modal'} style={modalStyle}>
         <ModalHeader toggle={toggle}>{'3D모델 등록하기'}</ModalHeader>
@@ -173,6 +180,7 @@ const View3DModal = ({ pid, purl }) => {
                     modelURL={product3D}
                     modelEx={productEx}
                     modelTexture={productTexture}
+                    status={ status}
                   />
                 )}
               </Col>
