@@ -113,7 +113,6 @@ const AdminProductTable = () => {
               <StyledTableCell>{row.price}</StyledTableCell>
               <StyledTableCell>{row.update_time}</StyledTableCell>
               <StyledTableCell>{row['3d_model_status'] === null ? '등록필요' : '등록완료'}</StyledTableCell>
-
             </StyledTableRow>
           ))}
         </TableBody>
