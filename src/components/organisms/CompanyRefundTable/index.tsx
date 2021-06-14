@@ -159,7 +159,18 @@ const CompanyRefundTable = () => {
                     >
                       환불 승인
                     </Button>
-                  ) : null}
+                  ) : (
+                    <Button
+                      disabled
+                      style={{ height: 32 }}
+                      variant="outlined"
+                      onClick={e => {
+                        updateRefund(row.id, deliverNum);
+                      }}
+                    >
+                      환불 승인
+                    </Button>
+                  )}
                 </StyledTableCell>
               </StyledTableRow>
             );
