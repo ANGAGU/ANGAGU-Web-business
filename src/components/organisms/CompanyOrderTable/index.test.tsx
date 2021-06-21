@@ -1,5 +1,6 @@
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import CompanyOrderTable from './index';
 
@@ -19,7 +20,7 @@ afterEach(() => {
 describe('CompanyOrderTable Component', () => {
   it('renders component', () => {
     act(() => {
-      render(<CompanyOrderTable />, container);
+      render(<Router><CompanyOrderTable /></Router>, container);
     });
   });
 });

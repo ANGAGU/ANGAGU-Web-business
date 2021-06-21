@@ -1,6 +1,6 @@
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
-
+import { BrowserRouter as Router } from 'react-router-dom';
 import CompanyQnATable from './index';
 
 let container: HTMLElement;
@@ -19,7 +19,7 @@ afterEach(() => {
 describe('CompanyQnATable Component', () => {
   it('renders component', () => {
     act(() => {
-      render(<CompanyQnATable />, container);
+      render(<Router><CompanyQnATable /></Router>, container);
     });
   });
 });
