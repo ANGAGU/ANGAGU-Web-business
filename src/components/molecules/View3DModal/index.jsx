@@ -13,16 +13,21 @@ import ThreeRender from '../../atoms/ThreeRender';
 import api from '../../../api';
 import './style.css';
 
-const View3DModal = ({ pid, purl }) => {
+const View3DModal = ({ status, pid, purl }) => {
   // set states
   const [modal, setModal] = useState(false);
   const [product3D, setProduct3D] = useState(null);
   const [productTexture, setProductTexture] = useState(null);
   const [productEx, setProductEx] = useState(null);
   const [size, setSize] = useState(['1000', '600']);
+
+  const [mainFileList, setMainFileList] = useState([]);
+  const [textureFileList, setTextureFileList] = useState([]);
+
   const [modelName, setModelName] = useState('');
   const inputRef = useRef(null);
   const boxRef = useRef(null);
+
   useEffect(async () => {
     api.setAxiosDefaultHeader();
     const result = await api.get(`/company/products/${pid}/ar`, {});
@@ -32,28 +37,16 @@ const View3DModal = ({ pid, purl }) => {
       setProductEx(result.data.mainUrl.split('.')[1]);
     }
   }, []);
-
   const toggle = () => setModal(!modal);
-  // const boxRef = useCallback(node => {
-  //   if (node !== null) {
-  //     setSize([
-  //       node.getBoundingClientRect().width.toString(),
-  //       node.getBoundingClientRect().height.toString(),
-  //     ]);
-  //   }
-  // }, []);
   useEffect(() => {
-    // The 'current' property contains info of the reference:
-    // align, title, ... , width, height, etc.
     if (boxRef.current) {
       let height = boxRef.current.offsetHeight;
       let width = boxRef.current.offsetWidth;
       setSize([width.toString(), height.toString()]);
     }
   }, [boxRef]);
+
   const handleclickInput = () => {
-    // let modelView = document.getElementById('modelView');
-    // if (modelView.lastChild) modelView.removeChild(modelView.lastChild);
     setProduct3D(null);
     setProductEx(null);
     setProductTexture(null);
@@ -66,7 +59,28 @@ const View3DModal = ({ pid, purl }) => {
   const handleOnChange = async evt => {
     let mainFiles = [];
     let textureFiles = [];
-    if (evt.target.files.length >= 1) {
+    if (evt.target.files.length <= 1) {
+      console.log(evt.target.files);
+      let fileContinue = false;
+      if (evt.target.files[0].name.split('.')[1] === 'dae') {
+        fileContinue = true;
+        setProductEx('dae');
+        mainFiles.push(evt.target.files[0]);
+      } else if (evt.target.files[0].name.split('.')[1] === '3ds') {
+        fileContinue = true;
+        setProductEx('3ds');
+        mainFiles.push(evt.target.files[0]);
+      }else if (evt.target.files[0].name.split('.')[1] === 'DAE') {
+        fileContinue = true;
+        setProductEx('dae');
+        mainFiles.push(evt.target.files[0]);
+      }
+      if (fileContinue === false) {
+        notify('어멋 잘못 올리셨네요');
+        toggle();
+      }
+    }
+    if (evt.target.files.length > 1) {
       Array.from(evt.target.files).forEach(item => {
         if (item.name.split('.')[1] === 'obj') {
           setProductEx('obj');
@@ -80,10 +94,22 @@ const View3DModal = ({ pid, purl }) => {
         } else if (item.name.split('.')[1] === 'dae') {
           setProductEx('dae');
           mainFiles.push(item);
-        } else if (item.name.split('.')[1] === 'dxf') {
+        } else if (item.name.split('.')[1] === 'DAE') {
+          setProductEx('dae');
+          mainFiles.push(item);
+        }else if (item.name.split('.')[1] === 'dxf') {
           setProductEx('dxf');
           mainFiles.push(item);
-        } else textureFiles.push(item);
+        } else if (item.name.split('.')[1] === 'png') {
+          textureFiles.push(item);
+        } else if (item.name.split('.')[1] === 'jpg') {
+          textureFiles.push(item);
+        } else if (item.name.split('.')[1] === 'mtl') {
+          textureFiles.push(item);
+        } else {
+          notify('어멋 잘못 올리셨네요');
+          toggle();
+        }
         return '';
       });
     }
@@ -96,14 +122,35 @@ const View3DModal = ({ pid, purl }) => {
     if (result.status === 'success') {
       setProduct3D(`http://d3u3zwu9bmcdht.cloudfront.net/${result.data.mainUrl}`);
       setProductTexture(result.data.textureUrl);
+      setMainFileList(mainFiles);
+      setTextureFileList(textureFiles);
     }
   };
 
-  const confirmModel = () => {
-    notify('상품 3D 모델 업로드 완료!');
-    let modelView = document.getElementById('modelView');
-    if (modelView.lastChild) modelView.removeChild(modelView.lastChild);
-    toggle();
+  const confirmModel = async () => {
+    // notify('상품 3D 모델 업로드 완료!');
+    if (mainFileList.length > 0) {
+      api.setAxiosDefaultHeader();
+      let mod = purl !== null ? 1 : 0;
+      const result = await api.upload(
+        `/bundle/${pid}`,
+        {
+          mainFile: mainFileList[0],
+          textureFile: textureFileList,
+          isMod: mod,
+        },
+        true,
+      );
+      if (result.status === 'success') {
+        notify('상품 3D 모델 번들링 요청 완료');
+        let modelView = document.getElementById('modelView');
+        if (modelView.lastChild) modelView.removeChild(modelView.lastChild);
+        toggle();
+      }
+    } else {
+      notify('변경된 파일이 없습니다. 다시 시도해주세요.');
+      toggle();
+    }
   };
 
   const rejectModel = () => {
@@ -114,7 +161,7 @@ const View3DModal = ({ pid, purl }) => {
   return (
     <div>
       <Button outline color="secondary" onClick={toggle}>
-        {purl !== null ? '3D 모델 수정' : '3D 모델 등록'}
+        {status !== null ? '3D 모델 수정' : '3D 모델 등록'}
       </Button>
       <Modal isOpen={modal} toggle={toggle} className={'product-3d-model__modal'} style={modalStyle}>
         <ModalHeader toggle={toggle}>{'3D모델 등록하기'}</ModalHeader>
@@ -126,17 +173,16 @@ const View3DModal = ({ pid, purl }) => {
               </Col>
             </Row>
             <Row style={modalBodyStyle}>
-              <Col id="modelView" className="model-view" style={visStyle} forwardref={boxRef}>
+              <Col id="modelView" className="model-view" style={visStyle}>
                 {product3D && productTexture && (
                   <ThreeRender
                     size={size}
                     modelURL={product3D}
                     modelEx={productEx}
                     modelTexture={productTexture}
+                    status={ status}
                   />
                 )}
-
-                {/* {product3D && <ObjModelLoader model={product3D} mtl={mesh} />} */}
               </Col>
             </Row>
           </Container>

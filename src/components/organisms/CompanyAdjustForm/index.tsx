@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button } from 'reactstrap';
-import { Dummy, date2String, calculateFee, drawLineGraph } from 'utils';
+import { Dummy, date2String, calculateFee, drawLineGraph, makeMoneyStr } from 'utils';
 import { CompanyFilter, MonthSelector, LineChart, DoughnutChart } from '../../molecules';
 import { projuctProfitTitleList } from '../../../commons/constants/string';
 import api from '../../../api';
@@ -136,7 +136,11 @@ const CompanyAdjustForm: React.FC = () => {
     setDoughnutGraph(graphData);
   };
 
-  const productProfitHeader = projuctProfitTitleList.map(ttl => <th className="column-title">{ttl}</th>);
+  const productProfitHeader = projuctProfitTitleList.map((ttl, inx) => (
+    <th key={`t${inx}`} className="column-title">
+      {ttl}
+    </th>
+  ));
 
   const productProfits = productProfitList.map(product => (
     <tr key={product.product_id}>
@@ -176,11 +180,13 @@ const CompanyAdjustForm: React.FC = () => {
                 {`${companyDate.getFullYear()}년 ${companyDate.getMonth() + 1}월`}
               </span>
               입금 금액은
-              <span className="adjust-profit content-highlight">{totalProfit - totalFee}원</span>
+              <span className="adjust-profit content-highlight">
+                {makeMoneyStr((totalProfit - totalFee).toString())}원
+              </span>
               입니다.
             </div>
             <div className="content__profit-detail">
-              총 매출 {totalProfit}원 - 수수료 {totalFee}원
+              총 매출 {makeMoneyStr(totalProfit.toString())}원 - 수수료 {makeMoneyStr(totalFee.toString())}원
             </div>
           </div>
           <Button

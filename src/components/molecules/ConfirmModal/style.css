@@ -1,4 +1,6 @@
-.modal-btn--left {
+.counter {
   position: absolute;
-  left: 10px;
+  left: 20px;
+  font-size: 16px;
+  color: rgb(189, 9, 9);
 }
